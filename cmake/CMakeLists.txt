@@ -55,6 +55,6 @@ if (ENABLE_TEST)
         TEST_DIR "${TEST_DIR}" 
         TEST_UTILS_DIR "${TEST_UTILS_DIR}" 
         TEST_BUILD_UTILS_DIR "${TEST_BUILD_UTILS_DIR}")
-    add_subdirectory(${TEST_DIR})
     enable_testing()
+    add_subdirectory(${TEST_DIR})
 endif()

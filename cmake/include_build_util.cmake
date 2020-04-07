@@ -4,7 +4,12 @@ function(include_build_util)
 
     set(relative_dir "${include_build_util_RELATIVE_DIR}")
     set(name "${include_build_util_NAME}")
-    if("${include_build_util_INCLUDE_DIR}" STREQUAL "" )
+
+    if("${name}" STREQUAL "")
+        message(FATAL_ERROR "parameter NAME is not defined")
+    endif()
+
+    if(NOT "${include_build_util_INCLUDE_DIR}" STREQUAL "" )
         set(base_dir "${include_build_util_INCLUDE_DIR}")
     else()
         set(base_dir "${INCLUDE_DIR}")

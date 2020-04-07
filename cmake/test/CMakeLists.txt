@@ -23,7 +23,7 @@ file(GLOB test_build_utils_list "${TEST_BUILD_UTILS_DIR}/*")
 foreach(it ${test_build_utils_list})
     set(name "")
     get_filename_component(name "${it}" NAME_WE)
-    add_test(NAME upper_str COMMAND ${CMAKE_COMMAND} 
+    add_test(NAME "${name}" COMMAND ${CMAKE_COMMAND} 
         -D BASE_SOURCE_DIR="${PROJECT_SOURCE_DIR}"
         -D INCLUDE_DIR="${SOURCE_DIR}"
         -D TEST_DIR="${TEST_DIR}"

@@ -24,11 +24,11 @@ foreach(it ${test_build_utils_list})
     set(name "")
     get_filename_component(name "${it}" NAME_WE)
     add_test(NAME "${name}" COMMAND ${CMAKE_COMMAND} 
-        -D BASE_SOURCE_DIR="${PROJECT_SOURCE_DIR}"
-        -D INCLUDE_DIR="${SOURCE_DIR}"
-        -D TEST_DIR="${TEST_DIR}"
-        -D TEST_UTILS_DIR="${TEST_UTILS_DIR}"
-        -D TEST_BUILD_UTILS_DIR="${TEST_BUILD_UTILS_DIR}"
+        -D BASE_SOURCE_DIR=${BASE_SOURCE_DIR}
+        -D INCLUDE_DIR=${SOURCE_DIR}
+        -D TEST_DIR=${TEST_DIR}
+        -D TEST_UTILS_DIR=${TEST_UTILS_DIR}
+        -D TEST_BUILD_UTILS_DIR=${TEST_BUILD_UTILS_DIR}
         -P "${it}")
 endforeach()
 

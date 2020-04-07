@@ -24,6 +24,8 @@ else()
     set(ENABLE_TEST ${ENABLE_TEST} CACHE BOOL "enable test" FORCE)
 endif()
 
+include(include_build_util.cmake)
+
 if (ENABLE_TEST)
     #add test
 

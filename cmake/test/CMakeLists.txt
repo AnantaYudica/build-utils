@@ -32,7 +32,7 @@ foreach(it ${test_build_utils_list})
             -D TEST_SOURCE_DIR=${BUILD_UTILS_TEST_SOURCE_DIR}
             -D TEST_NAME=${name}
             -D TEST_BASE_SOURCE_DIR=${it}
-            -P "${it}/main.cmake")
+            -P "${it}/CMakeLists.txt")
     endif()
 endforeach()
 

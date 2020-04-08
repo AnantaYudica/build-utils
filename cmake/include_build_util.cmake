@@ -12,7 +12,7 @@ function(include_build_util)
     if(NOT "${include_build_util_INCLUDE_DIR}" STREQUAL "" )
         set(base_dir "${include_build_util_INCLUDE_DIR}")
     else()
-        set(base_dir "${INCLUDE_DIR}")
+        set(base_dir "${BUILD_UTILS_INCLUDE_DIR}")
     endif()
     
     if(NOT "${relative_dir}" STREQUAL "")

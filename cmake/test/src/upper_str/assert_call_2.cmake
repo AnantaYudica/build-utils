@@ -1,0 +1,8 @@
+function(call)
+    cmake_parse_arguments(call "" "OUTPUT" "ARGS" ${ARGN}) 
+    set(out "")
+    list(GET call_ARGS 0 str)
+    list(GET call_ARGS 1 length)
+    upper_str(${str} out LENGTH ${length})
+    set(${call_OUTPUT} ${out} PARENT_SCOPE)
+endfunction(call)

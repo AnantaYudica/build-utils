@@ -98,7 +98,7 @@ if("${set_variables_TEST_BASE_SOURCE_DIR}" STREQUAL "")
     set(TEST_BASE_SOURCE_DIR ${TEST_SOURCE_DIR} CACHE PATH "test base source dir" FORCE)
 else()
     set(l_test_base_source_dir "")
-    get_filename_component(l_test_base_source_dir "${set_variables_TEST_SOURCE_DIR}" ABSOLUTE)
+    get_filename_component(l_test_base_source_dir "${set_variables_TEST_BASE_SOURCE_DIR}" ABSOLUTE)
     set(TEST_BASE_SOURCE_DIR ${l_test_base_source_dir} CACHE PATH "test base source dir" FORCE)
 endif()
 

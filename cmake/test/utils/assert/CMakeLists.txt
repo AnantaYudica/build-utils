@@ -1,4 +1,4 @@
-function(assert_CONDITION is_not is_equal is_less is_greater is_str a b a_name b_name result msg)
+function(assert_condition is_not is_equal is_less is_greater is_str a b a_name b_name result msg)
     set(res FALSE)
     set(operator "")
     set(not_operator "=")
@@ -84,7 +84,7 @@ function(assert_CONDITION is_not is_equal is_less is_greater is_str a b a_name b
             set(${msg} "((${a_name} : ${a}) ${operator} (${b_name} : ${b})) ${not_operator}= FALSE" PARENT_SCOPE)
         endif()
     endif()
-endfunction(assert_CONDITION)
+endfunction(assert_condition)
 
 function(assert)
     cmake_parse_arguments(assert "NOT;EQUAL;LESS;GREATER;STR;FOREACH" 
@@ -99,14 +99,14 @@ function(assert)
     set(condition FALSE)
     
     set(out "")
-    call(OUTPUT out ARGS ${assert_ARGS})
+    assert_call(OUTPUT out ARGS ${assert_ARGS})
 
     if(assert_FOREACH)
         list(LENGTH assert_RESULT len)
         foreach(index RANGE ${len})
             list(GET assert_RESULT ${index} element_result)
             list(GET out ${index} element_out)
-            assert_CONDITION(assert_NOT assert_EQUAL assert_LESS 
+            assert_condition(assert_NOT assert_EQUAL assert_LESS 
                 assert_GREATER assert_STR ${element_result} ${element_out} 
                 "result[${index}]" "output[${index}]" condition msg)
             if(NOT condition)
@@ -115,7 +115,7 @@ function(assert)
             endif()
         endforeach()
     else()
-        assert_CONDITION(${assert_NOT} ${assert_EQUAL} ${assert_LESS} 
+        assert_condition(${assert_NOT} ${assert_EQUAL} ${assert_LESS} 
             ${assert_GREATER} ${assert_STR} ${assert_RESULT} ${out}  
             "result" "output" condition msg)
         if(NOT condition)

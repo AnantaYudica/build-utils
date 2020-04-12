@@ -8,7 +8,7 @@ function(source_group_dir_recv prefix_name dir is_output_name is_output_path
     set(foreach_list_path "")
 
     foreach(it ${list_files})
-        source_group_dir_filter(${it} ok)
+        source_group_dir_filter(${it} ${level} ok)
         get_filename_component(file_name ${it} NAME)
         if (ok)
             if(IS_DIRECTORY ${it}) 

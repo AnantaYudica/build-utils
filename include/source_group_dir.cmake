@@ -1,17 +1,29 @@
 
 function(source_group_dir_recv prefix_name dir is_output_name is_output_path 
-    output_list_name output_list_path)
+    output_list_name output_list_path level)
 
     file(GLOB list_files "${dir}/*")
+
+    set(foreach_list_name "")
+    set(foreach_list_path "")
 
     foreach(it ${list_files})
         source_group_dir_filter(${it} ok)
         get_filename_component(file_name ${it} NAME)
         if (ok)
             if(IS_DIRECTORY ${it}) 
+                set(next_list_name "")
+                set(next_list_path "")
+                math(EXPR next_level "${level}+1")
                 source_group_dir_recv("${prefix_name}/${file_name}"
                     "${dir}/${file_name}" ${is_output_name} ${is_output_path}
-                    ${output_list_name} ${output_list_path})
+                    next_list_name next_list_path ${next_level})
+                if (is_output_name)
+                    list(APPEND foreach_list_name ${next_list_name})
+                endif()
+                if (is_output_path)
+                    list(APPEND foreach_list_path ${next_list_path})
+                endif()
             else()
                 source_group_dir_condition(${it} ok)
                 if (ok)
@@ -20,17 +32,22 @@ function(source_group_dir_recv prefix_name dir is_output_name is_output_path
                     endif()
 
                     if (is_output_name)
-                        set(tmp "${${output_list_name}};${prefix_name}")
-                        set(${output_list_name} ${tmp} PARENT_SCOPE)
+                        list(APPEND foreach_list_name ${prefix_name})
                     endif()
                     if (is_output_path)
-                        set(tmp "${${output_list_path}};${it}")
-                        set(${output_list_path} ${tmp} PARENT_SCOPE)
+                        list(APPEND foreach_list_path ${it})
                     endif()
                 endif()
             endif()
         endif()
     endforeach()
+    
+    if (is_output_name)
+        set(${output_list_name} "${foreach_list_name}" PARENT_SCOPE)
+    endif()
+    if (is_output_path)
+        set(${output_list_path} "${foreach_list_path}" PARENT_SCOPE)
+    endif()
 
 endfunction(source_group_dir_recv)
 
@@ -70,7 +87,7 @@ function(source_group_dir prefix_name dir)
 
     source_group_dir_recv(${prefix_name} ${dir} 
         ${enable_output_name} ${enable_output_path}
-        output_list_name output_list_path)
+        output_list_name output_list_path 0)
 
     if(enable_output_name)
         set(${source_group_dir_OUTPUT_LIST_NAME} "${output_list_name}" PARENT_SCOPE)

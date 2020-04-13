@@ -1,0 +1,5 @@
+function(get_test_target_name_set_name name output)
+    cmake_parse_arguments(get_test_target_name_set_name "" "" "ARGS" ${ARGN}) 
+    list(GET get_test_target_name_set_name_ARGS 0 index)
+    set("${output}" "${name}-${index}" PARENT_SCOPE)
+endfunction(get_test_target_name_set_name )

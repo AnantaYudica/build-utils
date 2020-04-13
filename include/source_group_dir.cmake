@@ -1,5 +1,5 @@
 
-function(source_group_dir_recv prefix_name dir is_output_name is_output_path 
+function(source_group_dir_recv prefix_name base_dir dir is_output_name is_output_path 
     output_list_name output_list_path level)
 
     file(GLOB list_files "${dir}/*")
@@ -8,14 +8,16 @@ function(source_group_dir_recv prefix_name dir is_output_name is_output_path
     set(foreach_list_path "")
 
     foreach(it ${list_files})
-        source_group_dir_filter(${it} ${level} ok)
+        file(RELATIVE_PATH relative_dir "${base_dir}" "${it}")
         get_filename_component(file_name ${it} NAME)
+        source_group_dir_filter(${it} ok LEVEL ${level} BASE_DIR ${base_dir} 
+            RELATIVE_PATH ${relative_dir} NAME ${file_name})
         if (ok)
             if(IS_DIRECTORY ${it}) 
                 set(next_list_name "")
                 set(next_list_path "")
                 math(EXPR next_level "${level}+1")
-                source_group_dir_recv("${prefix_name}/${file_name}"
+                source_group_dir_recv("${prefix_name}/${file_name}" "${base_dir}"
                     "${dir}/${file_name}" ${is_output_name} ${is_output_path}
                     next_list_name next_list_path ${next_level})
                 if (is_output_name)
@@ -25,7 +27,8 @@ function(source_group_dir_recv prefix_name dir is_output_name is_output_path
                     list(APPEND foreach_list_path ${next_list_path})
                 endif()
             else()
-                source_group_dir_condition(${it} ok)
+                source_group_dir_condition(${it} ok BASE_DIR ${base_dir} 
+                    RELATIVE_PATH ${relative_dir} NAME ${file_name})
                 if (ok)
                     if(NOT DEFINED CMAKE_SCRIPT_MODE_FILE)
                         source_group(${prefix_name} FILES ${it})
@@ -85,7 +88,7 @@ function(source_group_dir prefix_name dir)
     set(output_list_name "")
     set(output_list_path "")
 
-    source_group_dir_recv(${prefix_name} ${dir} 
+    source_group_dir_recv(${prefix_name} "${dir}" ${dir} 
         ${enable_output_name} ${enable_output_path}
         output_list_name output_list_path 0)
 

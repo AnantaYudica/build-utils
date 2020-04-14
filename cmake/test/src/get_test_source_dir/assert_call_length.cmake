@@ -1,0 +1,5 @@
+function(assert_call)
+    cmake_parse_arguments(assert_call "" "OUTPUT" "ARGS" ${ARGN}) 
+    list(LENGTH assert_call_ARGS len)
+    set(${assert_call_OUTPUT} ${len} PARENT_SCOPE)
+endfunction(assert_call)

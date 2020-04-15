@@ -103,11 +103,12 @@ function(assert)
 
     if(assert_FOREACH)
         list(LENGTH assert_RESULT len)
-        foreach(index RANGE ${len})
+        foreach(it RANGE 1 ${len} 1)
+            math(EXPR index "${it}-1")
             list(GET assert_RESULT ${index} element_result)
             list(GET out ${index} element_out)
-            assert_condition(assert_NOT assert_EQUAL assert_LESS 
-                assert_GREATER assert_STR ${element_result} ${element_out} 
+            assert_condition(${assert_NOT} ${assert_EQUAL} ${assert_LESS} 
+                ${assert_GREATER} ${assert_STR} ${element_result} ${element_out} 
                 "result[${index}]" "output[${index}]" condition msg)
             if(NOT condition)
                 message(FATAL_ERROR "Error Assert Condition ${msg}")

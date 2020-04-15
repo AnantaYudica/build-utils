@@ -88,7 +88,7 @@ endfunction(assert_condition)
 
 function(assert)
     cmake_parse_arguments(assert "NOT;EQUAL;LESS;GREATER;STR;FOREACH" 
-        "CALL;RESULT" "ARGS" ${ARGN}) 
+        "CALL;RESULT" "LIST_RESULT;ARGS" ${ARGN}) 
 
     if("${assert_CALL}" STREQUAL "" OR (NOT EXISTS "${assert_CALL}"))
         include(${TEST_UTILS_DIR}/assert/call.cmake)
@@ -102,10 +102,10 @@ function(assert)
     assert_call(OUTPUT out ARGS ${assert_ARGS})
 
     if(assert_FOREACH)
-        list(LENGTH assert_RESULT len)
+        list(LENGTH assert_LIST_RESULT len)
         foreach(it RANGE 1 ${len} 1)
             math(EXPR index "${it}-1")
-            list(GET assert_RESULT ${index} element_result)
+            list(GET assert_LIST_RESULT ${index} element_result)
             list(GET out ${index} element_out)
             assert_condition(${assert_NOT} ${assert_EQUAL} ${assert_LESS} 
                 ${assert_GREATER} ${assert_STR} ${element_result} ${element_out} 

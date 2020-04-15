@@ -56,7 +56,7 @@ endfunction(source_group_dir_recv)
 
 function(source_group_dir prefix_name dir)
     cmake_parse_arguments(source_group_dir "RECURSIVE" 
-        "FILTER;CONDITION;OUTPUT_LIST_NAME;OUTPUT_LIST_PATH;INCLUDE_DIR" "" ${ARGN}) 
+        "FILTER;CONDITION;LIST_NAME;LIST_PATH;INCLUDE_DIR" "" ${ARGN}) 
     
     set(base_dir "${BUILD_UTILS_INCLUDE_DIR}")
     if (NOT "${source_group_dir_INCLUDE_DIR}" STREQUAL "")
@@ -76,12 +76,12 @@ function(source_group_dir prefix_name dir)
     endif()
     
     set(enable_output_name FALSE)
-    if(NOT "${source_group_dir_OUTPUT_LIST_NAME}" STREQUAL "")
+    if(NOT "${source_group_dir_LIST_NAME}" STREQUAL "")
         set(enable_output_name TRUE)
     endif()
 
     set(enable_output_path FALSE)
-    if(NOT "${source_group_dir_OUTPUT_LIST_PATH}" STREQUAL "")
+    if(NOT "${source_group_dir_LIST_PATH}" STREQUAL "")
         set(enable_output_path TRUE)
     endif()
 
@@ -93,10 +93,10 @@ function(source_group_dir prefix_name dir)
         output_list_name output_list_path 0)
 
     if(enable_output_name)
-        set(${source_group_dir_OUTPUT_LIST_NAME} "${output_list_name}" PARENT_SCOPE)
+        set(${source_group_dir_LIST_NAME} "${output_list_name}" PARENT_SCOPE)
     endif()
     if(enable_output_path)
-        set(${source_group_dir_OUTPUT_LIST_PATH} "${output_list_path}" PARENT_SCOPE)
+        set(${source_group_dir_LIST_PATH} "${output_list_path}" PARENT_SCOPE)
     endif()
 
 endfunction(source_group_dir)

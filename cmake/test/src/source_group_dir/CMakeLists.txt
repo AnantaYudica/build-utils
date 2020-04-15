@@ -22,7 +22,7 @@ include_build_util(NAME source_group_dir INCLUDE_DIR ${INCLUDE_DIR})
 include_test_util(NAME assert)
 
 source_group_dir(root ${TEST_BASE_SOURCE_DIR}/dir RECURSIVE
-    OUTPUT_LIST_NAME list_name_1 OUTPUT_LIST_PATH list_path_1
+    LIST_NAME list_name_1 LIST_PATH list_path_1
     INCLUDE_DIR ${INCLUDE_DIR})
 
 set(call_length ${TEST_BASE_SOURCE_DIR}/assert_call_length.cmake 
@@ -60,7 +60,7 @@ set(filter ${TEST_BASE_SOURCE_DIR}/source_group_dir_filter.cmake)
 
 source_group_dir(root ${TEST_BASE_SOURCE_DIR}/dir RECURSIVE
     CONDITION ${condition}
-    OUTPUT_LIST_NAME list_name_2 OUTPUT_LIST_PATH list_path_2
+    LIST_NAME list_name_2 LIST_PATH list_path_2
     INCLUDE_DIR ${INCLUDE_DIR})
 
 assert(EQUAL CALL ${call_find} RESULT 1 ARGS "root" ${list_name_2})
@@ -79,7 +79,7 @@ assert(EQUAL CALL ${call_find} RESULT 1 ARGS "${TEST_BASE_SOURCE_DIR}/dir/c/a/te
 
 source_group_dir(root ${TEST_BASE_SOURCE_DIR}/dir RECURSIVE
     FILTER ${filter}
-    OUTPUT_LIST_NAME list_name_3 OUTPUT_LIST_PATH list_path_3
+    LIST_NAME list_name_3 LIST_PATH list_path_3
     INCLUDE_DIR ${INCLUDE_DIR})
 
 assert(EQUAL CALL ${call_find} RESULT 1 ARGS "root" ${list_name_3})
@@ -101,7 +101,7 @@ assert(EQUAL CALL ${call_find} RESULT 0 ARGS "root/c/a" ${list_name_3})
 
 source_group_dir(root ${TEST_BASE_SOURCE_DIR}/dir RECURSIVE
     FILTER ${filter} CONDITION ${condition}
-    OUTPUT_LIST_NAME list_name_4 OUTPUT_LIST_PATH list_path_4
+    LIST_NAME list_name_4 LIST_PATH list_path_4
     INCLUDE_DIR ${INCLUDE_DIR})
 
 assert(EQUAL CALL ${call_find} RESULT 1 ARGS "root" ${list_name_4})
@@ -118,7 +118,7 @@ assert(EQUAL CALL ${call_find} RESULT 1 ARGS "${TEST_BASE_SOURCE_DIR}/dir/c/test
 assert(EQUAL CALL ${call_find} RESULT 0 ARGS "root/c/a" ${list_name_4})
 
 source_group_dir(root ${TEST_BASE_SOURCE_DIR}/dir
-    OUTPUT_LIST_NAME list_name_5 OUTPUT_LIST_PATH list_path_5
+    LIST_NAME list_name_5 LIST_PATH list_path_5
     INCLUDE_DIR ${INCLUDE_DIR})
 
 assert(EQUAL CALL ${call_length} RESULT 1 ARGS ${list_name_5})

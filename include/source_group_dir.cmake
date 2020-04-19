@@ -17,7 +17,7 @@ function(source_group_dir_recv prefix_name base_dir dir is_recursive is_output_n
         file(RELATIVE_PATH relative_dir "${base_dir}" "${it}")
         get_filename_component(file_name ${it} NAME)
         source_group_dir_filter(${it} ok LEVEL ${level} BASE_DIR ${base_dir} 
-            RELATIVE_PATH ${relative_dir} NAME ${file_name} ARGS ${FILTER_ARGS})
+            RELATIVE_PATH ${relative_dir} NAME ${file_name} ARGS ${filter_args})
         if (ok)
             if(IS_DIRECTORY ${it} AND (is_recursive)) 
                 set(next_list_name "")
@@ -25,7 +25,8 @@ function(source_group_dir_recv prefix_name base_dir dir is_recursive is_output_n
                 math(EXPR next_level "${level}+1")
                 source_group_dir_recv("${prefix_name}/${file_name}" "${base_dir}"
                     "${dir}/${file_name}" ${is_recursive} ${is_output_name} ${is_output_path}
-                    next_list_name next_list_path ${next_level})
+                    next_list_name next_list_path ${next_level}
+                    FILTER_ARGS ${filter_args} CONDITION_ARGS ${condition_args})
                 if (is_output_name)
                     list(APPEND foreach_list_name ${next_list_name})
                 endif()
@@ -65,6 +66,9 @@ function(source_group_dir prefix_name dir)
         "FILTER;CONDITION;LIST_NAME;LIST_PATH;INCLUDE_DIR" 
         "FILTER_ARGS;CONDITION_ARGS" ${ARGN}) 
     
+    set(filter_args ${source_group_dir_FILTER_ARGS})
+    set(condition_args ${source_group_dir_CONDITION_ARGS})
+
     set(base_dir "${BUILD_UTILS_INCLUDE_DIR}")
     if (NOT "${source_group_dir_INCLUDE_DIR}" STREQUAL "")
         set(base_dir "${source_group_dir_INCLUDE_DIR}")
@@ -97,7 +101,9 @@ function(source_group_dir prefix_name dir)
 
     source_group_dir_recv(${prefix_name} "${dir}" ${dir} ${source_group_dir_RECURSIVE}
         ${enable_output_name} ${enable_output_path}
-        output_list_name output_list_path 0)
+        output_list_name output_list_path 0 
+        FILTER_ARGS ${filter_args}
+        CONDITION_ARGS ${condition_args})
 
     if(enable_output_name)
         set(${source_group_dir_LIST_NAME} "${output_list_name}" PARENT_SCOPE)

@@ -2,6 +2,12 @@
 function(source_group_dir_recv prefix_name base_dir dir is_recursive is_output_name 
     is_output_path output_list_name output_list_path level)
 
+    cmake_parse_arguments(source_group_dir_recv "" "" 
+        "FILTER_ARGS;CONDITION_ARGS" ${ARGN}) 
+
+    set(filter_args ${source_group_dir_recv_FILTER_ARGS})
+    set(condition_args ${source_group_dir_recv_CONDITION_ARGS})
+
     file(GLOB list_files "${dir}/*")
 
     set(foreach_list_name "")
@@ -11,7 +17,7 @@ function(source_group_dir_recv prefix_name base_dir dir is_recursive is_output_n
         file(RELATIVE_PATH relative_dir "${base_dir}" "${it}")
         get_filename_component(file_name ${it} NAME)
         source_group_dir_filter(${it} ok LEVEL ${level} BASE_DIR ${base_dir} 
-            RELATIVE_PATH ${relative_dir} NAME ${file_name})
+            RELATIVE_PATH ${relative_dir} NAME ${file_name} ARGS ${FILTER_ARGS})
         if (ok)
             if(IS_DIRECTORY ${it} AND (is_recursive)) 
                 set(next_list_name "")
@@ -28,7 +34,7 @@ function(source_group_dir_recv prefix_name base_dir dir is_recursive is_output_n
                 endif()
             elseif(NOT IS_DIRECTORY ${it})
                 source_group_dir_condition(${it} ok BASE_DIR ${base_dir} 
-                    RELATIVE_PATH ${relative_dir} NAME ${file_name})
+                    RELATIVE_PATH ${relative_dir} NAME ${file_name} ARGS ${condition_args})
                 if (ok)
                     if(NOT DEFINED CMAKE_SCRIPT_MODE_FILE)
                         source_group(${prefix_name} FILES ${it})
@@ -56,7 +62,8 @@ endfunction(source_group_dir_recv)
 
 function(source_group_dir prefix_name dir)
     cmake_parse_arguments(source_group_dir "RECURSIVE" 
-        "FILTER;CONDITION;LIST_NAME;LIST_PATH;INCLUDE_DIR" "" ${ARGN}) 
+        "FILTER;CONDITION;LIST_NAME;LIST_PATH;INCLUDE_DIR" 
+        "FILTER_ARGS;CONDITION_ARGS" ${ARGN}) 
     
     set(base_dir "${BUILD_UTILS_INCLUDE_DIR}")
     if (NOT "${source_group_dir_INCLUDE_DIR}" STREQUAL "")

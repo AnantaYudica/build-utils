@@ -1,21 +1,30 @@
 function(get_test_source_dir_recv base_dir dir list_output is_recursive level)
+    cmake_parse_arguments(get_test_source_dir_recv "" "" 
+        "FILTER_ARGS;CONDITION_ARGS" ${ARGN}) 
+
+    set(filter_args "${get_test_source_dir_recv_FILTER_ARGS}")
+    set(condition_args "${get_test_source_dir_recv_CONDITION_ARGS}")
+
     file(GLOB list_path "${dir}/*")
     set(foreach_list_path "")
     foreach(it ${list_path})
         file(RELATIVE_PATH relative_dir "${base_dir}" "${it}")
         get_filename_component(file_name ${it} NAME)
         get_test_source_dir_filter(${it} ok LEVEL ${level} BASE_DIR ${base_dir} 
-            RELATIVE_PATH ${relative_dir} NAME ${file_name})
+            RELATIVE_PATH ${relative_dir} NAME ${file_name}
+            ARGS ${filter_args})
         if (ok)
             if(IS_DIRECTORY ${it} AND (is_recursive))
                 set(next_list_path "")
                 math(EXPR next_level "${level}+1")
                 get_test_source_dir_recv("${base_dir}" "${dir}/${file_name}" next_list_path
-                    ${is_recursive} ${next_level})
+                    ${is_recursive} ${next_level} 
+                    FILTER_ARGS ${filter_args} CONDITION_ARGS ${condition_args})
                 list(APPEND foreach_list_path ${next_list_path})
             elseif(NOT IS_DIRECTORY ${it})
                 get_test_source_dir_condition(${it} ok BASE_DIR ${base_dir} 
-                    RELATIVE_PATH ${relative_dir} NAME ${file_name})
+                    RELATIVE_PATH ${relative_dir} NAME ${file_name}
+                    ARGS ${condition_args})
                 if (ok)
                     list(APPEND foreach_list_path ${it})
                 endif()
@@ -28,7 +37,11 @@ endfunction(get_test_source_dir_recv)
 
 function(get_test_source_dir dir list_output)
     cmake_parse_arguments(get_test_source_dir "RECURSIVE" 
-        "FILTER;CONDITION;INCLUDE_DIR" "" ${ARGN}) 
+        "FILTER;CONDITION;INCLUDE_DIR" 
+        "FILTER_ARGS;CONDITION_ARGS" ${ARGN}) 
+
+    set(filter_args ${get_test_source_dir_FILTER_ARGS})
+    set(condition_args ${get_test_source_dir_CONDITION_ARGS})
 
     set(base_dir "${BUILD_UTILS_INCLUDE_DIR}")
     if (NOT "${get_test_source_dir_INCLUDE_DIR}" STREQUAL "")
@@ -50,7 +63,8 @@ function(get_test_source_dir dir list_output)
     set(output_list_path "")
 
     get_test_source_dir_recv("${dir}" "${dir}" output_list_path
-        ${get_test_source_dir_RECURSIVE} 0)
+        ${get_test_source_dir_RECURSIVE} 0 
+        FILTER_ARGS ${filter_args} CONDITION_ARGS ${condition_args})
 
     set(${list_output} "${output_list_path}" PARENT_SCOPE)
     

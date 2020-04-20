@@ -1,6 +1,6 @@
 function(get_test_source_dir_condition path output)
     cmake_parse_arguments(get_test_source_dir_condition "" 
-        "BASE_DIR;RELATIVE_PATH;NAME" "ARGS" ${ARGN}) 
+        "BASE_DIR;RELATIVE_PATH;FILENAME" "ARGS" ${ARGN}) 
 
     cmake_parse_arguments(args "" "name;relative_path_regex" "" ${get_test_source_dir_condition_ARGS})
 
@@ -14,7 +14,7 @@ function(get_test_source_dir_condition path output)
         set(regex "${args_relative_path_regex}")
     endif()
 
-    if ("${get_test_source_dir_condition_NAME}" STREQUAL "${name}"
+    if ("${get_test_source_dir_condition_FILENAME}" STREQUAL "${name}"
         AND ("${get_test_source_dir_condition_RELATIVE_PATH}" MATCHES "${regex}"))
         
         set(${output} TRUE PARENT_SCOPE)

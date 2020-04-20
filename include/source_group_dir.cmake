@@ -18,7 +18,7 @@ function(source_group_dir_recv prefix_name base_dir dir is_recursive is_output_n
         file(RELATIVE_PATH relative_dir "${base_dir}" "${it}")
         get_filename_component(file_name ${it} NAME)
         source_group_dir_filter(${it} ok LEVEL ${level} BASE_DIR ${base_dir} 
-            RELATIVE_PATH ${relative_dir} NAME ${file_name} ARGS ${filter_args}
+            RELATIVE_PATH ${relative_dir} FILENAME ${file_name} ARGS ${filter_args}
             INCLUDE_DIR ${include_dir})
         if (ok)
             if(IS_DIRECTORY ${it} AND (is_recursive)) 
@@ -38,7 +38,7 @@ function(source_group_dir_recv prefix_name base_dir dir is_recursive is_output_n
                 endif()
             elseif(NOT IS_DIRECTORY ${it})
                 source_group_dir_condition(${it} ok BASE_DIR ${base_dir} 
-                    RELATIVE_PATH ${relative_dir} NAME ${file_name} ARGS ${condition_args}
+                    RELATIVE_PATH ${relative_dir} FILENAME ${file_name} ARGS ${condition_args}
                     INCLUDE_DIR ${include_dir})
                 if (ok)
                     if(NOT DEFINED CMAKE_SCRIPT_MODE_FILE)

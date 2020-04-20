@@ -1,6 +1,6 @@
 function(source_group_dir_filter path output)
     cmake_parse_arguments(source_group_dir_filter "" 
-        "LEVEL;BASE_DIR;RELATIVE_PATH;NAME" "ARGS" ${ARGN}) 
+        "LEVEL;BASE_DIR;RELATIVE_PATH;FILENAME" "ARGS" ${ARGN}) 
 
     cmake_parse_arguments(args "" "level" "" ${source_group_dir_filter_ARGS})
     

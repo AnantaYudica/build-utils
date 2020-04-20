@@ -6,7 +6,8 @@ function(get_test_name_tag_ext_file filename)
         ";TAG_DELIMITER_INDEX;TAG_DELIMITER_LENGTH;TAG_INDEX;TAG_LENGTH"
         ";EXT_DELIMITER_INDEX;EXT_DELIMITER_LENGTH;EXT_INDEX;EXT_LENGTH")
 
-    cmake_parse_arguments(get_test_name_tag_ext_file "" "${one_options}" "" ${ARGN}) 
+    cmake_parse_arguments(get_test_name_tag_ext_file "" "${one_options}" 
+        "GET_NAME_ARGS;GET_TAG_ARGS;TAG_CONDITION_ARGS" ${ARGN}) 
 
     set(filename_index 0)
     if (NOT "${get_test_name_tag_ext_file_INDEX}" STREQUAL "")
@@ -108,7 +109,8 @@ function(get_test_name_tag_ext_file filename)
                     DELIMITER_LENGTH ${in_tag_delim_length}
                     EXT_DELIMITER_INDEX ${ext_delim_index}  
                     EXT_DELIMITER_LENGTH ${ext_delim_length} 
-                    EXT_INDEX ${ext_index} EXT_LENGTH ${ext_length})
+                    EXT_INDEX ${ext_index} EXT_LENGTH ${ext_length}
+                    ARGS ${get_test_name_tag_ext_file_TAG_CONDITION_ARGS})
                 if (ok)
                     math(EXPR index "${index}+${tag_delim_length}")
                     math(EXPR tag_buffer_str_length "${tag_buffer_str_length}-${tag_delim_length}")
@@ -120,7 +122,8 @@ function(get_test_name_tag_ext_file filename)
                         DELIMITER_LENGTH ${in_tag_delim_length}
                         EXT_DELIMITER_INDEX ${ext_delim_index}  
                         EXT_DELIMITER_LENGTH ${ext_delim_length} 
-                        EXT_INDEX ${ext_index} EXT_LENGTH ${ext_length})
+                        EXT_INDEX ${ext_index} EXT_LENGTH ${ext_length}
+                        ARGS ${get_test_name_tag_ext_file_GET_TAG_ARGS})
                     break()
                 endif()
             endforeach(it)
@@ -134,7 +137,8 @@ function(get_test_name_tag_ext_file filename)
                 TAG_INDEX ${tag_index} TAG_LENGTH ${tag_length}
                 EXT_DELIMITER_INDEX ${ext_delim_index}  
                 EXT_DELIMITER_LENGTH ${ext_delim_length} 
-                EXT_INDEX ${ext_index} EXT_LENGTH ${ext_length})
+                EXT_INDEX ${ext_index} EXT_LENGTH ${ext_length}
+                ARGS ${get_test_name_tag_ext_file_GET_NAME_ARGS})
         endif()
 
     endif()

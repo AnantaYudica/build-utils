@@ -2,7 +2,7 @@
 function(get_test_target_name target_name_out)
     cmake_parse_arguments(get_test_target_name "" 
         "PREFIX;NAME;TAG;FORMAT;SET_NAME;SET_PREFIX;SET_TAG;INCLUDE_DIR" 
-        "PREFIX_ARGS;NAME_ARGS;TAG_ARGS" ${ARGN}) 
+        "PREFIX_ARGS;NAME_ARGS;TAG_ARGS;FORMAT_ARGS" ${ARGN}) 
 
     set(base_dir "${BUILD_UTILS_INCLUDE_DIR}")
     if (NOT "${get_test_target_name_INCLUDE_DIR}" STREQUAL "")
@@ -53,7 +53,8 @@ function(get_test_target_name target_name_out)
     get_test_target_name_set_name("${name}" name ARGS ${get_test_target_name_NAME_ARGS})
     get_test_target_name_set_tag("${tag}" tag ARGS ${get_test_target_name_TAG_ARGS})
 
-    get_test_target_name_format("${prefix}" "${name}" "${tag}" result)
+    get_test_target_name_format("${prefix}" "${name}" "${tag}" result
+        ARGS ${get_test_target_name_FORMAT_ARGS})
     
     set(${target_name_out} "${result}" PARENT_SCOPE)
 

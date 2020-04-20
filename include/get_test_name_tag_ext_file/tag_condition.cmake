@@ -2,7 +2,8 @@ function(get_test_name_tag_ext_file_tag_condition filename index length cond
     tag_delim_index tag_delim_length)
 
     set(one_options "STRING;CHARACTER;DELIMITER;DELIMITER_LENGTH;EXT_DELIMITER_INDEX")
-    string(CONCAT one_options "${one_options}" ";EXT_DELIMITER_LENGTH;EXT_INDEX;EXT_LENGTH")
+    string(CONCAT one_options "${one_options}" ";EXT_DELIMITER_LENGTH;EXT_INDEX;EXT_LENGTH"
+        ";INCLUDE_DIR")
     cmake_parse_arguments(get_test_name_tag_ext_file_tag_condition "" 
         "${one_options}" "ARGS" ${ARGN})
     set(delim_len ${get_test_name_tag_ext_file_tag_condition_DELIMITER_LENGTH})

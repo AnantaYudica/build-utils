@@ -110,7 +110,8 @@ function(get_test_name_tag_ext_file filename)
                     EXT_DELIMITER_INDEX ${ext_delim_index}  
                     EXT_DELIMITER_LENGTH ${ext_delim_length} 
                     EXT_INDEX ${ext_index} EXT_LENGTH ${ext_length}
-                    ARGS ${get_test_name_tag_ext_file_TAG_CONDITION_ARGS})
+                    ARGS ${get_test_name_tag_ext_file_TAG_CONDITION_ARGS}
+                    INCLUDE_DIR ${base_dir})
                 if (ok)
                     math(EXPR index "${index}+${tag_delim_length}")
                     math(EXPR tag_buffer_str_length "${tag_buffer_str_length}-${tag_delim_length}")
@@ -123,7 +124,8 @@ function(get_test_name_tag_ext_file filename)
                         EXT_DELIMITER_INDEX ${ext_delim_index}  
                         EXT_DELIMITER_LENGTH ${ext_delim_length} 
                         EXT_INDEX ${ext_index} EXT_LENGTH ${ext_length}
-                        ARGS ${get_test_name_tag_ext_file_GET_TAG_ARGS})
+                        ARGS ${get_test_name_tag_ext_file_GET_TAG_ARGS}
+                        INCLUDE_DIR ${base_dir})
                     break()
                 endif()
             endforeach(it)

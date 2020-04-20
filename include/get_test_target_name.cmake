@@ -49,12 +49,19 @@ function(get_test_target_name target_name_out)
         set(tag "${get_test_target_name_TAG}")
     endif()
 
-    get_test_target_name_set_prefix("${prefix}" prefix ARGS ${get_test_target_name_PREFIX_ARGS})
-    get_test_target_name_set_name("${name}" name ARGS ${get_test_target_name_NAME_ARGS})
-    get_test_target_name_set_tag("${tag}" tag ARGS ${get_test_target_name_TAG_ARGS})
+    get_test_target_name_set_prefix("${prefix}" prefix 
+        ARGS ${get_test_target_name_PREFIX_ARGS}
+        INCLUDE_DIR ${base_dir})
+    get_test_target_name_set_name("${name}" name 
+        ARGS ${get_test_target_name_NAME_ARGS}
+        INCLUDE_DIR ${base_dir})
+    get_test_target_name_set_tag("${tag}" tag 
+        ARGS ${get_test_target_name_TAG_ARGS}
+        INCLUDE_DIR ${base_dir})
 
     get_test_target_name_format("${prefix}" "${name}" "${tag}" result
-        ARGS ${get_test_target_name_FORMAT_ARGS})
+        ARGS ${get_test_target_name_FORMAT_ARGS}
+        INCLUDE_DIR ${base_dir})
     
     set(${target_name_out} "${result}" PARENT_SCOPE)
 

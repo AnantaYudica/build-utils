@@ -1,5 +1,5 @@
 function(get_test_source_dir_condition path output)
     cmake_parse_arguments(get_test_source_dir_condition "" 
-        "BASE_DIR;RELATIVE_PATH;NAME" "" ${ARGN}) 
+        "BASE_DIR;RELATIVE_PATH;NAME;INCLUDE_DIR" "" ${ARGN}) 
     set(${output} TRUE PARENT_SCOPE)
 endfunction(get_test_source_dir_condition)

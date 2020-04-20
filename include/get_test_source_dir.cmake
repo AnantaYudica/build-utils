@@ -1,9 +1,10 @@
 function(get_test_source_dir_recv base_dir dir list_output is_recursive level)
-    cmake_parse_arguments(get_test_source_dir_recv "" "" 
+    cmake_parse_arguments(get_test_source_dir_recv "" "INCLUDE_DIR" 
         "FILTER_ARGS;CONDITION_ARGS" ${ARGN}) 
 
     set(filter_args "${get_test_source_dir_recv_FILTER_ARGS}")
     set(condition_args "${get_test_source_dir_recv_CONDITION_ARGS}")
+    set(include_dir "${get_test_source_dir_recv_INCLUDE_DIR}")
 
     file(GLOB list_path "${dir}/*")
     set(foreach_list_path "")
@@ -12,19 +13,20 @@ function(get_test_source_dir_recv base_dir dir list_output is_recursive level)
         get_filename_component(file_name ${it} NAME)
         get_test_source_dir_filter(${it} ok LEVEL ${level} BASE_DIR ${base_dir} 
             RELATIVE_PATH ${relative_dir} NAME ${file_name}
-            ARGS ${filter_args})
+            ARGS ${filter_args} INCLUDE_DIR ${include_dir})
         if (ok)
             if(IS_DIRECTORY ${it} AND (is_recursive))
                 set(next_list_path "")
                 math(EXPR next_level "${level}+1")
                 get_test_source_dir_recv("${base_dir}" "${dir}/${file_name}" next_list_path
                     ${is_recursive} ${next_level} 
-                    FILTER_ARGS ${filter_args} CONDITION_ARGS ${condition_args})
+                    FILTER_ARGS ${filter_args} CONDITION_ARGS ${condition_args}
+                    INCLUDE_DIR ${include_dir})
                 list(APPEND foreach_list_path ${next_list_path})
             elseif(NOT IS_DIRECTORY ${it})
                 get_test_source_dir_condition(${it} ok BASE_DIR ${base_dir} 
                     RELATIVE_PATH ${relative_dir} NAME ${file_name}
-                    ARGS ${condition_args})
+                    ARGS ${condition_args} INCLUDE_DIR ${include_dir})
                 if (ok)
                     list(APPEND foreach_list_path ${it})
                 endif()
@@ -64,7 +66,8 @@ function(get_test_source_dir dir list_output)
 
     get_test_source_dir_recv("${dir}" "${dir}" output_list_path
         ${get_test_source_dir_RECURSIVE} 0 
-        FILTER_ARGS ${filter_args} CONDITION_ARGS ${condition_args})
+        FILTER_ARGS ${filter_args} CONDITION_ARGS ${condition_args}
+        INCLUDE_DIR ${base_dir})
 
     set(${list_output} "${output_list_path}" PARENT_SCOPE)
     

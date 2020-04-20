@@ -2,11 +2,12 @@
 function(source_group_dir_recv prefix_name base_dir dir is_recursive is_output_name 
     is_output_path output_list_name output_list_path level)
 
-    cmake_parse_arguments(source_group_dir_recv "" "" 
+    cmake_parse_arguments(source_group_dir_recv "" "INCLUDE_DIR" 
         "FILTER_ARGS;CONDITION_ARGS" ${ARGN}) 
 
     set(filter_args ${source_group_dir_recv_FILTER_ARGS})
     set(condition_args ${source_group_dir_recv_CONDITION_ARGS})
+    set(include_dir ${source_group_dir_recv_INCLUDE_DIR})
 
     file(GLOB list_files "${dir}/*")
 
@@ -17,7 +18,8 @@ function(source_group_dir_recv prefix_name base_dir dir is_recursive is_output_n
         file(RELATIVE_PATH relative_dir "${base_dir}" "${it}")
         get_filename_component(file_name ${it} NAME)
         source_group_dir_filter(${it} ok LEVEL ${level} BASE_DIR ${base_dir} 
-            RELATIVE_PATH ${relative_dir} NAME ${file_name} ARGS ${filter_args})
+            RELATIVE_PATH ${relative_dir} NAME ${file_name} ARGS ${filter_args}
+            INCLUDE_DIR ${include_dir})
         if (ok)
             if(IS_DIRECTORY ${it} AND (is_recursive)) 
                 set(next_list_name "")
@@ -26,7 +28,8 @@ function(source_group_dir_recv prefix_name base_dir dir is_recursive is_output_n
                 source_group_dir_recv("${prefix_name}/${file_name}" "${base_dir}"
                     "${dir}/${file_name}" ${is_recursive} ${is_output_name} ${is_output_path}
                     next_list_name next_list_path ${next_level}
-                    FILTER_ARGS ${filter_args} CONDITION_ARGS ${condition_args})
+                    FILTER_ARGS ${filter_args} CONDITION_ARGS ${condition_args}
+                    INCLUDE_DIR ${include_dir})
                 if (is_output_name)
                     list(APPEND foreach_list_name ${next_list_name})
                 endif()
@@ -35,7 +38,8 @@ function(source_group_dir_recv prefix_name base_dir dir is_recursive is_output_n
                 endif()
             elseif(NOT IS_DIRECTORY ${it})
                 source_group_dir_condition(${it} ok BASE_DIR ${base_dir} 
-                    RELATIVE_PATH ${relative_dir} NAME ${file_name} ARGS ${condition_args})
+                    RELATIVE_PATH ${relative_dir} NAME ${file_name} ARGS ${condition_args}
+                    INCLUDE_DIR ${include_dir})
                 if (ok)
                     if(NOT DEFINED CMAKE_SCRIPT_MODE_FILE)
                         source_group(${prefix_name} FILES ${it})
@@ -103,7 +107,8 @@ function(source_group_dir prefix_name dir)
         ${enable_output_name} ${enable_output_path}
         output_list_name output_list_path 0 
         FILTER_ARGS ${filter_args}
-        CONDITION_ARGS ${condition_args})
+        CONDITION_ARGS ${condition_args}
+        INCLUDE_DIR ${base_dir})
 
     if(enable_output_name)
         set(${source_group_dir_LIST_NAME} "${output_list_name}" PARENT_SCOPE)

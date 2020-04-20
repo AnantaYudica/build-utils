@@ -140,7 +140,8 @@ function(get_test_name_tag_ext_file filename)
                 EXT_DELIMITER_INDEX ${ext_delim_index}  
                 EXT_DELIMITER_LENGTH ${ext_delim_length} 
                 EXT_INDEX ${ext_index} EXT_LENGTH ${ext_length}
-                ARGS ${get_test_name_tag_ext_file_GET_NAME_ARGS})
+                ARGS ${get_test_name_tag_ext_file_GET_NAME_ARGS}
+                INCLUDE_DIR ${base_dir})
         endif()
 
     endif()

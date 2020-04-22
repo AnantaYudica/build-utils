@@ -4,11 +4,12 @@ function(source_group_dir_recv prefix_name base_dir dir is_recursive
     output_list_name output_list_path level)
 
     cmake_parse_arguments(source_group_dir_recv "" "INCLUDE_DIR" 
-        "FILTER_ARGS;CONDITION_ARGS" ${ARGN}) 
+        "FILTER_ARGS;CONDITION_ARGS;GET_PREFIX_NAME_ARGS" ${ARGN}) 
 
     set(filter_args ${source_group_dir_recv_FILTER_ARGS})
     set(condition_args ${source_group_dir_recv_CONDITION_ARGS})
     set(include_dir ${source_group_dir_recv_INCLUDE_DIR})
+    set(get_prefix_name_args ${source_group_dir_recv_GET_PREFIX_NAME_ARGS})
 
     file(GLOB list_files "${dir}/*")
 
@@ -31,12 +32,21 @@ function(source_group_dir_recv prefix_name base_dir dir is_recursive
                 set(next_list_name "")
                 set(next_list_path "")
                 math(EXPR next_level "${level}+1")
-                source_group_dir_recv("${prefix_name}/${file_name}" "${base_dir}"
+
+                source_group_dir_get_prefix_name(${it} "${prefix_name}" 
+                    next_prefix_name LEVEL ${level} BASE_DIR ${base_dir} 
+                    RELATIVE_PATH ${relative_dir} FILENAME ${file_name} 
+                    ARGS ${get_prefix_name_args}
+                    INCLUDE_DIR ${include_dir})
+
+                source_group_dir_recv("${next_prefix_name}" "${base_dir}"
                     "${dir}/${file_name}" ${is_recursive} ${is_case_sensitive} 
                     ${is_output_name} ${is_output_path}
                     next_list_name next_list_path ${next_level}
                     FILTER_ARGS ${filter_args} CONDITION_ARGS ${condition_args}
+                    GET_PREFIX_NAME_ARGS ${get_prefix_name_args}
                     INCLUDE_DIR ${include_dir})
+                    
                 if (is_output_name)
                     list(APPEND foreach_list_name ${next_list_name})
                 endif()
@@ -74,27 +84,40 @@ endfunction(source_group_dir_recv)
 
 function(source_group_dir prefix_name dir)
     cmake_parse_arguments(source_group_dir "RECURSIVE;CASE_SENSITIVE" 
-        "FILTER;CONDITION;LIST_NAME;LIST_PATH;INCLUDE_DIR" 
-        "FILTER_ARGS;CONDITION_ARGS" ${ARGN}) 
+        "FILTER;CONDITION;LIST_NAME;LIST_PATH;INCLUDE_DIR;GET_PREFIX_NAME" 
+        "FILTER_ARGS;CONDITION_ARGS;GET_PREFIX_NAME_ARGS" ${ARGN}) 
     
     set(filter_args ${source_group_dir_FILTER_ARGS})
     set(condition_args ${source_group_dir_CONDITION_ARGS})
+    set(get_prefix_name_args ${source_group_dir_GET_PREFIX_NAME_ARGS})
 
     set(base_dir "${BUILD_UTILS_INCLUDE_DIR}")
     if (NOT "${source_group_dir_INCLUDE_DIR}" STREQUAL "")
         set(base_dir "${source_group_dir_INCLUDE_DIR}")
     endif()
 
-    if("${source_group_dir_FILTER}" STREQUAL "" OR (NOT EXISTS "${source_group_dir_FILTER}"))
+    if("${source_group_dir_FILTER}" STREQUAL "" 
+        OR (NOT EXISTS "${source_group_dir_FILTER}"))
+        
         include(${base_dir}/source_group_dir/filter.cmake)
     else()
         include(${source_group_dir_FILTER})
     endif()
 
-    if("${source_group_dir_CONDITION}" STREQUAL "" OR (NOT EXISTS "${source_group_dir_CONDITION}"))
+    if("${source_group_dir_CONDITION}" STREQUAL "" 
+        OR (NOT EXISTS "${source_group_dir_CONDITION}"))
+        
         include(${base_dir}/source_group_dir/condition.cmake)
     else()
         include(${source_group_dir_CONDITION})
+    endif()
+
+    if("${source_group_dir_GET_PREFIX_NAME}" STREQUAL "" 
+        OR (NOT EXISTS "${source_group_dir_GET_PREFIX_NAME}"))
+
+        include(${base_dir}/source_group_dir/get_prefix_name.cmake)
+    else()
+        include(${source_group_dir_GET_PREFIX_NAME})
     endif()
     
     set(enable_output_name FALSE)
@@ -116,6 +139,7 @@ function(source_group_dir prefix_name dir)
         output_list_name output_list_path 0 
         FILTER_ARGS ${filter_args}
         CONDITION_ARGS ${condition_args}
+        GET_PREFIX_NAME_ARGS ${get_prefix_name_args}
         INCLUDE_DIR ${base_dir})
 
     if(enable_output_name)

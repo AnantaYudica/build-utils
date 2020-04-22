@@ -273,3 +273,60 @@ assert(EQUAL CALL ${call_find} RESULT 0 ARGS "${TEST_BASE_SOURCE_DIR}/dir/c/test
 assert(EQUAL CALL ${call_find} RESULT 0 ARGS "root/c/a" ${list_name_9})
 assert(EQUAL CALL ${call_find} RESULT 0 ARGS "${TEST_BASE_SOURCE_DIR}/dir/c/a/test1.txt" ${list_path_9})
 assert(EQUAL CALL ${call_find} RESULT 0 ARGS "${TEST_BASE_SOURCE_DIR}/dir/c/a/test2.txt" ${list_path_9})
+
+set(get_prefix_name ${TEST_BASE_SOURCE_DIR}/source_group_dir_get_prefix_name.cmake)
+
+source_group_dir(root ${TEST_BASE_SOURCE_DIR}/dir RECURSIVE
+    GET_PREFIX_NAME ${get_prefix_name}
+    LIST_NAME list_name_10 LIST_PATH list_path_10
+    INCLUDE_DIR ${INCLUDE_DIR})
+
+assert(EQUAL CALL ${call_length} RESULT 10 ARGS ${list_name_10})
+
+assert(EQUAL CALL ${call_find} RESULT 2 ARGS "root" ${list_name_10})
+assert(EQUAL CALL ${call_find} RESULT 1 ARGS "${TEST_BASE_SOURCE_DIR}/dir/test1.txt" ${list_path_10})
+assert(EQUAL CALL ${call_find} RESULT 1 ARGS "${TEST_BASE_SOURCE_DIR}/dir/Test2.txt" ${list_path_10})
+
+assert(EQUAL CALL ${call_find} RESULT 2 ARGS "root\\a" ${list_name_10})
+assert(EQUAL CALL ${call_find} RESULT 1 ARGS "${TEST_BASE_SOURCE_DIR}/dir/a/test1.txt" ${list_path_10})
+assert(EQUAL CALL ${call_find} RESULT 1 ARGS "${TEST_BASE_SOURCE_DIR}/dir/a/test2.txt" ${list_path_10})
+
+assert(EQUAL CALL ${call_find} RESULT 3 ARGS "root\\b" ${list_name_10})
+assert(EQUAL CALL ${call_find} RESULT 1 ARGS "${TEST_BASE_SOURCE_DIR}/dir/b/test1.txt" ${list_path_10})
+assert(EQUAL CALL ${call_find} RESULT 1 ARGS "${TEST_BASE_SOURCE_DIR}/dir/b/test2.txt" ${list_path_10})
+assert(EQUAL CALL ${call_find} RESULT 1 ARGS "${TEST_BASE_SOURCE_DIR}/dir/b/test3.txt" ${list_path_10})
+
+assert(EQUAL CALL ${call_find} RESULT 1 ARGS "root\\c" ${list_name_10})
+assert(EQUAL CALL ${call_find} RESULT 1 ARGS "${TEST_BASE_SOURCE_DIR}/dir/c/test1.txt" ${list_path_10})
+
+assert(EQUAL CALL ${call_find} RESULT 2 ARGS "root\\c\\a" ${list_name_10})
+assert(EQUAL CALL ${call_find} RESULT 1 ARGS "${TEST_BASE_SOURCE_DIR}/dir/c/a/test1.txt" ${list_path_10})
+assert(EQUAL CALL ${call_find} RESULT 1 ARGS "${TEST_BASE_SOURCE_DIR}/dir/c/a/test2.txt" ${list_path_10})
+
+source_group_dir(root ${TEST_BASE_SOURCE_DIR}/dir RECURSIVE
+    GET_PREFIX_NAME ${get_prefix_name}
+    GET_PREFIX_NAME_ARGS "delimiter;_"
+    LIST_NAME list_name_11 LIST_PATH list_path_11
+    INCLUDE_DIR ${INCLUDE_DIR})
+
+assert(EQUAL CALL ${call_length} RESULT 10 ARGS ${list_name_11})
+
+assert(EQUAL CALL ${call_find} RESULT 2 ARGS "root" ${list_name_11})
+assert(EQUAL CALL ${call_find} RESULT 1 ARGS "${TEST_BASE_SOURCE_DIR}/dir/test1.txt" ${list_path_11})
+assert(EQUAL CALL ${call_find} RESULT 1 ARGS "${TEST_BASE_SOURCE_DIR}/dir/Test2.txt" ${list_path_11})
+
+assert(EQUAL CALL ${call_find} RESULT 2 ARGS "root_a" ${list_name_11})
+assert(EQUAL CALL ${call_find} RESULT 1 ARGS "${TEST_BASE_SOURCE_DIR}/dir/a/test1.txt" ${list_path_11})
+assert(EQUAL CALL ${call_find} RESULT 1 ARGS "${TEST_BASE_SOURCE_DIR}/dir/a/test2.txt" ${list_path_11})
+
+assert(EQUAL CALL ${call_find} RESULT 3 ARGS "root_b" ${list_name_11})
+assert(EQUAL CALL ${call_find} RESULT 1 ARGS "${TEST_BASE_SOURCE_DIR}/dir/b/test1.txt" ${list_path_11})
+assert(EQUAL CALL ${call_find} RESULT 1 ARGS "${TEST_BASE_SOURCE_DIR}/dir/b/test2.txt" ${list_path_11})
+assert(EQUAL CALL ${call_find} RESULT 1 ARGS "${TEST_BASE_SOURCE_DIR}/dir/b/test3.txt" ${list_path_11})
+
+assert(EQUAL CALL ${call_find} RESULT 1 ARGS "root_c" ${list_name_11})
+assert(EQUAL CALL ${call_find} RESULT 1 ARGS "${TEST_BASE_SOURCE_DIR}/dir/c/test1.txt" ${list_path_11})
+
+assert(EQUAL CALL ${call_find} RESULT 2 ARGS "root_c_a" ${list_name_11})
+assert(EQUAL CALL ${call_find} RESULT 1 ARGS "${TEST_BASE_SOURCE_DIR}/dir/c/a/test1.txt" ${list_path_11})
+assert(EQUAL CALL ${call_find} RESULT 1 ARGS "${TEST_BASE_SOURCE_DIR}/dir/c/a/test2.txt" ${list_path_11})

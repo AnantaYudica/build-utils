@@ -1,5 +1,5 @@
 function(get_test_source_dir_filter path output)
-    cmake_parse_arguments(get_test_source_dir_filter "" 
+    cmake_parse_arguments(get_test_source_dir_filter "CASE_SENSITIVE" 
         "LEVEL;BASE_DIR;RELATIVE_PATH;FILENAME" "ARGS" ${ARGN}) 
     
     cmake_parse_arguments(args "" "level" "" ${get_test_source_dir_filter_ARGS})

@@ -9,13 +9,17 @@ function(get_test_source_dir_condition path output)
         set(is_case_sensitive ${get_test_source_dir_filter_CASE_SENSITIVE})
     endif()
 
-    cmake_parse_arguments(args "" "GET_TAG;TAG_CONDITION;TAG_DELIMITER" "LIST_TAG" 
-        ${get_test_source_dir_condition_ARGS})
+    cmake_parse_arguments(args "" "GET_NAME;GET_TAG;TAG_CONDITION;TAG_DELIMITER" 
+        "LIST_TAG" ${get_test_source_dir_condition_ARGS})
         
     set(list_tag ${args_LIST_TAG})
 
     if (NOT "${list_tag}" STREQUAL "")
         set(call_args "")
+        if (NOT "${args_GET_NAME}" STREQUAL "")
+            list(APPEND call_args "GET_NAME" ${args_GET_NAME})
+        endif()
+
         if (NOT "${args_GET_TAG}" STREQUAL "")
             list(APPEND call_args "GET_TAG" ${args_GET_TAG})
         endif()

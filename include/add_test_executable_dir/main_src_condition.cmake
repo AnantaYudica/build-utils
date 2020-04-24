@@ -2,7 +2,7 @@
 function(add_test_executable_dir_main_src_condition path cond)
     
     cmake_parse_arguments(add_test_executable_dir_main_src_condition "CASE_SENSITIVE" 
-        "BASE_DIR;RELATIVE_PATH;FILENAME;NAME;TAG;EXT;INCLUDE_DIR" 
+        "DIR;BASE_DIR;RELATIVE_PATH;FILENAME;NAME;TAG;EXT;INCLUDE_DIR" 
         "LIST_TAG;ARGS" ${ARGN}) 
 
     set(list_tag ${add_test_executable_dir_main_src_condition_LIST_TAG})

@@ -2,7 +2,7 @@ function(add_test_executable_dir_filter path cond)
     
     cmake_parse_arguments(add_test_executable_dir_filter "CASE_SENSITIVE" 
         "LEVEL;BASE_DIR;RELATIVE_PATH;FILENAME;NAME;TAG:EXT;INCLUDE_DIR" 
-        "LIST_EXT" ${ARGN}) 
+        "LIST_EXT;ARGS" ${ARGN}) 
 
     set(is_case_sensitive ${add_test_executable_dir_filter_CASE_SENSITIVE})
     set(list_ext ${add_test_executable_dir_filter_LIST_EXT})

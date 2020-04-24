@@ -1,22 +1,17 @@
 
 function(source_group_dir_recv prefix_name base_dir dir is_recursive 
-    is_case_sensitive is_output_name is_output_path 
-    output_list_name output_list_path level)
+    is_output_name is_output_path output_list_name output_list_path level)
 
-    cmake_parse_arguments(source_group_dir_recv "" "INCLUDE_DIR" 
+    cmake_parse_arguments(source_group_dir_recv "" "INCLUDE_DIR;CASE_SENSITIVE_ARG" 
         "FILTER_ARGS;CONDITION_ARGS;GET_PREFIX_NAME_ARGS" ${ARGN}) 
 
     set(filter_args ${source_group_dir_recv_FILTER_ARGS})
     set(condition_args ${source_group_dir_recv_CONDITION_ARGS})
     set(include_dir ${source_group_dir_recv_INCLUDE_DIR})
     set(get_prefix_name_args ${source_group_dir_recv_GET_PREFIX_NAME_ARGS})
+    set(case_sensitive_arg ${source_group_dir_recv_CASE_SENSITIVE_ARG})
 
     file(GLOB list_files "${dir}/*")
-
-    set(case_sensitive_arg "")
-    if (is_case_sensitive)
-        set(case_sensitive_arg "CASE_SENSITIVE")
-    endif()
 
     set(foreach_list_name "")
     set(foreach_list_path "")
@@ -40,13 +35,13 @@ function(source_group_dir_recv prefix_name base_dir dir is_recursive
                     INCLUDE_DIR ${include_dir})
 
                 source_group_dir_recv("${next_prefix_name}" "${base_dir}"
-                    "${dir}/${file_name}" ${is_recursive} ${is_case_sensitive} 
+                    "${dir}/${file_name}" ${is_recursive}
                     ${is_output_name} ${is_output_path}
                     next_list_name next_list_path ${next_level}
                     FILTER_ARGS ${filter_args} CONDITION_ARGS ${condition_args}
                     GET_PREFIX_NAME_ARGS ${get_prefix_name_args}
                     INCLUDE_DIR ${include_dir})
-                    
+
                 if (is_output_name)
                     list(APPEND foreach_list_name ${next_list_name})
                 endif()
@@ -129,18 +124,24 @@ function(source_group_dir prefix_name dir)
     if(NOT "${source_group_dir_LIST_PATH}" STREQUAL "")
         set(enable_output_path TRUE)
     endif()
+    
+    set(case_sensitive_arg "")
+    if (source_group_dir_CASE_SENSITIVE)
+        set(case_sensitive_arg "CASE_SENSITIVE")
+    endif()
 
     set(output_list_name "")
     set(output_list_path "")
 
-    source_group_dir_recv(${prefix_name} "${dir}" ${dir} ${source_group_dir_RECURSIVE}
-        ${source_group_dir_CASE_SENSITIVE}
+    source_group_dir_recv(${prefix_name} "${dir}" ${dir} 
+        ${source_group_dir_RECURSIVE}
         ${enable_output_name} ${enable_output_path}
         output_list_name output_list_path 0 
         FILTER_ARGS ${filter_args}
         CONDITION_ARGS ${condition_args}
         GET_PREFIX_NAME_ARGS ${get_prefix_name_args}
-        INCLUDE_DIR ${base_dir})
+        INCLUDE_DIR ${base_dir}
+        CASE_SENSITIVE_ARG ${case_sensitive_arg})
 
     if(enable_output_name)
         set(${source_group_dir_LIST_NAME} "${output_list_name}" PARENT_SCOPE)

@@ -1,19 +1,14 @@
-function(get_test_source_dir_recv base_dir dir list_output is_recursive 
-    is_case_sensitive level)
-    cmake_parse_arguments(get_test_source_dir_recv "" "INCLUDE_DIR" 
+function(get_test_source_dir_recv base_dir dir list_output is_recursive level)
+    cmake_parse_arguments(get_test_source_dir_recv "" "INCLUDE_DIR;CASE_SENSITIVE_ARG" 
         "FILTER_ARGS;CONDITION_ARGS" ${ARGN}) 
 
     set(filter_args "${get_test_source_dir_recv_FILTER_ARGS}")
     set(condition_args "${get_test_source_dir_recv_CONDITION_ARGS}")
     set(include_dir "${get_test_source_dir_recv_INCLUDE_DIR}")
+    set(case_sensitive_arg ${get_test_source_dir_recv_CASE_SENSITIVE_ARG})
 
     file(GLOB list_path "${dir}/*")
     
-    set(case_sensitive_arg "")
-    if (is_case_sensitive)
-        set(case_sensitive_arg "CASE_SENSITIVE")
-    endif()
-
     set(foreach_list_path "")
     foreach(it ${list_path})
         file(RELATIVE_PATH relative_dir "${base_dir}" "${it}")
@@ -26,7 +21,7 @@ function(get_test_source_dir_recv base_dir dir list_output is_recursive
                 set(next_list_path "")
                 math(EXPR next_level "${level}+1")
                 get_test_source_dir_recv("${base_dir}" "${dir}/${file_name}" next_list_path
-                    ${is_recursive} ${is_case_sensitive} ${next_level} 
+                    ${is_recursive} ${next_level} 
                     FILTER_ARGS ${filter_args} CONDITION_ARGS ${condition_args}
                     INCLUDE_DIR ${include_dir})
                 list(APPEND foreach_list_path ${next_list_path})
@@ -69,13 +64,17 @@ function(get_test_source_dir dir list_output)
         include(${get_test_source_dir_CONDITION})
     endif()
 
+    set(case_sensitive_arg "")
+    if (get_test_source_dir_CASE_SENSITIVE)
+        set(case_sensitive_arg "CASE_SENSITIVE")
+    endif()
+
     set(output_list_path "")
 
     get_test_source_dir_recv("${dir}" "${dir}" output_list_path
-        ${get_test_source_dir_RECURSIVE} 
-        ${get_test_source_dir_CASE_SENSITIVE} 0 
+        ${get_test_source_dir_RECURSIVE} 0 
         FILTER_ARGS ${filter_args} CONDITION_ARGS ${condition_args}
-        INCLUDE_DIR ${base_dir})
+        INCLUDE_DIR ${base_dir} CASE_SENSITIVE_ARG ${case_sensitive_arg})
 
     set(${list_output} "${output_list_path}" PARENT_SCOPE)
     

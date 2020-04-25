@@ -1,19 +1,19 @@
-function(add_test_executable_dir_main_src_filter path cond)
+function(add_test_executable_dir_src_filter path cond)
     
-    cmake_parse_arguments(add_test_executable_dir_main_src_filter "CASE_SENSITIVE" 
+    cmake_parse_arguments(add_test_executable_dir_src_filter "CASE_SENSITIVE" 
         "LEVEL;BASE_DIR;RELATIVE_PATH;FILENAME;NAME;TAG:EXT;INCLUDE_DIR" 
         "LIST_EXT;ARGS" ${ARGN}) 
 
-    set(is_case_sensitive ${add_test_executable_dir_main_src_filter_CASE_SENSITIVE})
-    set(list_ext ${add_test_executable_dir_main_src_filter_LIST_EXT})
+    set(is_case_sensitive ${add_test_executable_dir_src_filter_CASE_SENSITIVE})
+    set(list_ext ${add_test_executable_dir_src_filter_LIST_EXT})
 
     if (NOT ${list_ext} STREQUAL "")
         set(result FALSE)
 
         if(is_case_sensitive)
-            set(ext "${add_test_executable_dir_main_src_filter_EXT}")
+            set(ext "${add_test_executable_dir_src_filter_EXT}")
         else()
-            string(TOLOWER "${add_test_executable_dir_main_src_filter_EXT}" ext)
+            string(TOLOWER "${add_test_executable_dir_src_filter_EXT}" ext)
         endif()
 
         foreach(it ${list_ext})
@@ -28,4 +28,4 @@ function(add_test_executable_dir_main_src_filter path cond)
 
     set(${cond} ${result} PARENT_SCOPE)
     
-endfunction(add_test_executable_dir_main_src_filter)
+endfunction(add_test_executable_dir_src_filter)

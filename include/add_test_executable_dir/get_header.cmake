@@ -1,32 +1,32 @@
-function(add_test_executable_dir_get_main_header path header_dir output_list_path)
+function(add_test_executable_dir_get_header path header_dir output_list_path)
     string(CONCAT one_options "TARGET_NAME;DIR;BASE_DIR;RELATIVE_PATH;FILENAME"
         ";NAME;TAG;EXT;CONDITION;FILTER;INCLUDE_DIR"
         ";GET_NAME;GET_TAG;TAG_CONDITION;TAG_DELIMITER")
     string(CONCAT list_options "LIST_TAG;LIST_EXT;ARGS")
 
-    cmake_parse_arguments(add_test_executable_dir_get_main_header 
+    cmake_parse_arguments(add_test_executable_dir_get_header 
         "RECURSIVE;CASE_SENSITIVE" 
         "${one_options}" "${list_options}" ${ARGN}) 
 
     set(recursive_arg "")
-    if(NOT "${add_test_executable_dir_get_main_header_RECURSIVE}" STREQUAL "")
+    if(NOT "${add_test_executable_dir_get_header_RECURSIVE}" STREQUAL "")
         set(recursive_arg "RECURSIVE")
     endif()
 
     set(case_sensitive_arg "")
-    if(NOT "${add_test_executable_dir_get_main_header_CASE_SENSITIVE}" STREQUAL "")
+    if(NOT "${add_test_executable_dir_get_header_CASE_SENSITIVE}" STREQUAL "")
         set(case_sensitive_arg "CASE_SENSITIVE")
     endif()
 
-    set(include_dir ${add_test_executable_dir_get_main_header_INCLUDE_DIR})
-    set(condition ${add_test_executable_dir_get_main_header_CONDITION})
-    set(filter ${add_test_executable_dir_get_main_header_FILTER})
-    set(list_ext ${add_test_executable_dir_get_main_header_LIST_EXT})
-    set(get_name ${add_test_executable_dir_get_main_header_GET_NAME})
-    set(get_tag ${add_test_executable_dir_get_main_header_GET_TAG})
-    set(tag_condition ${add_test_executable_dir_get_main_header_TAG_CONDITION})
-    set(tag_delimiter ${add_test_executable_dir_get_main_header_TAG_DELIMITER})
-    set(list_tag ${add_test_executable_dir_get_main_header_LIST_TAG})
+    set(include_dir ${add_test_executable_dir_get_header_INCLUDE_DIR})
+    set(condition ${add_test_executable_dir_get_header_CONDITION})
+    set(filter ${add_test_executable_dir_get_header_FILTER})
+    set(list_ext ${add_test_executable_dir_get_header_LIST_EXT})
+    set(get_name ${add_test_executable_dir_get_header_GET_NAME})
+    set(get_tag ${add_test_executable_dir_get_header_GET_TAG})
+    set(tag_condition ${add_test_executable_dir_get_header_TAG_CONDITION})
+    set(tag_delimiter ${add_test_executable_dir_get_header_TAG_DELIMITER})
+    set(list_tag ${add_test_executable_dir_get_header_LIST_TAG})
 
     set(filter_args "")
     if(NOT "${list_ext}" STREQUAL "")
@@ -64,4 +64,4 @@ function(add_test_executable_dir_get_main_header path header_dir output_list_pat
 
     set(${output_list_path} ${list_path} PARENT_SCOPE)
     
-endfunction(add_test_executable_dir_get_main_header)
+endfunction(add_test_executable_dir_get_header)

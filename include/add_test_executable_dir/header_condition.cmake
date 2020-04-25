@@ -1,8 +1,8 @@
-function(get_test_source_dir_condition path output)
-    cmake_parse_arguments(get_test_source_dir_condition "CASE_SENSITIVE" 
+function(add_test_executable_dir_header_condition path output)
+    cmake_parse_arguments(add_test_executable_dir_header_condition "CASE_SENSITIVE" 
         "BASE_DIR;RELATIVE_PATH;FILENAME;INCLUDE_DIR" "ARGS" ${ARGN}) 
 
-    set(filename "${get_test_source_dir_condition_FILENAME}")
+    set(filename "${add_test_executable_dir_header_condition_FILENAME}")
 
     set(is_case_sensitive FALSE)
     if (NOT "${get_test_source_dir_filter_CASE_SENSITIVE}" STREQUAL "")
@@ -10,7 +10,7 @@ function(get_test_source_dir_condition path output)
     endif()
 
     cmake_parse_arguments(args "" "GET_NAME;GET_TAG;TAG_CONDITION;TAG_DELIMITER" 
-        "LIST_TAG" ${get_test_source_dir_condition_ARGS})
+        "LIST_TAG" ${add_test_executable_dir_header_condition_ARGS})
         
     set(list_tag ${args_LIST_TAG})
 
@@ -58,4 +58,4 @@ function(get_test_source_dir_condition path output)
     
     set(${output} ${result} PARENT_SCOPE)
 
-endfunction(get_test_source_dir_condition)
+endfunction(add_test_executable_dir_header_condition)

@@ -7,6 +7,11 @@ function(add_test_executable_dir_get_header path header_dir output_list_path)
     cmake_parse_arguments(add_test_executable_dir_get_header 
         "RECURSIVE;CASE_SENSITIVE" 
         "${one_options}" "${list_options}" ${ARGN}) 
+    
+        set(base_dir "${BUILD_UTILS_INCLUDE_DIR}")
+    if (NOT "${get_test_source_dir_condition_INCLUDE_DIR}" STREQUAL "")
+        set(base_dir "${get_test_source_dir_condition_INCLUDE_DIR}")
+    endif()
 
     set(recursive_arg "")
     if(NOT "${add_test_executable_dir_get_header_RECURSIVE}" STREQUAL "")
@@ -19,18 +24,24 @@ function(add_test_executable_dir_get_header path header_dir output_list_path)
     endif()
 
     set(include_dir ${add_test_executable_dir_get_header_INCLUDE_DIR})
-    set(condition ${add_test_executable_dir_get_header_CONDITION})
-    set(filter ${add_test_executable_dir_get_header_FILTER})
+    set(condition ${base_dir}/add_test_executable_dir/get_test_source_dir/condition.cmake)
+    set(filter ${base_dir}/add_test_executable_dir/get_test_source_dir/filter.cmake)
     set(list_ext ${add_test_executable_dir_get_header_LIST_EXT})
     set(get_name ${add_test_executable_dir_get_header_GET_NAME})
     set(get_tag ${add_test_executable_dir_get_header_GET_TAG})
     set(tag_condition ${add_test_executable_dir_get_header_TAG_CONDITION})
     set(tag_delimiter ${add_test_executable_dir_get_header_TAG_DELIMITER})
     set(list_tag ${add_test_executable_dir_get_header_LIST_TAG})
+    set(header_condition ${add_test_executable_dir_get_header_CONDITION})
+    set(header_filter ${add_test_executable_dir_get_header_FILTER})
 
     set(filter_args "")
     if(NOT "${list_ext}" STREQUAL "")
         list(APPEND filter_args "LIST_EXT" ${list_ext})
+    endif()
+
+    if (NOT "${header_filter}" STREQUAL "")
+        list(APPEND filter_args "HEADER_FILTER" ${header_filter})
     endif()
 
     set(condition_args "")
@@ -48,6 +59,10 @@ function(add_test_executable_dir_get_header path header_dir output_list_path)
 
     if (NOT "${tag_delimiter}" STREQUAL "")
         list(APPEND condition_args "TAG_DELIMITER" ${tag_delimiter})
+    endif()
+    
+    if (NOT "${header_condition}" STREQUAL "")
+        list(APPEND condition_args "HEADER_CONDITION" ${header_condition})
     endif()
 
     if (NOT "${list_tag}" STREQUAL "")

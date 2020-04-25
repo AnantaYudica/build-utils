@@ -1,6 +1,6 @@
 function(add_test_executable_dir_get_main_header path header_dir output_list_path)
     string(CONCAT one_options "TARGET_NAME;DIR;BASE_DIR;RELATIVE_PATH;FILENAME"
-        ";NAME;TAG;EXT;MAIN_HEADER_CONDITION;MAIN_HEADER_FILTER;INCLUDE_DIR"
+        ";NAME;TAG;EXT;CONDITION;FILTER;INCLUDE_DIR"
         ";GET_NAME;GET_TAG;TAG_CONDITION;TAG_DELIMITER")
     string(CONCAT list_options "LIST_TAG;LIST_EXT;ARGS")
 
@@ -19,8 +19,8 @@ function(add_test_executable_dir_get_main_header path header_dir output_list_pat
     endif()
 
     set(include_dir ${add_test_executable_dir_get_main_header_INCLUDE_DIR})
-    set(condition ${add_test_executable_dir_get_main_header_MAIN_HEADER_CONDITION})
-    set(filter ${add_test_executable_dir_get_main_header_MAIN_HEADER_FILTER})
+    set(condition ${add_test_executable_dir_get_main_header_CONDITION})
+    set(filter ${add_test_executable_dir_get_main_header_FILTER})
     set(list_ext ${add_test_executable_dir_get_main_header_LIST_EXT})
     set(get_name ${add_test_executable_dir_get_main_header_GET_NAME})
     set(get_tag ${add_test_executable_dir_get_main_header_GET_TAG})

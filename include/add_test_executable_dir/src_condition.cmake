@@ -25,6 +25,8 @@ function(add_test_executable_dir_src_condition path cond)
                 break()
             endif()
         endforeach(it)
+    else()
+        set(result TRUE)
     endif()
 
     set(${cond} ${result} PARENT_SCOPE)

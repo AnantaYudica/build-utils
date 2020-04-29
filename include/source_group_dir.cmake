@@ -116,11 +116,13 @@ function(source_group_dir prefix_name dir)
     endif()
     
     set(enable_output_name FALSE)
+    unset("${source_group_dir_LIST_NAME}")
     if(NOT "${source_group_dir_LIST_NAME}" STREQUAL "")
         set(enable_output_name TRUE)
     endif()
 
     set(enable_output_path FALSE)
+    unset("${source_group_dir_LIST_PATH}")
     if(NOT "${source_group_dir_LIST_PATH}" STREQUAL "")
         set(enable_output_path TRUE)
     endif()

@@ -146,59 +146,72 @@ function(get_test_name_tag_ext_file filename)
 
     endif()
     
+    unset("${get_test_name_tag_ext_file_NAME}")
     if (NOT "${get_test_name_tag_ext_file_NAME}" STREQUAL "")
         set("${get_test_name_tag_ext_file_NAME}" "${name_out}" PARENT_SCOPE)
     endif()
 
+    unset("${get_test_name_tag_ext_file_TAG}")
     if (NOT "${get_test_name_tag_ext_file_TAG}" STREQUAL "")
         set("${get_test_name_tag_ext_file_TAG}" "${tag_out}" PARENT_SCOPE)
     endif()
 
+    unset("${get_test_name_tag_ext_file_EXT}")
     if (NOT "${get_test_name_tag_ext_file_EXT}" STREQUAL "")
         set("${get_test_name_tag_ext_file_EXT}" "${ext_out}" PARENT_SCOPE)
     endif()
 
+    unset("${get_test_name_tag_ext_file_NAME_INDEX}")
     if (NOT "${get_test_name_tag_ext_file_NAME_INDEX}" STREQUAL "")
         math(EXPR name_index "${name_index}+${filename_index}")
         set("${get_test_name_tag_ext_file_NAME_INDEX}" "${name_index}" PARENT_SCOPE)
     endif()
 
+    unset("${get_test_name_tag_ext_file_NAME_LENGTH}")
     if (NOT "${get_test_name_tag_ext_file_NAME_LENGTH}" STREQUAL "")
         set("${get_test_name_tag_ext_file_NAME_LENGTH}" "${name_length}" PARENT_SCOPE)
     endif()
     
+    unset("${get_test_name_tag_ext_file_NAME_LENGTH}")
     if (NOT "${get_test_name_tag_ext_file_TAG_DELIMITER_INDEX}" STREQUAL "")
         math(EXPR tag_delim_index "${tag_delim_index}+${filename_index}")
         set("${get_test_name_tag_ext_file_TAG_DELIMITER_INDEX}" "${tag_delim_index}" PARENT_SCOPE)
     endif()
 
+    unset("${get_test_name_tag_ext_file_TAG_DELIMITER_LENGTH}")
     if (NOT "${get_test_name_tag_ext_file_TAG_DELIMITER_LENGTH}" STREQUAL "")
         set("${get_test_name_tag_ext_file_TAG_DELIMITER_LENGTH}" "${tag_delim_length}" PARENT_SCOPE)
     endif()
 
+    unset("${get_test_name_tag_ext_file_TAG_INDEX}")
     if (NOT "${get_test_name_tag_ext_file_TAG_INDEX}" STREQUAL "")
         math(EXPR tag_index "${tag_index}+${filename_index}")
         set("${get_test_name_tag_ext_file_TAG_INDEX}" "${tag_index}" PARENT_SCOPE)
     endif()
 
+    unset("${get_test_name_tag_ext_file_TAG_LENGTH}")
     if (NOT "${get_test_name_tag_ext_file_TAG_LENGTH}" STREQUAL "")
         set("${get_test_name_tag_ext_file_TAG_LENGTH}" "${tag_length}" PARENT_SCOPE)
     endif()
     
+    unset("${get_test_name_tag_ext_file_EXT_DELIMITER_INDEX}")
     if (NOT "${get_test_name_tag_ext_file_EXT_DELIMITER_INDEX}" STREQUAL "")
         math(EXPR ext_delim_index "${ext_delim_index}+${filename_index}")
         set("${get_test_name_tag_ext_file_EXT_DELIMITER_INDEX}" "${ext_delim_index}" PARENT_SCOPE)
     endif()
     
+    unset("${get_test_name_tag_ext_file_EXT_DELIMITER_LENGTH}")
     if (NOT "${get_test_name_tag_ext_file_EXT_DELIMITER_LENGTH}" STREQUAL "")
         set("${get_test_name_tag_ext_file_EXT_DELIMITER_LENGTH}" "${ext_delim_length}" PARENT_SCOPE)
     endif()
     
+    unset("${get_test_name_tag_ext_file_EXT_INDEX}")
     if (NOT "${get_test_name_tag_ext_file_EXT_INDEX}" STREQUAL "")
         math(EXPR ext_index "${ext_index}+${filename_index}")
         set("${get_test_name_tag_ext_file_EXT_INDEX}" "${ext_index}" PARENT_SCOPE)
     endif()
     
+    unset("${get_test_name_tag_ext_file_EXT_LENGTH}")
     if (NOT "${get_test_name_tag_ext_file_EXT_LENGTH}" STREQUAL "")
         set("${get_test_name_tag_ext_file_EXT_LENGTH}" "${ext_length}" PARENT_SCOPE)
     endif()

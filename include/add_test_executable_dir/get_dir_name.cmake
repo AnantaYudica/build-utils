@@ -1,9 +1,9 @@
-function(add_test_executable_dir_get_dir_name path dir_name)
+function(add_test_executable_dir_get_dir_name dir out_dir_name)
     
     cmake_parse_arguments(add_test_executable_dir_get_dir_name "" 
-        "BASE_DIR;RELATIVE_PATH;FILENAME;NAME;TAG;EXT;INCLUDE_DIR" 
+        "BASE_DIR;RELATIVE_DIR;DIR_NAME;NAME;TAG;INCLUDE_DIR" 
         "ARGS" ${ARGN}) 
 
-    set(${dir_name} "${add_test_executable_dir_get_dir_name_FILENAME}" PARENT_SCOPE)
+    set(${out_dir_name} "${add_test_executable_dir_get_dir_name_DIR_NAME}" PARENT_SCOPE)
 
 endfunction(add_test_executable_dir_get_dir_name)

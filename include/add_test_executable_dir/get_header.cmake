@@ -1,6 +1,7 @@
 function(add_test_executable_dir_get_header path header_dir output_list_path)
-    string(CONCAT one_options "TARGET_NAME;DIR;BASE_DIR;RELATIVE_PATH;FILENAME"
-        ";NAME;TAG;EXT;CONDITION;FILTER;INCLUDE_DIR"
+    string(CONCAT one_options "TARGET_NAME;TARGET_DIR"
+        ";BASE_DIR;RELATIVE_PATH;FILENAME;NAME;TAG;EXT"
+        ";DIR;RELATIVE_DIR;CONDITION;FILTER;INCLUDE_DIR"
         ";GET_NAME;GET_TAG;TAG_CONDITION;TAG_DELIMITER")
     string(CONCAT list_options "LIST_TAG;LIST_EXT;ARGS")
 
@@ -8,7 +9,7 @@ function(add_test_executable_dir_get_header path header_dir output_list_path)
         "RECURSIVE;CASE_SENSITIVE" 
         "${one_options}" "${list_options}" ${ARGN}) 
     
-        set(base_dir "${BUILD_UTILS_INCLUDE_DIR}")
+    set(base_dir "${BUILD_UTILS_INCLUDE_DIR}")
     if (NOT "${get_test_source_dir_condition_INCLUDE_DIR}" STREQUAL "")
         set(base_dir "${get_test_source_dir_condition_INCLUDE_DIR}")
     endif()

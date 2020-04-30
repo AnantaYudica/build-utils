@@ -3,7 +3,7 @@ function(add_test_executable_dir_get_header path header_dir output_list_path)
         ";BASE_DIR;RELATIVE_PATH;FILENAME;NAME;TAG;EXT"
         ";DIR;RELATIVE_DIR;CONDITION;FILTER;INCLUDE_DIR"
         ";GET_NAME;GET_TAG;TAG_CONDITION;TAG_DELIMITER")
-    string(CONCAT list_options "LIST_TAG;LIST_EXT;ARGS")
+    string(CONCAT list_options "LIST_TAG;LIST_EXT;FILTER_ARGS;CONDITION_ARGS;ARGS")
 
     cmake_parse_arguments(add_test_executable_dir_get_header 
         "RECURSIVE;CASE_SENSITIVE" 
@@ -42,6 +42,8 @@ function(add_test_executable_dir_get_header path header_dir output_list_path)
     set(src_ext ${add_test_executable_dir_get_header_SRC_EXT})
     set(src_path ${add_test_executable_dir_get_header_SRC_PATH})
     set(src_base_dir ${add_test_executable_dir_get_header_SRC_BASE_DIR})
+    set(header_filter_args ${add_test_executable_dir_get_header_FILTER_ARGS})
+    set(header_condition_args ${add_test_executable_dir_get_header_CONDITION_ARGS})
 
     set(arg "")
     if(NOT "${target_name}" STREQUAL "")
@@ -81,6 +83,10 @@ function(add_test_executable_dir_get_header path header_dir output_list_path)
         list(APPEND filter_args "HEADER_FILTER" ${header_filter})
     endif()
 
+    if (NOT "${header_filter_args}" STREQUAL "")
+        list(APPEND filter_args "HEADER_FILTER_ARGS" ${header_filter_args})
+    endif()
+
     set(condition_args "${arg}")
     if (NOT "${get_name}" STREQUAL "")
         list(APPEND condition_args "GET_NAME" ${get_name})
@@ -104,6 +110,10 @@ function(add_test_executable_dir_get_header path header_dir output_list_path)
 
     if (NOT "${list_tag}" STREQUAL "")
         list(APPEND condition_args "LIST_TAG" ${list_tag})
+    endif()
+
+    if (NOT "${header_condition_args}" STREQUAL "")
+        list(APPEND condition_args "HEADER_CONDITION_ARGS" ${header_condition_args})
     endif()
     
     if (NOT COMMAND get_test_source_dir)

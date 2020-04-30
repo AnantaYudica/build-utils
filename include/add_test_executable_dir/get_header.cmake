@@ -10,8 +10,8 @@ function(add_test_executable_dir_get_header path header_dir output_list_path)
         "${one_options}" "${list_options}" ${ARGN}) 
     
     set(base_dir "${BUILD_UTILS_INCLUDE_DIR}")
-    if (NOT "${get_test_source_dir_condition_INCLUDE_DIR}" STREQUAL "")
-        set(base_dir "${get_test_source_dir_condition_INCLUDE_DIR}")
+    if (NOT "${add_test_executable_dir_get_header_INCLUDE_DIR}" STREQUAL "")
+        set(base_dir "${add_test_executable_dir_get_header_INCLUDE_DIR}")
     endif()
 
     set(recursive_arg "")

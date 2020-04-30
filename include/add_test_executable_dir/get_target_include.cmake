@@ -7,6 +7,6 @@ function(add_test_executable_dir_get_target_include path out_list_dir)
         "${one_options}" 
         "ARGS;DEFAULT_LIST_DIR" ${ARGN}) 
 
-    set(${out_list_dir} "add_test_executable_dir_get_target_include_DEFAULT_LIST_DIR" PARENT_SCOPE)
+    set(${out_list_dir} "${add_test_executable_dir_get_target_include_DEFAULT_LIST_DIR}" PARENT_SCOPE)
     
 endfunction(add_test_executable_dir_get_target_include)

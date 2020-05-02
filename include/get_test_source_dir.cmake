@@ -8,16 +8,31 @@ function(get_test_source_dir_recv base_dir dir list_output is_recursive level)
     set(case_sensitive_arg ${get_test_source_dir_recv_CASE_SENSITIVE_ARG})
 
     file(GLOB list_path "${dir}/*")
-    
+
     set(foreach_list_path "")
     foreach(it ${list_path})
-        file(RELATIVE_PATH relative_dir "${base_dir}" "${it}")
-        get_filename_component(file_name ${it} NAME)
-        get_test_source_dir_filter(${it} ok LEVEL ${level} BASE_DIR ${base_dir} 
-            RELATIVE_PATH ${relative_dir} FILENAME ${file_name}
-            ARGS ${filter_args} INCLUDE_DIR ${include_dir} ${case_sensitive_arg})
+        file(RELATIVE_PATH relative_dir "${base_dir}" "${dir}")
+        file(RELATIVE_PATH relative_path "${base_dir}" "${it}")
+        get_filename_component(dirname ${dir} NAME)
+        get_filename_component(filename ${it} NAME)
+        set(is_directory FALSE)
+        if(IS_DIRECTORY ${it})
+            set(is_directory TRUE)
+            get_test_source_dir_filter(ok DIRECTORY
+                LEVEL ${level} BASE_DIR ${base_dir} PATH ${it} RELATIVE_PATH ${relative_path}
+                DIRNAME ${filename} CURR_DIR ${dir} RELATIVE_CURR_DIR ${relative_dir} 
+                CURR_DIRNAME ${dirname} ARGS ${filter_args} INCLUDE_DIR ${include_dir} 
+                ${case_sensitive_arg})
+        else()
+            get_test_source_dir_filter(ok 
+                LEVEL ${level} BASE_DIR ${base_dir} PATH ${it} RELATIVE_PATH ${relative_path} 
+                FILENAME ${filename} CURR_DIR ${dir} RELATIVE_CURR_DIR ${relative_dir}
+                CURR_DIRNAME ${dirname} ARGS ${filter_args} INCLUDE_DIR ${include_dir} 
+                ${case_sensitive_arg})
+        endif()
+
         if (ok)
-            if(IS_DIRECTORY ${it} AND (is_recursive))
+            if(is_directory AND (is_recursive))
                 set(next_list_path "")
                 math(EXPR next_level "${level}+1")
                 get_test_source_dir_recv("${base_dir}" "${dir}/${file_name}" next_list_path
@@ -25,9 +40,9 @@ function(get_test_source_dir_recv base_dir dir list_output is_recursive level)
                     FILTER_ARGS ${filter_args} CONDITION_ARGS ${condition_args}
                     INCLUDE_DIR ${include_dir})
                 list(APPEND foreach_list_path ${next_list_path})
-            elseif(NOT IS_DIRECTORY ${it})
+            elseif(NOT is_directory)
                 get_test_source_dir_condition(${it} ok BASE_DIR ${base_dir} 
-                    RELATIVE_PATH ${relative_dir} FILENAME ${file_name}
+                    RELATIVE_PATH ${relative_path} FILENAME ${file_name}
                     ARGS ${condition_args} INCLUDE_DIR ${include_dir} ${case_sensitive_arg})
                 if (ok)
                     list(APPEND foreach_list_path ${it})

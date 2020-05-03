@@ -17,25 +17,43 @@ function(source_group_dir_recv prefix_name base_dir dir is_recursive
     set(foreach_list_path "")
 
     foreach(it ${list_files})
-        file(RELATIVE_PATH relative_dir "${base_dir}" "${it}")
-        get_filename_component(file_name ${it} NAME)
-        source_group_dir_filter(${it} ok LEVEL ${level} BASE_DIR ${base_dir} 
-            RELATIVE_PATH ${relative_dir} FILENAME ${file_name} ARGS ${filter_args}
-            INCLUDE_DIR ${include_dir} ${case_sensitive_arg})
+        file(RELATIVE_PATH relative_curr_dir "${base_dir}" "${dir}")
+        file(RELATIVE_PATH relative_path "${base_dir}" "${it}")
+        get_filename_component(curr_dirname ${dir} NAME)
+        set(is_directory FALSE)
+        if(IS_DIRECTORY ${it})
+            set(is_directory TRUE)
+            get_filename_component(dirname ${it} NAME)
+            source_group_dir_filter(ok DIRECTORY 
+                LEVEL ${level} BASE_DIR ${base_dir} PATH ${it} 
+                RELATIVE_PATH ${relative_path} DIRNAME ${dirname} 
+                CURR_DIR ${dir} RELATIVE_CURR_DIR ${relative_curr_dir} 
+                CURR_DIRNAME ${curr_dirname} INCLUDE_DIR ${include_dir} 
+                ARGS ${filter_args} ${case_sensitive_arg})
+        else()
+            get_filename_component(filename ${it} NAME)
+            source_group_dir_filter(ok 
+                LEVEL ${level} BASE_DIR ${base_dir} PATH ${it} 
+                RELATIVE_PATH ${relative_path} FILENAME ${filename} 
+                CURR_DIR ${dir} RELATIVE_CURR_DIR ${relative_curr_dir} 
+                CURR_DIRNAME ${curr_dirname} INCLUDE_DIR ${include_dir} 
+                ARGS ${filter_args} ${case_sensitive_arg})
+        endif()
+        
         if (ok)
-            if(IS_DIRECTORY ${it} AND (is_recursive)) 
+            if(is_directory AND (is_recursive)) 
                 set(next_list_name "")
                 set(next_list_path "")
                 math(EXPR next_level "${level}+1")
-
-                source_group_dir_get_prefix_name(${it} "${prefix_name}" 
-                    next_prefix_name LEVEL ${level} BASE_DIR ${base_dir} 
-                    RELATIVE_PATH ${relative_dir} FILENAME ${file_name} 
-                    ARGS ${get_prefix_name_args}
-                    INCLUDE_DIR ${include_dir})
+                source_group_dir_get_prefix_name("${prefix_name}" next_prefix_name 
+                    LEVEL ${level} BASE_DIR ${base_dir} PATH ${it}
+                    RELATIVE_PATH ${relative_dir} DIRNAME ${dirname} 
+                    CURR_DIR ${dir} RELATIVE_CURR_DIR ${relative_curr_dir} 
+                    CURR_DIRNAME ${curr_dirname} INCLUDE_DIR ${include_dir}
+                    ARGS ${get_prefix_name_args})
 
                 source_group_dir_recv("${next_prefix_name}" "${base_dir}"
-                    "${dir}/${file_name}" ${is_recursive}
+                    "${dir}/${dirname}" ${is_recursive}
                     ${is_output_name} ${is_output_path}
                     next_list_name next_list_path ${next_level}
                     FILTER_ARGS ${filter_args} CONDITION_ARGS ${condition_args}
@@ -48,10 +66,13 @@ function(source_group_dir_recv prefix_name base_dir dir is_recursive
                 if (is_output_path)
                     list(APPEND foreach_list_path ${next_list_path})
                 endif()
-            elseif(NOT IS_DIRECTORY ${it})
-                source_group_dir_condition(${it} ok BASE_DIR ${base_dir} 
-                    RELATIVE_PATH ${relative_dir} FILENAME ${file_name} ARGS ${condition_args}
-                    INCLUDE_DIR ${include_dir} ${case_sensitive_arg})
+            elseif(NOT is_directory)
+                source_group_dir_condition(ok 
+                    BASE_DIR ${base_dir} PATH ${it}
+                    RELATIVE_PATH ${relative_path} FILENAME ${filename} 
+                    CURR_DIR ${dir} RELATIVE_CURR_DIR ${relative_curr_dir} 
+                    CURR_DIRNAME ${curr_dirname} INCLUDE_DIR ${include_dir}
+                    ARGS ${condition_args} ${case_sensitive_arg})
                 if (ok)
                     if(NOT DEFINED CMAKE_SCRIPT_MODE_FILE)
                         source_group(${prefix_name} FILES ${it})

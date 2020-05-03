@@ -1,6 +1,8 @@
-function(source_group_dir_condition path output)
+function(source_group_dir_condition output)
+    string(CONCAT one_options "BASE_DIR;RELATIVE_PATH;PATH;FILENAME"
+        ";CURR_DIR;RELATIVE_CURR_DIR;CURR_DIRNAME;INCLUDE_DIR")
     cmake_parse_arguments(source_group_dir_condition "CASE_SENSITIVE" 
-        "BASE_DIR;RELATIVE_PATH;FILENAME" "ARGS" ${ARGN}) 
+        "${one_options}" "ARGS" ${ARGN}) 
 
     cmake_parse_arguments(args "" "name;relative_path_regex" "" ${source_group_dir_condition_ARGS})
 

@@ -1,8 +1,10 @@
-function(source_group_dir_get_prefix_name path current_prefix_name prefix_name)
+function(source_group_dir_get_prefix_name current_prefix_name prefix_name)
+    string(CONCAT one_options "LEVEL;BASE_DIR;PATH;RELATIVE_PATH;DIRNAME"
+        ";CURR_DIR;RELATIVE_CURR_DIR;CURR_DIRNAME;INCLUDE_DIR")
     cmake_parse_arguments(source_group_dir_get_prefix_name "" 
-        "LEVEL;BASE_DIR;RELATIVE_PATH;FILENAME;INCLUDE_DIR" "ARGS" ${ARGN}) 
+        "${one_options}" "ARGS" ${ARGN}) 
     
-    set(filename "${source_group_dir_get_prefix_name_FILENAME}")
+    set(dirname "${source_group_dir_get_prefix_name_DIRNAME}")
 
     cmake_parse_arguments(args "" "delimiter" "" 
         ${source_group_dir_get_prefix_name_ARGS}) 
@@ -12,7 +14,7 @@ function(source_group_dir_get_prefix_name path current_prefix_name prefix_name)
         set(delim "${args_delimiter}")
     endif()
     
-    set(${prefix_name} "${current_prefix_name}${delim}${filename}" PARENT_SCOPE)
+    set(${prefix_name} "${current_prefix_name}${delim}${dirname}" PARENT_SCOPE)
     
 endfunction(source_group_dir_get_prefix_name)
 

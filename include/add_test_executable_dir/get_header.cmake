@@ -3,7 +3,7 @@ function(add_test_executable_dir_get_header path header_dir output_list_path)
         ";BASE_DIR;RELATIVE_PATH;FILENAME;NAME;TAG;EXT"
         ";DIR;RELATIVE_DIR;CONDITION;FILTER;INCLUDE_DIR"
         ";GET_NAME;GET_TAG;TAG_CONDITION;TAG_DELIMITER")
-    string(CONCAT list_options "LIST_TAG;LIST_EXT;FILTER_ARGS;CONDITION_ARGS;ARGS")
+    string(CONCAT list_options "FILTER_ARGS;CONDITION_ARGS;ARGS")
 
     cmake_parse_arguments(add_test_executable_dir_get_header 
         "RECURSIVE;CASE_SENSITIVE" 
@@ -27,12 +27,10 @@ function(add_test_executable_dir_get_header path header_dir output_list_path)
     set(include_dir ${base_dir})
     set(condition ${base_dir}/add_test_executable_dir/get_test_source_dir/condition.cmake)
     set(filter ${base_dir}/add_test_executable_dir/get_test_source_dir/filter.cmake)
-    set(list_ext ${add_test_executable_dir_get_header_LIST_EXT})
     set(get_name ${add_test_executable_dir_get_header_GET_NAME})
     set(get_tag ${add_test_executable_dir_get_header_GET_TAG})
     set(tag_condition ${add_test_executable_dir_get_header_TAG_CONDITION})
     set(tag_delimiter ${add_test_executable_dir_get_header_TAG_DELIMITER})
-    set(list_tag ${add_test_executable_dir_get_header_LIST_TAG})
     set(header_condition ${add_test_executable_dir_get_header_CONDITION})
     set(header_filter ${add_test_executable_dir_get_header_FILTER})
     set(target_name ${add_test_executable_dir_get_header_TARGET_NAME})
@@ -95,9 +93,6 @@ function(add_test_executable_dir_get_header path header_dir output_list_path)
     endif()
 
     set(filter_args "${args}")
-    if(NOT "${list_ext}" STREQUAL "")
-        list(APPEND filter_args "LIST_EXT" ${list_ext})
-    endif()
 
     if (NOT "${header_filter}" STREQUAL "")
         list(APPEND filter_args "HEADER_FILTER" ${header_filter})
@@ -126,10 +121,6 @@ function(add_test_executable_dir_get_header path header_dir output_list_path)
     
     if (NOT "${header_condition}" STREQUAL "")
         list(APPEND condition_args "HEADER_CONDITION" ${header_condition})
-    endif()
-
-    if (NOT "${list_tag}" STREQUAL "")
-        list(APPEND condition_args "LIST_TAG" ${list_tag})
     endif()
 
     if (NOT "${header_condition_args}" STREQUAL "")

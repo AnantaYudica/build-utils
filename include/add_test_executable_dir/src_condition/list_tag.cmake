@@ -1,11 +1,15 @@
 
-function(add_test_executable_dir_src_condition path cond)
-    
-    cmake_parse_arguments(add_test_executable_dir_src_condition "CASE_SENSITIVE" 
-        "DIR;BASE_DIR;RELATIVE_PATH;FILENAME;NAME;TAG;EXT;INCLUDE_DIR" 
-        "LIST_TAG;ARGS" ${ARGN}) 
+function(add_test_executable_dir_src_condition cond)
 
-    set(list_tag ${add_test_executable_dir_src_condition_LIST_TAG})
+    string(CONCAT one_options "BASE_DIR;PATH;RELATIVE_PATH;FILENAME"
+        ";CURR_DIR;RELATIVE_CURR_DIR;CURR_DIRNAME;INCLUDE_DIR") 
+    cmake_parse_arguments(add_test_executable_dir_src_condition "CASE_SENSITIVE" 
+        "${one_options}" "ARGS" ${ARGN}) 
+
+    cmake_parse_arguments(args "" "" "LIST_TAG" 
+        ${add_test_executable_dir_src_condition_ARGS}) 
+
+    set(list_tag ${args_LIST_TAG})
     set(tag "${add_test_executable_dir_src_condition_TAG}")
 
     set(is_case_sensitive FALSE)

@@ -1,5 +1,5 @@
-function(add_test_executable_dir_get_group_name path)
-    string(CONCAT one_option "BASE_DIR;RELATIVE_PATH;FILENAME;NAME;TAG;EXT"
+function(add_test_executable_dir_get_group_name)
+    string(CONCAT one_option "BASE_DIR;PATH;RELATIVE_PATH;FILENAME;NAME;TAG;EXT"
         ";DIR;RELATIVE_DIR;INCLUDE_DIR;DEFAULT_HEADER;DEFAULT_SRC;DEFAULT_OTHER_SRC"
         ";TARGET_NAME;TARGET_DIR;HEADER;SRC;OTHER_SRC")
     cmake_parse_arguments(add_test_executable_dir_get_group_name "" 

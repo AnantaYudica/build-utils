@@ -179,8 +179,8 @@ function(add_test_executable_dir_recv prefix_target prefix_target_dir base_dir d
                     next_list_target_include_dir next_list_target_compile_def
                     next_list_target_compile_option next_list_target_property next_list_target_cmd_arg 
                     next_list_src next_list_header next_list_group_name
-                    HEADER_RECURSIVE_ARG ${header_case_sensitive_arg}
-                    CASE_SENSITIVE_ARG ${recursive_arg}
+                    HEADER_RECURSIVE_ARG ${header_recursive_arg}
+                    CASE_SENSITIVE_ARG ${case_sensitive_arg}
                     HEADER_CASE_SENSITIVE_ARG ${header_case_sensitive_arg}
                     SRC_EXPAND_ARGS ${src_expand_args}
                     HEADER_EXPAND_ARGS ${header_expand_args}
@@ -815,21 +815,27 @@ function(add_test_executable_dir prefix dir)
     set(is_header_recursive FALSE)
     if (NOT "${add_test_executable_dir_HEADER_RECURSIVE}" STREQUAL "")
         set(is_header_recursive ${add_test_executable_dir_HEADER_RECURSIVE})
-        set(header_recursive_arg "RECURSIVE")
+        if (is_header_recursive)
+            set(header_recursive_arg "RECURSIVE")
+        endif()
     endif()
 
     set(case_sensitive_arg "")
     set(is_case_sensitive FALSE)
     if (NOT "${add_test_executable_dir_CASE_SENSITIVE}" STREQUAL "")
         set(is_case_sensitive ${add_test_executable_dir_CASE_SENSITIVE})
-        set(case_sensitive_arg "CASE_SENSITIVE")
+        if (is_case_sensitive)
+            set(case_sensitive_arg "CASE_SENSITIVE")
+        endif()
     endif()
     
     set(header_case_sensitive_arg "")
     set(is_header_case_sensitive FALSE)
     if (NOT "${add_test_executable_dir_HEADER_CASE_SENSITIVE}" STREQUAL "")
         set(is_header_case_sensitive ${add_test_executable_dir_HEADER_CASE_SENSITIVE})
-        set(header_case_sensitive_arg "CASE_SENSITIVE")
+        if (is_header_case_sensitive)
+            set(header_case_sensitive_arg "CASE_SENSITIVE")
+        endif()
     endif()
     
     set(src_expand_args "")
@@ -974,8 +980,8 @@ function(add_test_executable_dir prefix dir)
         list_target_name list_target_dir list_target_lib
         list_target_include_dir list_target_compile_def list_target_compile_option
         list_target_property list_target_cmd_arg list_src list_header list_group_name
-        HEADER_RECURSIVE_ARG ${header_case_sensitive_arg}
-        CASE_SENSITIVE_ARG ${recursive_arg}
+        HEADER_RECURSIVE_ARG ${header_recursive_arg}
+        CASE_SENSITIVE_ARG ${case_sensitive_arg}
         HEADER_CASE_SENSITIVE_ARG ${header_case_sensitive_arg}
         SRC_EXPAND_ARGS ${src_expand_args}
         HEADER_EXPAND_ARGS ${header_expand_args}

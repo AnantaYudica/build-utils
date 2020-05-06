@@ -7,6 +7,6 @@ function(add_test_executable_dir_header_filter output)
     cmake_parse_arguments(add_test_executable_dir_header_filter "DIRECTORY;CASE_SENSITIVE" 
         "${one_options}" "ARGS" ${ARGN}) 
 
-    set(${output} TRUE PARENT_SCOPE)
+    set(${output} FALSE PARENT_SCOPE)
      
 endfunction(add_test_executable_dir_header_filter)

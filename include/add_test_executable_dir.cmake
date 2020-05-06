@@ -43,8 +43,8 @@ function(add_test_executable_dir_recv base_dir dir
 
     file(GLOB list_file "${dir}/*")
 
-    set(prefix ${add_test_executable_dir_recv_HPREFIX})
-    set(prefix_dir ${add_test_executable_dir_recv_HPREFIX_DIR})
+    set(prefix ${add_test_executable_dir_recv_PREFIX})
+    set(prefix_dir ${add_test_executable_dir_recv_PREFIX_DIR})
     
     set(header_recursive_arg ${add_test_executable_dir_recv_HEADER_RECURSIVE_ARG})
     set(case_sensitive_arg ${add_test_executable_dir_recv_CASE_SENSITIVE_ARG})

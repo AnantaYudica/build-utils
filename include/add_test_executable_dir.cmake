@@ -1,6 +1,6 @@
 
 
-function(add_test_executable_dir_recv prefix_target prefix_target_dir base_dir dir 
+function(add_test_executable_dir_recv base_dir dir 
     is_recursive is_output_target_name is_output_target_dir is_output_target_lib
     is_output_target_include_dir is_output_target_compile_def
     is_output_target_compile_option is_output_target_property
@@ -16,7 +16,9 @@ function(add_test_executable_dir_recv prefix_target prefix_target_dir base_dir d
 
     string(CONCAT list_options "SRC_EXPAND_ARGS;HEADER_EXPAND_ARGS")
 
-    string(CONCAT one_options "BASE_HEADER_DIR")
+    string(CONCAT one_options "PREFIX;PREFIX_DIR")
+
+    string(CONCAT one_options "${one_options}" ";BASE_HEADER_DIR")
     
     string(CONCAT list_options "${list_options}"
         ";GET_DIRNAME_ARGS;GET_GROUP_NAME_ARGS;GET_HEADER_DIR_ARGS"
@@ -40,6 +42,9 @@ function(add_test_executable_dir_recv prefix_target prefix_target_dir base_dir d
         "${one_options}" "${list_options}" ${ARGN}) 
 
     file(GLOB list_file "${dir}/*")
+
+    set(prefix ${add_test_executable_dir_recv_HPREFIX})
+    set(prefix_dir ${add_test_executable_dir_recv_HPREFIX_DIR})
     
     set(header_recursive_arg ${add_test_executable_dir_recv_HEADER_RECURSIVE_ARG})
     set(case_sensitive_arg ${add_test_executable_dir_recv_CASE_SENSITIVE_ARG})
@@ -168,8 +173,7 @@ function(add_test_executable_dir_recv prefix_target prefix_target_dir base_dir d
                     CURR_DIRNAME ${curr_dirname} INCLUDE_DIR ${include_dir} 
                     ARGS ${get_dirname_args})
 
-                add_test_executable_dir_recv("${prefix_target}${dir_target_name}"
-                    "${prefix_target_dir}/${dir_name}" "${base_dir}" "${dir}/${filename}"
+                add_test_executable_dir_recv("${base_dir}" "${dir}/${filename}"
                     ${is_recursive} ${is_output_target_name} ${is_output_target_dir} 
                     ${is_output_target_lib} ${is_output_target_include_dir} 
                     ${is_output_target_compile_def} ${is_output_target_compile_option} 
@@ -179,6 +183,8 @@ function(add_test_executable_dir_recv prefix_target prefix_target_dir base_dir d
                     next_list_target_include_dir next_list_target_compile_def
                     next_list_target_compile_option next_list_target_property next_list_target_cmd_arg 
                     next_list_src next_list_header next_list_group_name
+                    PREFIX "${prefix}${dir_target_name}"
+                    PREFIX_DIR "${prefix_dir}/${dirname}"
                     HEADER_RECURSIVE_ARG ${header_recursive_arg}
                     CASE_SENSITIVE_ARG ${case_sensitive_arg}
                     HEADER_CASE_SENSITIVE_ARG ${header_case_sensitive_arg}
@@ -277,7 +283,7 @@ function(add_test_executable_dir_recv prefix_target prefix_target_dir base_dir d
                         ARGS ${get_target_name_args})
 
                     add_test_executable_dir_get_header_dir(header_dir 
-                        TARGET_NAME ${target_name} TARGET_DIR ${prefix_target_dir}
+                        TARGET_NAME ${target_name} TARGET_DIR ${prefix_dir}
                         BASE_HEADER_DIR ${base_header_dir} 
                         BASE_DIR ${base_dir} PATH ${it} RELATIVE_PATH ${relative_path} 
                         FILENAME ${filename} NAME ${src_name} TAG ${src_tag} EXT ${src_ext}
@@ -286,7 +292,7 @@ function(add_test_executable_dir_recv prefix_target prefix_target_dir base_dir d
                         ARGS ${get_header_dir_args})
 
                     add_test_executable_dir_get_header(${header_dir} target_list_header 
-                        TARGET_NAME ${target_name} TARGET_DIR ${prefix_target_dir}
+                        TARGET_NAME ${target_name} TARGET_DIR ${prefix_dir}
                         BASE_DIR ${base_dir} PATH ${it} RELATIVE_PATH ${relative_path} 
                         FILENAME ${filename} NAME ${src_name} TAG ${tag} EXT ${src_ext} 
                         CURR_DIR ${dir} RELATIVE_CURR_DIR ${relative_dir} 
@@ -300,7 +306,7 @@ function(add_test_executable_dir_recv prefix_target prefix_target_dir base_dir d
                         DEFAULT_OTHER_SRC "${other_src_group_name}" 
                         BASE_DIR ${base_dir} PATH ${it} RELATIVE_PATH ${relative_path} 
                         FILENAME ${filename} NAME ${src_name} TAG ${src_tag} EXT ${src_ext} 
-                        TARGET_NAME ${target_name} TARGET_DIR ${prefix_target_dir}
+                        TARGET_NAME ${target_name} TARGET_DIR ${prefix_dir}
                         CURR_DIR ${dir} RELATIVE_CURR_DIR ${relative_dir} 
                         CURR_DIRNAME ${curr_dirname} INCLUDE_DIR ${include_dir} 
                         HEADER header_group_name 
@@ -310,7 +316,7 @@ function(add_test_executable_dir_recv prefix_target prefix_target_dir base_dir d
 
                     add_test_executable_dir_get_target_link(target_list_lib
                         DEFAULT_LIST_LIB ${list_lib}
-                        TARGET_NAME ${target_name} TARGET_DIR ${prefix_target_dir}
+                        TARGET_NAME ${target_name} TARGET_DIR ${prefix_dir}
                         BASE_DIR ${base_dir} PATH ${it} RELATIVE_PATH ${relative_path}
                         FILENAME ${filename} NAME ${src_name} TAG ${src_tag} EXT ${src_ext} 
                         CURR_DIR ${dir} RELATIVE_CURR_DIR ${relative_dir} 
@@ -319,7 +325,7 @@ function(add_test_executable_dir_recv prefix_target prefix_target_dir base_dir d
 
                     add_test_executable_dir_get_target_include(target_list_include_dir
                         DEFAULT_LIST_DIR ${list_include_dir}
-                        TARGET_NAME ${target_name} TARGET_DIR ${prefix_target_dir}
+                        TARGET_NAME ${target_name} TARGET_DIR ${prefix_dir}
                         BASE_DIR ${base_dir} PATH ${it} RELATIVE_PATH ${relative_path}
                         FILENAME ${filename} NAME ${src_name} TAG ${src_tag} EXT ${src_ext} 
                         CURR_DIR ${dir} RELATIVE_CURR_DIR ${relative_dir} 
@@ -330,7 +336,7 @@ function(add_test_executable_dir_recv prefix_target prefix_target_dir base_dir d
                         target_list_compile_def target_list_compile_option
                         DEFAULT_LIST_DEF ${list_compile_def}
                         DEFAULT_LIST_OPTION ${list_compile_option}
-                        TARGET_NAME ${target_name} TARGET_DIR ${prefix_target_dir}
+                        TARGET_NAME ${target_name} TARGET_DIR ${prefix_dir}
                         BASE_DIR ${base_dir} PATH ${it} RELATIVE_PATH ${relative_path} 
                         FILENAME ${filename} NAME ${src_name} TAG ${src_tag} EXT ${src_ext} 
                         CURR_DIR ${dir} RELATIVE_CURR_DIR ${relative_dir} 
@@ -339,7 +345,7 @@ function(add_test_executable_dir_recv prefix_target prefix_target_dir base_dir d
 
                     add_test_executable_dir_get_target_other_src(target_list_other_src
                         DEFAULT_LIST_SRC ${list_other_src}
-                        TARGET_NAME ${target_name} TARGET_DIR ${prefix_target_dir}
+                        TARGET_NAME ${target_name} TARGET_DIR ${prefix_dir}
                         BASE_DIR ${base_dir} PATH ${it} RELATIVE_PATH ${relative_path} 
                         FILENAME ${filename} NAME ${src_name} TAG ${src_tag} EXT ${src_ext} 
                         CURR_DIR ${dir} RELATIVE_CURR_DIR ${relative_dir} 
@@ -348,7 +354,7 @@ function(add_test_executable_dir_recv prefix_target prefix_target_dir base_dir d
 
                     add_test_executable_dir_get_target_properties(target_list_property
                         DEFAULT_LIST_PROPERTY ${list_property}
-                        TARGET_NAME ${target_name} TARGET_DIR ${prefix_target_dir}
+                        TARGET_NAME ${target_name} TARGET_DIR ${prefix_dir}
                         BASE_DIR ${base_dir} PATH ${it} RELATIVE_PATH ${relative_path} 
                         FILENAME ${filename} NAME ${src_name} TAG ${src_tag} EXT ${src_ext} 
                         CURR_DIR ${dir} RELATIVE_CURR_DIR ${relative_dir} 
@@ -357,7 +363,7 @@ function(add_test_executable_dir_recv prefix_target prefix_target_dir base_dir d
 
                     add_test_executable_dir_get_test_command(target_list_command_arg
                         DEFAULT_LIST_ARG ${list_command_arg}
-                        TARGET_NAME ${target_name} TARGET_DIR ${prefix_target_dir}
+                        TARGET_NAME ${target_name} TARGET_DIR ${prefix_dir}
                         BASE_DIR ${base_dir} PATH ${it} RELATIVE_PATH ${relative_path} 
                         FILENAME ${filename} NAME ${src_name} TAG ${src_tag} EXT ${src_ext} 
                         CURR_DIR ${dir} RELATIVE_CURR_DIR ${relative_dir} 
@@ -535,14 +541,16 @@ function(add_test_executable_dir_recv prefix_target prefix_target_dir base_dir d
     
 endfunction(add_test_executable_dir_recv)
 
-function(add_test_executable_dir prefix dir)
+function(add_test_executable_dir dir)
 
     string(CONCAT bool_options "RECURSIVE;CASE_SENSITIVE")
     
-    string(CONCAT one_options "GET_DIRNAME;GET_GROUP_NAME"
-        ";GET_HEADER_DIR;GET_HEADER;GET_TARGET_COMPILE;GET_TARGET_DIR"
-        ";GET_TARGET_INCLUDE;GET_TARGET_LINK;GET_TARGET_NAME"
-        ";GET_TARGET_OTHER_SRC"
+    string(CONCAT one_options "PREFIX;PREFIX_DIR")
+
+    string(CONCAT one_options "${one_options}" 
+        ";GET_DIRNAME;GET_GROUP_NAME;GET_HEADER_DIR;GET_HEADER"
+        ";GET_TARGET_COMPILE;GET_TARGET_DIR;GET_TARGET_INCLUDE"
+        ";GET_TARGET_LINK;GET_TARGET_NAME;GET_TARGET_OTHER_SRC"
         ";GET_TARGET_PROPERTIES;GET_TEST_COMMAND;HEADER_CONDITION"
         ";HEADER_FILTER;SRC_CONDITION;SRC_FILTER")
 
@@ -971,7 +979,7 @@ function(add_test_executable_dir prefix dir)
     set(list_header "") 
     set(list_group_name "")
     
-    add_test_executable_dir_recv(${prefix} ${dir} ${dir} ${dir}
+    add_test_executable_dir_recv(${dir} ${dir}
         ${is_recursive} ${enable_output_target_name} ${enable_output_target_dir}
         ${enable_output_target_lib} ${enable_output_target_include_dir}
         ${enable_output_target_compile_def} ${enable_output_target_compile_option}
@@ -980,6 +988,8 @@ function(add_test_executable_dir prefix dir)
         list_target_name list_target_dir list_target_lib
         list_target_include_dir list_target_compile_def list_target_compile_option
         list_target_property list_target_cmd_arg list_src list_header list_group_name
+        PREFIX ${add_test_executable_dir_PREFIX}
+        PREFIX_DIR ${add_test_executable_dir_PREFIX_DIR}
         HEADER_RECURSIVE_ARG ${header_recursive_arg}
         CASE_SENSITIVE_ARG ${case_sensitive_arg}
         HEADER_CASE_SENSITIVE_ARG ${header_case_sensitive_arg}

@@ -15,12 +15,16 @@ function(add_test_executable_dir_get_header header_dir output_list_path)
     endif()
 
     set(recursive_arg "")
-    if(NOT "${add_test_executable_dir_get_header_RECURSIVE}" STREQUAL "")
+    if(NOT "${add_test_executable_dir_get_header_RECURSIVE}" STREQUAL ""
+        AND (add_test_executable_dir_get_header_RECURSIVE))
+
         set(recursive_arg "RECURSIVE")
     endif()
 
     set(case_sensitive_arg "")
-    if(NOT "${add_test_executable_dir_get_header_CASE_SENSITIVE}" STREQUAL "")
+    if(NOT "${add_test_executable_dir_get_header_CASE_SENSITIVE}" STREQUAL ""
+        AND (add_test_executable_dir_get_header_CASE_SENSITIVE))
+
         set(case_sensitive_arg "CASE_SENSITIVE")
     endif()
 

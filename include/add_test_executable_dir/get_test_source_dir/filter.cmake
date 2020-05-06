@@ -36,7 +36,7 @@ function(get_test_source_dir_filter output)
 
     set(directory_arg "")
     if (NOT "${get_test_source_dir_filter_DIRECTORY}" STREQUAL ""
-        AND (${get_test_source_dir_filter_DIRECTORY}))
+        AND (get_test_source_dir_filter_DIRECTORY))
 
         set(directory_arg "DIRECTORY")
     endif()

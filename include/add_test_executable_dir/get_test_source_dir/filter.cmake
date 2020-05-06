@@ -29,7 +29,7 @@ function(get_test_source_dir_filter output)
 
     set(case_sensitive_arg "")
     if(NOT "${get_test_source_dir_filter_CASE_SENSITIVE}" STREQUAL "" 
-        AND (${get_test_source_dir_filter_CASE_SENSITIVE}))
+        AND (get_test_source_dir_filter_CASE_SENSITIVE))
 
         set(case_sensitive_arg "CASE_SENSITIVE")
     endif()

@@ -174,9 +174,9 @@ function(add_test_executable_dir_recv prefix_target prefix_target_dir base_dir d
                     ${is_output_target_lib} ${is_output_target_include_dir} 
                     ${is_output_target_compile_def} ${is_output_target_compile_option} 
                     ${is_output_target_property} ${is_output_target_cmd_arg} 
-                    ${is_output_src} ${is_output_header} ${is_output_other_src} 
-                    ${is_output_group_name} ${next_level} next_list_target_name next_list_target_dir 
-                    next_list_target_lib next_list_target_include_dir next_list_target_compile_def
+                    ${is_output_src} ${is_output_header} ${is_output_group_name} ${next_level} 
+                    next_list_target_name next_list_target_dir next_list_target_lib 
+                    next_list_target_include_dir next_list_target_compile_def
                     next_list_target_compile_option next_list_target_property next_list_target_cmd_arg 
                     next_list_src next_list_header next_list_group_name
                     HEADER_RECURSIVE_ARG ${header_case_sensitive_arg}
@@ -285,7 +285,7 @@ function(add_test_executable_dir_recv prefix_target prefix_target_dir base_dir d
                         CURR_DIRNAME ${curr_dirname} INCLUDE_DIR ${include_dir} 
                         ARGS ${get_header_dir_args})
 
-                    add_test_executable_dir_get_header(${header_dir} list_header 
+                    add_test_executable_dir_get_header(${header_dir} target_list_header 
                         TARGET_NAME ${target_name} TARGET_DIR ${prefix_target_dir}
                         BASE_DIR ${base_dir} PATH ${it} RELATIVE_PATH ${relative_path} 
                         FILENAME ${filename} NAME ${src_name} TAG ${tag} EXT ${src_ext} 
@@ -365,10 +365,10 @@ function(add_test_executable_dir_recv prefix_target prefix_target_dir base_dir d
                         ARGS ${get_test_command_args})
 
                     if (NOT "${header_group_name}" STREQUAL ""
-                        AND (NOT "${list_header}" STREQUAL ""))
+                        AND (NOT "${target_list_header}" STREQUAL ""))
 
                         if(NOT DEFINED CMAKE_SCRIPT_MODE_FILE)
-                            source_group("${header_group_name}" FILES ${list_header})
+                            source_group("${header_group_name}" FILES ${target_list_header})
                         endif()
 
                         if (is_output_group_name)
@@ -400,7 +400,7 @@ function(add_test_executable_dir_recv prefix_target prefix_target_dir base_dir d
 
                     if (NOT "${target_name}" STREQUAL "")
                         if(NOT DEFINED CMAKE_SCRIPT_MODE_FILE)
-                            add_executable("${target_name}" ${it} ${target_list_other_src} ${list_header})
+                            add_executable("${target_name}" ${it} ${target_list_other_src} ${target_list_header})
                         endif()
 
                         if (NOT "${target_list_property}" STREQUAL "")
@@ -481,7 +481,7 @@ function(add_test_executable_dir_recv prefix_target prefix_target_dir base_dir d
                     endif()
                     
                     if (is_output_header)
-                        list(APPEND foreach_list_header ${list_header}) 
+                        list(APPEND foreach_list_header ${target_list_header}) 
                     endif()
 
                 endif()
@@ -970,8 +970,8 @@ function(add_test_executable_dir prefix dir)
         ${enable_output_target_lib} ${enable_output_target_include_dir}
         ${enable_output_target_compile_def} ${enable_output_target_compile_option}
         ${enable_output_target_property} ${enable_output_target_cmd_arg}
-        ${enable_output_src} ${enable_output_header} ${enable_output_other_src}
-        ${enable_output_group_name} 0 list_target_name list_target_dir list_target_lib
+        ${enable_output_src} ${enable_output_header} ${enable_output_group_name} 0 
+        list_target_name list_target_dir list_target_lib
         list_target_include_dir list_target_compile_def list_target_compile_option
         list_target_property list_target_cmd_arg list_src list_header list_group_name
         HEADER_RECURSIVE_ARG ${header_case_sensitive_arg}

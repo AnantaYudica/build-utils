@@ -1,7 +1,7 @@
-function(add_test_executable_dir_get_header path header_dir output_list_path)
+function(add_test_executable_dir_get_header header_dir output_list_path)
     string(CONCAT one_options "TARGET_NAME;TARGET_DIR"
-        ";BASE_DIR;RELATIVE_PATH;FILENAME;NAME;TAG;EXT"
-        ";DIR;RELATIVE_DIR;CONDITION;FILTER;INCLUDE_DIR"
+        ";BASE_DIR;PATH;RELATIVE_PATH;FILENAME;NAME;TAG;EXT"
+        ";CURR_DIR;RELATIVE_CURR_DIR;CURR_DIRNAME;CONDITION;FILTER;INCLUDE_DIR"
         ";GET_NAME;GET_TAG;TAG_CONDITION;TAG_DELIMITER")
     string(CONCAT list_options "FILTER_ARGS;CONDITION_ARGS;ARGS")
 
@@ -35,15 +35,16 @@ function(add_test_executable_dir_get_header path header_dir output_list_path)
     set(header_filter ${add_test_executable_dir_get_header_FILTER})
     set(target_name ${add_test_executable_dir_get_header_TARGET_NAME})
     set(target_dir ${add_test_executable_dir_get_header_TARGET_DIR})
-    set(src_path ${path})
+    set(src_path ${add_test_executable_dir_get_header_PATH})
     set(src_base_dir ${add_test_executable_dir_get_header_BASE_DIR})
     set(src_relative_path ${add_test_executable_dir_get_header_RELATIVE_PATH})
     set(src_filename ${add_test_executable_dir_get_header_FILENAME})
     set(src_name ${add_test_executable_dir_get_header_NAME})
     set(src_tag ${add_test_executable_dir_get_header_TAG})
     set(src_ext ${add_test_executable_dir_get_header_EXT})
-    set(src_dir ${DIR})
-    set(src_relative_dir ${RELATIVE_DIR})
+    set(src_curr_dir ${add_test_executable_dir_get_header_CURR_DIR})
+    set(src_relative_curr_dir ${dd_test_executable_dir_get_header_RELATIVE_CURR_DIR})
+    set(src_curr_dirname ${add_test_executable_dir_get_header_CURR_DIRNAME})
     set(header_filter_args ${add_test_executable_dir_get_header_FILTER_ARGS})
     set(header_condition_args ${add_test_executable_dir_get_header_CONDITION_ARGS})
 
@@ -84,12 +85,16 @@ function(add_test_executable_dir_get_header path header_dir output_list_path)
         list(APPEND args "SRC_EXT" ${src_ext})
     endif()
 
-    if(NOT "${src_dir}" STREQUAL "")
-        list(APPEND args "SRC_DIR" ${src_dir})
+    if(NOT "${src_curr_dir}" STREQUAL "")
+        list(APPEND args "SRC_CURR_DIR" ${src_curr_dir})
     endif()
 
-    if(NOT "${src_relative_dir}" STREQUAL "")
-        list(APPEND args "SRC_RELATIVE_DIR" ${src_relative_dir})
+    if(NOT "${src_relative_curr_dir}" STREQUAL "")
+        list(APPEND args "SRC_RELATIVE_CURR_DIR" ${src_relative_curr_dir})
+    endif()
+    
+    if(NOT "${src_curr_dirname}" STREQUAL "")
+        list(APPEND args "SRC_CURR_DIRNAME" ${src_curr_dirname})
     endif()
 
     set(filter_args "${args}")

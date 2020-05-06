@@ -364,7 +364,9 @@ function(add_test_executable_dir_recv prefix_target prefix_target_dir base_dir d
                         CURR_DIRNAME ${curr_dirname} INCLUDE_DIR ${include_dir} 
                         ARGS ${get_test_command_args})
 
-                    if (NOT "${header_group_name}" STREQUAL "")
+                    if (NOT "${header_group_name}" STREQUAL ""
+                        AND (NOT "${list_header}" STREQUAL ""))
+
                         if(NOT DEFINED CMAKE_SCRIPT_MODE_FILE)
                             source_group("${header_group_name}" FILES ${list_header})
                         endif()
@@ -384,7 +386,9 @@ function(add_test_executable_dir_recv prefix_target prefix_target_dir base_dir d
                         endif()
                     endif()
 
-                    if (NOT "${other_src_group_name}" STREQUAL "")
+                    if (NOT "${other_src_group_name}" STREQUAL ""
+                        AND (NOT "${target_list_other_src}" STREQUAL ""))
+
                         if(NOT DEFINED CMAKE_SCRIPT_MODE_FILE)
                             source_group("${other_src_group_name}" FILES ${target_list_other_src})
                         endif()

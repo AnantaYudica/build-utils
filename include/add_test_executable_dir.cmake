@@ -276,6 +276,7 @@ function(add_test_executable_dir_recv base_dir dir
                 if (ok)
 
                     add_test_executable_dir_get_target_name(target_name 
+                        PREFIX ${prefix} PREFIX_DIR ${prefix_dir}
                         BASE_DIR ${base_dir} PATH ${it} RELATIVE_PATH ${relative_path} 
                         FILENAME ${filename} NAME ${src_name} TAG ${src_tag} EXT ${src_ext} 
                         CURR_DIR ${dir} RELATIVE_CURR_DIR ${relative_dir} 

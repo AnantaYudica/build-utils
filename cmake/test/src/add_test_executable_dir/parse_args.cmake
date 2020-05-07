@@ -48,7 +48,7 @@ function(parse_args output_dir output_call_args)
         ";include_dir")
 
     cmake_parse_arguments(args "${bool_options}" "${one_options}" 
-        "${list_options}" ${parse_args_ARGN}) 
+        "${list_options}" ${parse_args_ARGS}) 
 
     unset("${output_dir}")
     if (NOT "${output_dir}" STREQUAL "" 

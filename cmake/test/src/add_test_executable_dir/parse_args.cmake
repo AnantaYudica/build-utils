@@ -52,9 +52,9 @@ function(parse_args output_dir output_call_args)
 
     unset("${output_dir}")
     if (NOT "${output_dir}" STREQUAL "" 
-        AND (NOT "${args_case_dir}" STREQUAL ""))
+        AND (NOT "${args_dir}" STREQUAL ""))
         
-        set(${output_dir} ${args_case_dir} PARENT_SCOPE)
+        set(${output_dir} ${args_dir} PARENT_SCOPE)
     endif()
 
     set(call_args "")

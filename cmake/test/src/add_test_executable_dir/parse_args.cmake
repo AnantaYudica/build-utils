@@ -1,9 +1,9 @@
-function(parse_args output_call_args)
+function(parse_args output_dir output_call_args)
     cmake_parse_arguments(parse_args "" "" "ARGS" ${ARGN}) 
 
     string(CONCAT bool_options "recursive;case_sensitive")
     
-    string(CONCAT one_options "prefix;prefix_dir")
+    string(CONCAT one_options "dir;prefix;prefix_dir")
 
     string(CONCAT one_options "${one_options}" 
         ";get_dirname;get_group_name;get_header_dir;get_header"
@@ -49,6 +49,13 @@ function(parse_args output_call_args)
 
     cmake_parse_arguments(args "${bool_options}" "${one_options}" 
         "${list_options}" ${parse_args_ARGN}) 
+
+    unset("${output_dir}")
+    if (NOT "${output_dir}" STREQUAL "" 
+        AND (NOT "${args_case_dir}" STREQUAL ""))
+        
+        set(${output_dir} ${args_case_dir} PARENT_SCOPE)
+    endif()
 
     set(call_args "")
     if (args_recursive)
@@ -317,7 +324,7 @@ function(parse_args output_call_args)
 
     unset("${output_call_args}")
     if (NOT "${output_call_args}" STREQUAL "")
-        set(${output_call_args} ${call_args})
+        set(${output_call_args} ${call_args} PARENT_SCOPE)
     endif()
     
 endfunction(parse_args)

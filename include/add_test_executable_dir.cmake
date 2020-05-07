@@ -173,6 +173,12 @@ function(add_test_executable_dir_recv base_dir dir
                     CURR_DIRNAME ${curr_dirname} INCLUDE_DIR ${include_dir} 
                     ARGS ${get_dirname_args})
 
+                if (NOT "${prefix_dir}" STREQUAL "")
+                    set(next_prefix_dir ${prefix_dir}/${dirname})
+                else()
+                    set(next_prefix_dir ${dirname})
+                endif()
+
                 add_test_executable_dir_recv("${base_dir}" "${dir}/${filename}"
                     ${is_recursive} ${is_output_target_name} ${is_output_target_dir} 
                     ${is_output_target_lib} ${is_output_target_include_dir} 
@@ -184,7 +190,7 @@ function(add_test_executable_dir_recv base_dir dir
                     next_list_target_compile_option next_list_target_property next_list_target_cmd_arg 
                     next_list_src next_list_header next_list_group_name
                     PREFIX "${prefix}${dir_target_name}"
-                    PREFIX_DIR "${prefix_dir}/${dirname}"
+                    PREFIX_DIR "${next_prefix_dir}"
                     HEADER_RECURSIVE_ARG ${header_recursive_arg}
                     CASE_SENSITIVE_ARG ${case_sensitive_arg}
                     HEADER_CASE_SENSITIVE_ARG ${header_case_sensitive_arg}

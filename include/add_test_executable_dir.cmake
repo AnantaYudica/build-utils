@@ -16,7 +16,7 @@ function(add_test_executable_dir_recv base_dir dir
 
     string(CONCAT list_options "SRC_EXPAND_ARGS;HEADER_EXPAND_ARGS")
 
-    string(CONCAT one_options "PREFIX;PREFIX_DIR")
+    string(CONCAT one_options "${one_options}" ";PREFIX;PREFIX_DIR")
 
     string(CONCAT one_options "${one_options}" ";BASE_HEADER_DIR")
     

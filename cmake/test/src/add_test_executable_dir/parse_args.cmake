@@ -250,12 +250,12 @@ function(parse_args output_dir output_call_args)
         list(APPEND call_args "SRC_TAG" ${args_src_tag})
     endif()
 
-    if (NOT "${args_header_recursive}" STREQUAL "")
-        list(APPEND call_args "HEADER_RECURSIVE" ${args_header_recursive})
+    if (args_header_recursive)
+        list(APPEND call_args "HEADER_RECURSIVE")
     endif()
     
-    if (NOT "${args_header_case_sensitive}" STREQUAL "")
-        list(APPEND call_args "HEADER_CASE_SENSITIVE" ${args_header_case_sensitive})
+    if (args_header_case_sensitive)
+        list(APPEND call_args "HEADER_CASE_SENSITIVE")
     endif()
 
     if (NOT "${args_list_header_ext}" STREQUAL "")

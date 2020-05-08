@@ -89,8 +89,11 @@ function(assert_condition is_not is_equal is_less is_greater is_str a b a_name b
 endfunction(assert_condition)
 
 function(assert)
-    cmake_parse_arguments(assert "NOT;EQUAL;LESS;GREATER;STR;FOREACH;CONTAIN;COUNT" 
+    cmake_parse_arguments(assert "DEBUG;NOT;EQUAL;LESS;GREATER;STR;FOREACH;CONTAIN;COUNT" 
         "CALL;RESULT;COUNT_IF_EQUAL;COUNT_IF_STREQUAL" "LIST_RESULT;ARGS" ${ARGN}) 
+    if (assert_DEBUG)
+        message(STATUS "args : ${ARGN}")
+    endif()
 
     if("${assert_CALL}" STREQUAL "" OR (NOT EXISTS "${assert_CALL}"))
         include(${TEST_UTILS_DIR}/assert/call.cmake)
@@ -102,6 +105,9 @@ function(assert)
     
     set(out "")
     assert_call(OUTPUT out ARGS ${assert_ARGS})
+    if (assert_DEBUG)
+        message(STATUS "Call Output : ${out}")
+    endif()
 
     set(enable_count_if_equal FALSE)
     set(enable_count_if_strequal FALSE)

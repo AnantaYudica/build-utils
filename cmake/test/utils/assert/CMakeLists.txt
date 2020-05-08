@@ -87,7 +87,7 @@ function(assert_condition is_not is_equal is_less is_greater is_str a b a_name b
 endfunction(assert_condition)
 
 function(assert)
-    cmake_parse_arguments(assert "NOT;EQUAL;LESS;GREATER;STR;FOREACH" 
+    cmake_parse_arguments(assert "NOT;EQUAL;LESS;GREATER;STR;FOREACH;CONTAIN" 
         "CALL;RESULT" "LIST_RESULT;ARGS" ${ARGN}) 
 
     if("${assert_CALL}" STREQUAL "" OR (NOT EXISTS "${assert_CALL}"))
@@ -102,17 +102,43 @@ function(assert)
     assert_call(OUTPUT out ARGS ${assert_ARGS})
 
     if(assert_FOREACH)
-        list(LENGTH assert_LIST_RESULT len)
-        foreach(it RANGE 1 ${len} 1)
+        list(LENGTH out out_len)
+        list(LENGTH assert_LIST_RESULT result_len)
+        foreach(it RANGE 1 ${out_len} 1)
             math(EXPR index "${it}-1")
-            list(GET assert_LIST_RESULT ${index} element_result)
             list(GET out ${index} element_out)
-            assert_condition(${assert_NOT} ${assert_EQUAL} ${assert_LESS} 
-                ${assert_GREATER} ${assert_STR} ${element_result} ${element_out} 
-                "result[${index}]" "output[${index}]" condition msg)
-            if(NOT condition)
-                message(FATAL_ERROR "Error Assert Condition ${msg}")
-                break()
+            if (assert_CONTAIN)
+                set(contain_condition FALSE)
+                set(contain_msg "")
+                foreach(inner_it RANGE 1 ${result_len} 1)
+                    math(EXPR inner_index "${inner_it}-1")
+                    list(GET assert_LIST_RESULT ${inner_index} element_result)
+                    assert_condition(${assert_NOT} ${assert_EQUAL} ${assert_LESS} 
+                        ${assert_GREATER} ${assert_STR} ${element_result} ${element_out} 
+                        "result[${inner_index}]" "output[${index}]" condition msg)
+                    if ("${contain_msg}" STREQUAL "")
+                        string(CONCAT contain_msg "${msg}")
+                    else()
+                        string(CONCAT contain_msg "${contain_msg}" "\n" "${msg}")
+                    endif()
+                    if (condition)
+                        set(contain_condition TRUE)
+                        break()
+                    endif()
+                endforeach(inner_it)
+                if (NOT contain_condition)
+                    message(FATAL_ERROR "Error Assert Condition ${contain_msg}")
+                    break()
+                endif()
+            else()
+                list(GET assert_LIST_RESULT ${index} element_result)
+                assert_condition(${assert_NOT} ${assert_EQUAL} ${assert_LESS} 
+                    ${assert_GREATER} ${assert_STR} ${element_result} ${element_out} 
+                    "result[${index}]" "output[${index}]" condition msg)
+                if(NOT condition)
+                    message(FATAL_ERROR "Error Assert Condition ${msg}")
+                    break()
+                endif()
             endif()
         endforeach()
     else()

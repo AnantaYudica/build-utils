@@ -266,7 +266,7 @@ function(add_test_executable_dir_recv base_dir dir
                 endif()
 
                 if (is_output_group_name)
-                    list(APPEND foreach_list_group_name ${next_group_name})
+                    list(APPEND foreach_list_group_name ${next_list_group_name})
                 endif()
 
             elseif(NOT is_directory)

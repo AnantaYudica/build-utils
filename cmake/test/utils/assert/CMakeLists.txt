@@ -89,7 +89,7 @@ function(assert_condition is_not is_equal is_less is_greater is_str a b a_name b
 endfunction(assert_condition)
 
 function(assert)
-    cmake_parse_arguments(assert "NOT;EQUAL;LESS;GREATER;STR;FOREACH;CONTAIN" 
+    cmake_parse_arguments(assert "NOT;EQUAL;LESS;GREATER;STR;FOREACH;CONTAIN;COUNT" 
         "CALL;RESULT" "LIST_RESULT;ARGS" ${ARGN}) 
 
     if("${assert_CALL}" STREQUAL "" OR (NOT EXISTS "${assert_CALL}"))
@@ -102,6 +102,10 @@ function(assert)
     
     set(out "")
     assert_call(OUTPUT out ARGS ${assert_ARGS})
+
+    if (assert_COUNT)
+        set(count 0)
+    endif()
 
     if(assert_FOREACH)
         list(LENGTH out out_len)
@@ -132,6 +136,8 @@ function(assert)
                     message(FATAL_ERROR "Error Assert Condition : { ${contain_msg} }")
                     break()
                 endif()
+            elseif (assert_COUNT)
+                math(EXPR count "${count}+1")
             else()
                 list(GET assert_LIST_RESULT ${index} element_result)
                 assert_condition(${assert_NOT} ${assert_EQUAL} ${assert_LESS} 
@@ -143,6 +149,14 @@ function(assert)
                 endif()
             endif()
         endforeach()
+        if (assert_COUNT)
+            assert_condition(${assert_NOT} ${assert_EQUAL} ${assert_LESS} 
+                ${assert_GREATER} ${assert_STR} ${assert_RESULT} ${count} 
+                "result" "count" condition msg)
+            if(NOT condition)
+                message(FATAL_ERROR "Error Assert Condition : ${msg}")
+            endif()
+        endif()
     else()
         assert_condition(${assert_NOT} ${assert_EQUAL} ${assert_LESS} 
             ${assert_GREATER} ${assert_STR} ${assert_RESULT} ${out}  

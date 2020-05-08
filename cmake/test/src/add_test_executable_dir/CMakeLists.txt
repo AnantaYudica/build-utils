@@ -40,8 +40,7 @@ string(CONCAT list_src_1
     "${TEST_BASE_SOURCE_DIR}/dir_1/test1.txt"
     ";${TEST_BASE_SOURCE_DIR}/dir_1/test2.txt")
 string(CONCAT list_group_name_1
-    "Source Files"
-    ";Source Files")
+    "Source Files")
     
 assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_name} 
     LIST_RESULT "test1;test2" 
@@ -73,8 +72,69 @@ assert(EQUAL STR FOREACH CALL ${assert_call_result_list_src}
 assert(EQUAL STR FOREACH CALL ${assert_call_result_list_header} 
     LIST_RESULT "EMPTY" 
     ARGS "${args_1}")
-assert(EQUAL STR FOREACH CALL ${assert_call_result_list_group_name} 
+assert(EQUAL STR FOREACH CONTAIN CALL ${assert_call_result_list_group_name} 
     LIST_RESULT "${list_group_name_1}" 
     ARGS "${args_1}")
+assert(EQUAL FOREACH COUNT CALL ${assert_call_result_list_group_name} 
+    RESULT 2
+    ARGS "${args_1}")
+assert(EQUAL FOREACH COUNT_IF_STREQUAL "Source Files" CALL ${assert_call_result_list_group_name} 
+    RESULT 2
+    ARGS "${args_1}")
+
+set(args_2 "dir;${TEST_BASE_SOURCE_DIR}/dir_1;include_dir;${INCLUDE_DIR};recursive")
+string(CONCAT list_target_name_2
+    "test1;test1;test1;test2;test1;test2")
+string(CONCAT list_target_dir_2
+    "sub1/sub1;sub1;sub2/sub1;sub2/sub1")
+string(CONCAT list_src_2 
+    "${TEST_BASE_SOURCE_DIR}/dir_1/sub1/sub1/test1.txt"
+    ";${TEST_BASE_SOURCE_DIR}/dir_1/sub1/test1.txt"
+    ";${TEST_BASE_SOURCE_DIR}/dir_1/sub2/sub1/test1.txt"
+    ";${TEST_BASE_SOURCE_DIR}/dir_1/sub2/sub1/test2.txt"
+    ";${TEST_BASE_SOURCE_DIR}/dir_1/test1.txt"
+    ";${TEST_BASE_SOURCE_DIR}/dir_1/test2.txt")
+string(CONCAT list_group_name_2
+    "Source Files")
+    
+assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_name} 
+    LIST_RESULT "${list_target_name_2}" 
+    ARGS "${args_2}")
+assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_dir} 
+    LIST_RESULT "${list_target_dir_2}" 
+    ARGS "${args_2}")
+assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_lib} 
+    LIST_RESULT "EMPTY" 
+    ARGS "${args_2}")
+assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_include_dir} 
+    LIST_RESULT "EMPTY" 
+    ARGS "${args_2}")
+assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_compile_def} 
+    LIST_RESULT "EMPTY" 
+    ARGS "${args_2}")
+assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_compile_option} 
+    LIST_RESULT "EMPTY" 
+    ARGS "${args_2}")
+assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_property} 
+    LIST_RESULT "EMPTY" 
+    ARGS "${args_2}")
+assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_cmd_arg} 
+    LIST_RESULT "EMPTY" 
+    ARGS "${args_2}")
+assert(EQUAL STR FOREACH CALL ${assert_call_result_list_src} 
+    LIST_RESULT "${list_src_2}" 
+    ARGS "${args_2}")
+assert(EQUAL STR FOREACH CALL ${assert_call_result_list_header} 
+    LIST_RESULT "EMPTY" 
+    ARGS "${args_2}")
+assert(EQUAL STR FOREACH CONTAIN CALL ${assert_call_result_list_group_name} 
+    LIST_RESULT "${list_group_name_2}" 
+    ARGS "${args_2}")
+assert(EQUAL FOREACH COUNT CALL ${assert_call_result_list_group_name} 
+    RESULT 6
+    ARGS "${args_2}")
+assert(EQUAL FOREACH COUNT_IF_STREQUAL "Source Files" CALL ${assert_call_result_list_group_name} 
+    RESULT 6
+    ARGS "${args_2}")
 
 message(FATAL_ERROR "")

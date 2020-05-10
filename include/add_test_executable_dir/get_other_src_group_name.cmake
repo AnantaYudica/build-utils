@@ -9,6 +9,6 @@ function(add_test_executable_dir_get_other_src_group_name output_group_name)
 
     set(prefix ${add_test_executable_dir_get_other_src_group_name_PREFIX})
 
-    set(${output_group_name} ${prefix})
+    set(${output_group_name} ${prefix} PARENT_SCOPE)
     
 endfunction(add_test_executable_dir_get_other_src_group_name)

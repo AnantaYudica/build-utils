@@ -77,7 +77,7 @@ function(add_test_executable_dir_recv base_dir dir
     set(other_src_group_name ${add_test_executable_dir_recv_OTHER_SRC_GROUP_NAME})
     set(list_compile_def ${add_test_executable_dir_recv_LIST_COMPILE_DEF})
     set(list_compile_option ${add_test_executable_dir_recv_LIST_COMPILE_OPTION})
-    set(list_include_dir ${add_test_executable_dir_recv_LIST_INCLUDED_DIR})
+    set(list_include_dir ${add_test_executable_dir_recv_LIST_INCLUDE_DIR})
     set(list_lib ${add_test_executable_dir_recv_LIST_LIB})
     set(list_other_src ${add_test_executable_dir_recv_LIST_OTHER_SRC})
     set(list_property ${add_test_executable_dir_recv_LIST_PROPERTY})

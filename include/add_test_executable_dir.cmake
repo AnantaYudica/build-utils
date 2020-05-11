@@ -543,8 +543,8 @@ function(add_test_executable_dir_recv base_dir dir
                         endif()
 
                         if (NOT "${target_list_test_cmd_arg}" STREQUAL "")
-                            if (is_output_target_cmd_arg)
-                                list(APPEND foreach_list_target_cmd_arg 
+                            if (is_output_target_test_cmd_arg)
+                                list(APPEND foreach_list_target_test_cmd_arg 
                                     ${target_list_test_cmd_arg}) 
                             endif()
 
@@ -601,8 +601,8 @@ function(add_test_executable_dir_recv base_dir dir
         set(${list_target_property} ${foreach_list_target_property} PARENT_SCOPE) 
     endif()
     
-    if (is_output_target_cmd_arg)
-        set(${list_target_cmd} ${foreach_list_target_cmd_arg} PARENT_SCOPE) 
+    if (is_output_target_test_cmd_arg)
+        set(${list_target_test_cmd_arg} ${foreach_list_target_test_cmd_arg} PARENT_SCOPE) 
     endif()
     
     if (is_output_src)

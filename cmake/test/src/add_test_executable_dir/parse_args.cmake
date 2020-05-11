@@ -183,7 +183,7 @@ function(parse_args output_dir output_call_args)
     endif()
 
     if (NOT "${args_get_test_cmd_args_args}" STREQUAL "")
-        list(APPEND call_args "GET_TEST_CMD_ARGS_ARGS" ${args_get_test_command_args})
+        list(APPEND call_args "GET_TEST_CMD_ARGS_ARGS" ${args_get_test_cmd_args_args})
     endif()
     
     if (NOT "${args_header_condition_args}" STREQUAL "")
@@ -315,7 +315,7 @@ function(parse_args output_dir output_call_args)
     endif()
     
     if (NOT "${args_list_test_cmd_arg}" STREQUAL "")
-        list(APPEND call_args "LIST_TEST_CMD_ARG" ${list_test_cmd_arg})
+        list(APPEND call_args "LIST_TEST_CMD_ARG" ${args_list_test_cmd_arg})
     endif()
 
     if (NOT "${args_include_dir}" STREQUAL "")

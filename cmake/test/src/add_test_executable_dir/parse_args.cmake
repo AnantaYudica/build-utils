@@ -9,14 +9,14 @@ function(parse_args output_dir output_call_args)
         ";get_dirname;get_group_name;get_header_dir;get_header"
         ";get_target_compile;get_target_dir;get_target_include"
         ";get_target_link;get_target_name;get_target_other_src"
-        ";get_target_properties;get_test_command;header_condition"
+        ";get_target_properties;get_test_cmd_args;header_condition"
         ";header_filter;src_condition;src_filter")
 
     string(CONCAT list_options "get_dirname_args;get_group_name_args"
         ";get_header_dir_args;get_header_args;get_target_compile_args"
         ";get_target_dir_args;get_target_include_args;get_target_link_args"
         ";get_target_name_args;get_target_other_src_args;get_target_properties_args"
-        ";get_test_command_args;header_condition_args"
+        ";get_test_cmd_args_args;header_condition_args"
         ";header_filter_args;src_condition_args;src_filter_args")
 
     string(CONCAT one_options "${one_options}" 
@@ -42,7 +42,7 @@ function(parse_args output_dir output_call_args)
     
     string(CONCAT list_options "${list_options}"
         ";list_compile_def;list_compile_option;list_include_dir;list_lib"
-        ";list_other_src;list_property;list_command_arg")
+        ";list_other_src;list_property;list_test_cmd_arg")
 
     string(CONCAT one_options "${one_options}" 
         ";include_dir")
@@ -118,8 +118,8 @@ function(parse_args output_dir output_call_args)
         list(APPEND call_args "GET_TARGET_PROPERTIES" ${args_get_target_properties})
     endif()
     
-    if (NOT "${args_get_test_command}" STREQUAL "")
-        list(APPEND call_args "GET_TEST_COMMAND" ${args_get_test_command})
+    if (NOT "${args_get_test_cmd_args}" STREQUAL "")
+        list(APPEND call_args "GET_TEST_CMD_ARGS" ${args_get_test_cmd_args})
     endif()
     
     if (NOT "${args_header_condition}" STREQUAL "")
@@ -182,8 +182,8 @@ function(parse_args output_dir output_call_args)
         list(APPEND call_args "GET_TARGET_PROPERTIES_ARGS" ${args_get_target_properties_args})
     endif()
 
-    if (NOT "${args_get_test_command_args}" STREQUAL "")
-        list(APPEND call_args "GET_TEST_COMMAND_ARGS" ${args_get_test_command_args})
+    if (NOT "${args_get_test_cmd_args_args}" STREQUAL "")
+        list(APPEND call_args "GET_TEST_CMD_ARGS_ARGS" ${args_get_test_command_args})
     endif()
     
     if (NOT "${args_header_condition_args}" STREQUAL "")
@@ -314,8 +314,8 @@ function(parse_args output_dir output_call_args)
         list(APPEND call_args "LIST_PROPERTY" ${args_list_property})
     endif()
     
-    if (NOT "${args_list_command_arg}" STREQUAL "")
-        list(APPEND call_args "LIST_COMMAND_ARG" ${args_list_command_arg})
+    if (NOT "${args_list_test_cmd_arg}" STREQUAL "")
+        list(APPEND call_args "LIST_TEST_CMD_ARG" ${list_test_cmd_arg})
     endif()
 
     if (NOT "${args_include_dir}" STREQUAL "")

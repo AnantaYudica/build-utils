@@ -372,7 +372,7 @@ function(add_test_executable_dir_recv base_dir dir
                         CURR_DIRNAME ${curr_dirname} INCLUDE_DIR ${include_dir} 
                         ARGS ${get_target_properties_args})
 
-                    add_test_executable_dir_get_test_command(target_list_test_command_arg
+                        add_test_executable_dir_get_test_cmd_args(target_list_test_command_arg
                         DEFAULT_LIST_ARG ${list_test_command_arg}
                         TARGET_NAME ${target_name} TARGET_DIR ${prefix_dir}
                         BASE_DIR ${base_dir} PATH ${it} RELATIVE_PATH ${relative_path} 
@@ -848,7 +848,7 @@ function(add_test_executable_dir dir)
     if("${add_test_executable_dir_GET_TEST_COMMAND}" STREQUAL "" 
         OR (NOT EXISTS "${add_test_executable_dir_GET_TEST_COMMAND}"))
         
-        include(${base_dir}/add_test_executable_dir/get_test_command.cmake)
+        include(${base_dir}/add_test_executable_dir/get_test_cmd_args.cmake)
     else()
         include(${add_test_executable_dir_GET_TEST_COMMAND})
     endif()

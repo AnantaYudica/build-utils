@@ -24,7 +24,7 @@ function(add_test_executable_dir_recv base_dir dir
         ";GET_HEADER_GROUP_NAME_ARGS;GET_HEADER_ARGS;GET_OTHER_SRC_GROUP_NAME_ARGS"
         ";GET_TARGET_COMPILE_ARGS;GET_TARGET_DIR_ARGS;GET_TARGET_INCLUDE_ARGS"
         ";GET_TARGET_LINK_ARGS;GET_TARGET_NAME_ARGS;GET_TARGET_OTHER_SRC_ARGS"
-        ";GET_TARGET_PROPERTIES_ARGS;GET_TEST_COMMAND_ARGS;HEADER_CONDITION_ARGS"
+        ";GET_TARGET_PROPERTIES_ARGS;GET_TEST_CMD_ARGS_ARGS;HEADER_CONDITION_ARGS"
         ";HEADER_FILTER_ARGS;SRC_CONDITION_ARGS;SRC_FILTER_ARGS")
 
     string(CONCAT one_options "${one_options}"
@@ -35,7 +35,7 @@ function(add_test_executable_dir_recv base_dir dir
 
     string(CONCAT list_options "${list_options}"
         ";LIST_COMPILE_DEF;LIST_COMPILE_OPTION;LIST_INCLUDE_DIR;LIST_LIB"
-        ";LIST_OTHER_SRC;LIST_PROPERTY;LIST_TEST_COMMAND_ARG")
+        ";LIST_OTHER_SRC;LIST_PROPERTY;LIST_TEST_CMD_ARG")
 
     cmake_parse_arguments(add_test_executable_dir_recv "" 
         "${one_options}" "${list_options}" ${ARGN}) 
@@ -67,7 +67,7 @@ function(add_test_executable_dir_recv base_dir dir
     set(get_target_name_args ${add_test_executable_dir_recv_GET_TARGET_NAME_ARGS})
     set(get_target_other_src_args ${add_test_executable_dir_recv_GET_TARGET_OTHER_SRC_ARGS}) 
     set(get_target_properties_args ${add_test_executable_dir_recv_GET_TARGET_PROPERTIES_ARGS}) 
-    set(get_test_command_args ${add_test_executable_dir_recv_GET_TEST_COMMAND_ARGS})
+    set(get_test_cmd_args_args ${add_test_executable_dir_recv_GET_TEST_CMD_ARGS_ARGS})
     set(header_condition_args ${add_test_executable_dir_recv_HEADER_CONDITION_ARGS})
     set(header_filter_args ${add_test_executable_dir_recv_HEADER_FILTER_ARGS})
     set(src_condition_args ${add_test_executable_dir_recv_SRC_CONDITION_ARGS})
@@ -82,7 +82,7 @@ function(add_test_executable_dir_recv base_dir dir
     set(list_lib ${add_test_executable_dir_recv_LIST_LIB})
     set(list_other_src ${add_test_executable_dir_recv_LIST_OTHER_SRC})
     set(list_property ${add_test_executable_dir_recv_LIST_PROPERTY})
-    set(list_test_command_arg ${add_test_executable_dir_recv_LIST_TEST_COMMAND_ARG})
+    set(list_test_cmd_arg ${add_test_executable_dir_recv_LIST_TEST_CMD_ARG})
 
     set(include_dir ${add_test_executable_dir_recv_INCLUDE_DIR})
     
@@ -212,7 +212,7 @@ function(add_test_executable_dir_recv base_dir dir
                     GET_TARGET_NAME_ARGS ${get_target_name_args}
                     GET_TARGET_OTHER_SRC_ARGS ${get_target_other_src_args}
                     GET_TARGET_PROPERTIES_ARGS ${get_target_properties_args}
-                    GET_TEST_COMMAND_ARGS ${get_test_command_args}
+                    GET_TEST_CMD_ARGS_ARGS ${get_test_cmd_args_args}
                     HEADER_CONDITION_ARGS ${header_condition_args}
                     HEADER_FILTER_ARGS ${header_filter_args}
                     SRC_CONDITION_ARGS ${src_condition_args}
@@ -226,7 +226,7 @@ function(add_test_executable_dir_recv base_dir dir
                     LIST_LIB ${list_lib}
                     LIST_OTHER_SRC ${list_other_src}
                     LIST_PROPERTY ${list_property}
-                    LIST_TEST_COMMAND_ARG ${list_test_command_arg}
+                    LIST_TEST_CMD_ARG ${list_test_cmd_arg}
                     INCLUDE_DIR ${include_dir})
                     
                 if (is_output_target_name)
@@ -372,14 +372,14 @@ function(add_test_executable_dir_recv base_dir dir
                         CURR_DIRNAME ${curr_dirname} INCLUDE_DIR ${include_dir} 
                         ARGS ${get_target_properties_args})
 
-                        add_test_executable_dir_get_test_cmd_args(target_list_test_command_arg
-                        DEFAULT_LIST_ARG ${list_test_command_arg}
+                        add_test_executable_dir_get_test_cmd_args(target_list_test_cmd_arg
+                        DEFAULT_LIST_ARG ${list_test_cmd_arg}
                         TARGET_NAME ${target_name} TARGET_DIR ${prefix_dir}
                         BASE_DIR ${base_dir} PATH ${it} RELATIVE_PATH ${relative_path} 
                         FILENAME ${filename} NAME ${src_name} TAG ${src_tag} EXT ${src_ext} 
                         CURR_DIR ${dir} RELATIVE_CURR_DIR ${relative_dir} 
                         CURR_DIRNAME ${curr_dirname} INCLUDE_DIR ${include_dir} 
-                        ARGS ${get_test_command_args})
+                        ARGS ${get_test_cmd_args_args})
 
                     if (NOT "${target_list_header}" STREQUAL "")
 
@@ -539,13 +539,13 @@ function(add_test_executable_dir_recv base_dir dir
                         
                         if(NOT DEFINED CMAKE_SCRIPT_MODE_FILE)
                             add_test(NAME "${target_name}" COMMAND ${target_name} 
-                                ${target_list_test_command_arg})
+                                ${target_list_test_cmd_arg})
                         endif()
 
-                        if (NOT "${target_list_test_command_arg}" STREQUAL "")
+                        if (NOT "${target_list_test_cmd_arg}" STREQUAL "")
                             if (is_output_target_cmd_arg)
                                 list(APPEND foreach_list_target_cmd_arg 
-                                    ${target_list_test_command_arg}) 
+                                    ${target_list_test_cmd_arg}) 
                             endif()
 
                         endif()
@@ -629,7 +629,7 @@ function(add_test_executable_dir dir)
         ";GET_DIRNAME;GET_GROUP_NAME;GET_HEADER_DIR;GET_HEADER_GROUP_NAME"
         ";GET_HEADER;GET_OTHER_SRC_GROUP_NAME;GET_TARGET_COMPILE"
         ";GET_TARGET_DIR;GET_TARGET_INCLUDE;GET_TARGET_LINK;GET_TARGET_NAME"
-        ";GET_TARGET_OTHER_SRC;GET_TARGET_PROPERTIES;GET_TEST_COMMAND"
+        ";GET_TARGET_OTHER_SRC;GET_TARGET_PROPERTIES;GET_TEST_CMD_ARGS"
         ";HEADER_CONDITION;HEADER_FILTER;SRC_CONDITION;SRC_FILTER")
 
     string(CONCAT list_options "GET_DIRNAME_ARGS;GET_GROUP_NAME_ARGS"
@@ -637,7 +637,7 @@ function(add_test_executable_dir dir)
         ";GET_OTHER_SRC_GROUP_NAME_ARGS;GET_TARGET_COMPILE_ARGS"
         ";GET_TARGET_DIR_ARGS;GET_TARGET_INCLUDE_ARGS;GET_TARGET_LINK_ARGS"
         ";GET_TARGET_NAME_ARGS;GET_TARGET_OTHER_SRC_ARGS"
-        ";GET_TARGET_PROPERTIES_ARGS;GET_TEST_COMMAND_ARGS;HEADER_CONDITION_ARGS"
+        ";GET_TARGET_PROPERTIES_ARGS;GET_TEST_CMD_ARGS_ARGS;HEADER_CONDITION_ARGS"
         ";HEADER_FILTER_ARGS;SRC_CONDITION_ARGS;SRC_FILTER_ARGS")
 
     string(CONCAT one_options "${one_options}" 
@@ -663,7 +663,7 @@ function(add_test_executable_dir dir)
     
     string(CONCAT list_options "${list_options}"
         ";LIST_COMPILE_DEF;LIST_COMPILE_OPTION;LIST_INCLUDE_DIR;LIST_LIB"
-        ";LIST_OTHER_SRC;LIST_PROPERTY;LIST_TEST_COMMAND_ARG")
+        ";LIST_OTHER_SRC;LIST_PROPERTY;LIST_TEST_CMD_ARG")
 
     string(CONCAT one_options "${one_options}" 
         ";INCLUDE_DIR")
@@ -845,12 +845,12 @@ function(add_test_executable_dir dir)
         include(${add_test_executable_dir_GET_TARGET_PROPERTIES})
     endif()
 
-    if("${add_test_executable_dir_GET_TEST_COMMAND}" STREQUAL "" 
-        OR (NOT EXISTS "${add_test_executable_dir_GET_TEST_COMMAND}"))
+    if("${add_test_executable_dir_GET_TEST_CMD_ARGS}" STREQUAL "" 
+        OR (NOT EXISTS "${add_test_executable_dir_GET_TEST_CMD_ARGS}"))
         
         include(${base_dir}/add_test_executable_dir/get_test_cmd_args.cmake)
     else()
-        include(${add_test_executable_dir_GET_TEST_COMMAND})
+        include(${add_test_executable_dir_GET_TEST_CMD_ARGS})
     endif()
 
     if("${add_test_executable_dir_HEADER_CONDITION}" STREQUAL "" 
@@ -1116,7 +1116,7 @@ function(add_test_executable_dir dir)
         GET_TARGET_NAME_ARGS ${add_test_executable_dir_GET_TARGET_NAME_ARGS}
         GET_TARGET_OTHER_SRC_ARGS ${add_test_executable_dir_GET_TARGET_OTHER_SRC_ARGS}
         GET_TARGET_PROPERTIES_ARGS ${add_test_executable_dir_GET_TARGET_PROPERTIES_ARGS}
-        GET_TEST_COMMAND_ARGS ${add_test_executable_dir_GET_TEST_COMMAND_ARGS}
+        GET_TEST_CMD_ARGS_ARGS ${add_test_executable_dir_GET_TEST_CMD_ARGS_ARGS}
         HEADER_CONDITION_ARGS ${add_test_executable_dir_HEADER_CONDITION_ARGS}
         HEADER_FILTER_ARGS ${add_test_executable_dir_HEADER_FILTER_ARGS}
         SRC_CONDITION_ARGS ${add_test_executable_dir_SRC_CONDITION_ARGS}
@@ -1130,7 +1130,7 @@ function(add_test_executable_dir dir)
         LIST_LIB ${add_test_executable_dir_LIST_LIB}
         LIST_OTHER_SRC ${add_test_executable_dir_LIST_OTHER_SRC}
         LIST_PROPERTY ${add_test_executable_dir_LIST_PROPERTY}
-        LIST_TEST_COMMAND_ARG ${add_test_executable_dir_LIST_TEST_COMMAND_ARG}
+        LIST_TEST_CMD_ARG ${add_test_executable_dir_LIST_TEST_CMD_ARG}
         INCLUDE_DIR ${base_dir})
 
     if (enable_output_target_name)

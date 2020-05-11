@@ -22,11 +22,11 @@ function(add_test_executable_dir_recv base_dir dir
     
     string(CONCAT list_options "${list_options}"
         ";GET_DIRNAME_ARGS;GET_GROUP_NAME_ARGS;GET_HEADER_DIR_ARGS"
-        ";GET_HEADER_ARGS;GET_TARGET_COMPILE_ARGS;GET_TARGET_DIR_ARGS"
-        ";GET_TARGET_INCLUDE_ARGS;GET_TARGET_LINK_ARGS;GET_TARGET_NAME_ARGS"
-        ";GET_TARGET_OTHER_SRC_ARGS;GET_TARGET_PROPERTIES_ARGS "
-        ";GET_TEST_COMMAND_ARGS;HEADER_CONDITION_ARGS;HEADER_FILTER_ARGS" 
-        ";SRC_CONDITION_ARGS;SRC_FILTER_ARGS")
+        ";GET_HEADER_GROUP_NAME_ARGS;GET_HEADER_ARGS;GET_OTHER_SRC_GROUP_NAME_ARGS"
+        ";GET_TARGET_COMPILE_ARGS;GET_TARGET_DIR_ARGS;GET_TARGET_INCLUDE_ARGS"
+        ";GET_TARGET_LINK_ARGS;GET_TARGET_NAME_ARGS;GET_TARGET_OTHER_SRC_ARGS"
+        ";GET_TARGET_PROPERTIES_ARGS;GET_TEST_COMMAND_ARGS;HEADER_CONDITION_ARGS"
+        ";HEADER_FILTER_ARGS;SRC_CONDITION_ARGS;SRC_FILTER_ARGS")
 
     string(CONCAT one_options "${one_options}"
         ";SRC_GROUP_NAME;HEADER_GROUP_NAME;OTHER_SRC_GROUP_NAME")
@@ -58,7 +58,9 @@ function(add_test_executable_dir_recv base_dir dir
     set(get_dirname_args ${add_test_executable_dir_recv_GET_DIRNAME_ARGS})
     set(get_group_name_args ${add_test_executable_dir_recv_GET_GROUP_NAME_ARGS})
     set(get_header_dir_args ${add_test_executable_dir_recv_GET_HEADER_DIR_ARGS})
+    set(get_header_group_name_args ${add_test_executable_dir_recv_GET_HEADER_GROUP_NAME_ARGS})
     set(get_header_args ${add_test_executable_dir_recv_GET_HEADER_ARGS})
+    set(get_other_src_group_name_args ${add_test_executable_dir_recv_GET_OTHER_SRC_GROUP_NAME_ARGS})
     set(get_target_compile_args ${add_test_executable_dir_recv_GET_TARGET_COMPILE_ARGS}) 
     set(get_target_dir_args ${add_test_executable_dir_recv_GET_TARGET_DIR_ARGS})
     set(get_target_include_args ${add_test_executable_dir_recv_GET_TARGET_INCLUDE_ARGS})
@@ -200,7 +202,9 @@ function(add_test_executable_dir_recv base_dir dir
                     GET_DIRNAME_ARGS ${get_dirname_args}
                     GET_GROUP_NAME_ARGS ${get_group_name_args}
                     GET_HEADER_DIR_ARGS ${get_header_dir_args}
+                    GET_HEADER_GROUP_NAME_ARGS ${get_header_group_name_args}
                     GET_HEADER_ARGS ${get_header_args}
+                    GET_OTHER_SRC_GROUP_NAME_ARGS ${get_other_src_group_name_args}
                     GET_TARGET_COMPILE_ARGS ${get_target_compile_args}
                     GET_TARGET_DIR_ARGS ${get_target_dir_args}
                     GET_TARGET_INCLUDE_ARGS ${get_target_include_args}
@@ -377,15 +381,49 @@ function(add_test_executable_dir_recv base_dir dir
                         CURR_DIRNAME ${curr_dirname} INCLUDE_DIR ${include_dir} 
                         ARGS ${get_test_command_args})
 
-                    if (NOT "${header_group_name}" STREQUAL ""
-                        AND (NOT "${target_list_header}" STREQUAL ""))
+                    if (NOT "${target_list_header}" STREQUAL "")
 
-                        if(NOT DEFINED CMAKE_SCRIPT_MODE_FILE)
-                            source_group("${header_group_name}" FILES ${target_list_header})
-                        endif()
+                        set(foreach_header_group_name "")
+                        foreach(it_header_path ${target_list_header})
+                            
+                            get_filename_component(header_curr_dir 
+                                ${it_header_path} DIRECTORY)
+                            get_filename_component(header_filename 
+                                ${it_header_path} NAME)
+                            get_filename_component(header_curr_dirname 
+                                ${header_curr_dir} NAME)
+                            file(RELATIVE_PATH header_relative_path 
+                                "${header_dir}" "${it_header_path}")
+                            file(RELATIVE_PATH header_relative_curr_dir 
+                                "${header_dir}" "${header_curr_dir}")
+                            add_test_executable_dir_get_header_group_name(it_header_group_name
+                                PREFIX ${header_group_name} PATH ${it_header_path}
+                                BASE_DIR ${header_dir} RELATIVE_PATH ${header_relative_path}
+                                FILENAME ${header_filename} CURR_DIR ${header_curr_dir}
+                                RELATIVE_CURR_DIR ${header_relative_curr_dir}
+                                CURR_DIRNAME ${header_curr_dirname}
+                                SRC_BASE_DIR ${base_dir} SRC_PATH ${it}
+                                SRC_RELATIVE_PATH ${relative_path} SRC_FILENAME ${filename}
+                                SRC_NAME ${src_name} SRC_TAG ${src_tag} SRC_EXT ${src_ext}
+                                SRC_CURR_DIR ${dir} SRC_RELATIVE_CURR_DIR ${relative_dir}
+                                SRC_CURR_DIRNAME ${curr_dirname} INCLUDE_DIR ${include_dir}
+                                TARGET_NAME ${target_name} TARGET_DIR ${prefix_dir}
+                                ARGS ${get_header_group_name_args})
+
+                            if(NOT DEFINED CMAKE_SCRIPT_MODE_FILE)
+                                source_group("${it_header_group_name}" 
+                                    FILES ${it_header_path})
+                            endif()
+
+                            if (is_output_group_name)
+                                list(APPEND foreach_header_group_name ${it_header_group_name})
+                            endif()
+
+                        endforeach(it_header_path)
 
                         if (is_output_group_name)
-                            list(APPEND foreach_list_group_name ${header_group_name})
+                            list(REMOVE_DUPLICATES foreach_header_group_name)
+                            list(APPEND foreach_list_group_name ${foreach_header_group_name})
                         endif()
                     endif()
 
@@ -402,12 +440,43 @@ function(add_test_executable_dir_recv base_dir dir
                     if (NOT "${other_src_group_name}" STREQUAL ""
                         AND (NOT "${target_list_other_src}" STREQUAL ""))
 
-                        if(NOT DEFINED CMAKE_SCRIPT_MODE_FILE)
-                            source_group("${other_src_group_name}" FILES ${target_list_other_src})
-                        endif()
+                        set(foreach_other_src_group_name "")
+                        foreach(it_other_src_path ${target_list_other_src})
+
+                            get_filename_component(other_src_curr_dir 
+                                ${it_other_src_path} DIRECTORY)
+                            get_filename_component(other_src_filename 
+                                ${it_other_src_path} NAME)
+                            get_filename_component(other_src_curr_dirname 
+                                ${other_src_curr_dir} NAME)
+                            add_test_executable_dir_get_other_src_group_name(
+                                it_other_src_group_name
+                                PREFIX ${other_src_group_name} PATH ${it_other_src_path}
+                                FILENAME ${other_src_filename} CURR_DIR ${other_src_curr_dir}
+                                CURR_DIRNAME ${other_src_curr_dirname}
+                                SRC_BASE_DIR ${base_dir} SRC_PATH ${it}
+                                SRC_RELATIVE_PATH ${relative_path} SRC_FILENAME ${filename}
+                                SRC_NAME ${src_name} SRC_TAG ${src_tag} SRC_EXT ${src_ext}
+                                SRC_CURR_DIR ${dir} SRC_RELATIVE_CURR_DIR ${relative_dir}
+                                SRC_CURR_DIRNAME ${curr_dirname} INCLUDE_DIR ${include_dir}
+                                TARGET_NAME ${target_name} TARGET_DIR ${prefix_dir}
+                                ARGS ${get_other_src_group_name_args})
+
+                            if(NOT DEFINED CMAKE_SCRIPT_MODE_FILE)
+                                source_group("${it_other_src_group_name}" 
+                                    FILES ${it_other_src_path})
+                            endif()
+
+                            if (is_output_group_name)
+                                list(APPEND foreach_other_src_group_name 
+                                    ${it_other_src_group_name})
+                            endif()
+                            
+                        endforeach(it_other_src_path)
 
                         if (is_output_group_name)
-                            list(APPEND foreach_list_group_name ${other_src_group_name})
+                            list(REMOVE_DUPLICATES foreach_other_src_group_name)
+                            list(APPEND foreach_list_group_name ${foreach_other_src_group_name})
                         endif()
                     endif()
 
@@ -555,17 +624,18 @@ function(add_test_executable_dir dir)
     string(CONCAT one_options "PREFIX;PREFIX_DIR")
 
     string(CONCAT one_options "${one_options}" 
-        ";GET_DIRNAME;GET_GROUP_NAME;GET_HEADER_DIR;GET_HEADER"
-        ";GET_TARGET_COMPILE;GET_TARGET_DIR;GET_TARGET_INCLUDE"
-        ";GET_TARGET_LINK;GET_TARGET_NAME;GET_TARGET_OTHER_SRC"
-        ";GET_TARGET_PROPERTIES;GET_TEST_COMMAND;HEADER_CONDITION"
-        ";HEADER_FILTER;SRC_CONDITION;SRC_FILTER")
+        ";GET_DIRNAME;GET_GROUP_NAME;GET_HEADER_DIR;GET_HEADER_GROUP_NAME"
+        ";GET_HEADER;GET_OTHER_SRC_GROUP_NAME;GET_TARGET_COMPILE"
+        ";GET_TARGET_DIR;GET_TARGET_INCLUDE;GET_TARGET_LINK;GET_TARGET_NAME"
+        ";GET_TARGET_OTHER_SRC;GET_TARGET_PROPERTIES;GET_TEST_COMMAND"
+        ";HEADER_CONDITION;HEADER_FILTER;SRC_CONDITION;SRC_FILTER")
 
     string(CONCAT list_options "GET_DIRNAME_ARGS;GET_GROUP_NAME_ARGS"
-        ";GET_HEADER_DIR_ARGS;GET_HEADER_ARGS;GET_TARGET_COMPILE_ARGS"
+        ";GET_HEADER_DIR_ARGS;GET_HEADER_GROUP_NAME_ARGS;GET_HEADER_ARGS"
+        ";GET_OTHER_SRC_GROUP_NAME_ARGS;GET_TARGET_COMPILE_ARGS"
         ";GET_TARGET_DIR_ARGS;GET_TARGET_INCLUDE_ARGS;GET_TARGET_LINK_ARGS"
-        ";GET_TARGET_NAME_ARGS;GET_TARGET_OTHER_SRC_ARGS;GET_TARGET_PROPERTIES_ARGS"
-        ";GET_TEST_COMMAND_ARGS;HEADER_CONDITION_ARGS"
+        ";GET_TARGET_NAME_ARGS;GET_TARGET_OTHER_SRC_ARGS"
+        ";GET_TARGET_PROPERTIES_ARGS;GET_TEST_COMMAND_ARGS;HEADER_CONDITION_ARGS"
         ";HEADER_FILTER_ARGS;SRC_CONDITION_ARGS;SRC_FILTER_ARGS")
 
     string(CONCAT one_options "${one_options}" 
@@ -693,12 +763,28 @@ function(add_test_executable_dir dir)
         include(${add_test_executable_dir_GET_HEADER_DIR})
     endif()
 
+    if ("${add_test_executable_dir_GET_HEADER_GROUP_NAME}" STREQUAL ""
+        OR (NOT EXISTS "${add_test_executable_dir_GET_HEADER_GROUP_NAME}"))
+
+        include(${base_dir}/add_test_executable_dir/get_header_group_name.cmake)
+    else()
+        include(${add_test_executable_dir_GET_HEADER_GROUP_NAME})
+    endif()
+
     if("${add_test_executable_dir_GET_HEADER}" STREQUAL "" 
         OR (NOT EXISTS "${add_test_executable_dir_GET_HEADER}"))
         
         include(${base_dir}/add_test_executable_dir/get_header.cmake)
     else()
         include(${add_test_executable_dir_GET_HEADER})
+    endif()
+
+    if ("${add_test_executable_dir_GET_OTHER_SRC_GROUP_NAME}" STREQUAL ""
+        OR (NOT EXISTS "${add_test_executable_dir_GET_OTHER_SRC_GROUP_NAME}"))
+
+        include(${base_dir}/add_test_executable_dir/get_other_src_group_name.cmake)
+    else()
+        include(${add_test_executable_dir_GET_OTHER_SRC_GROUP_NAME})
     endif()
 
     if("${add_test_executable_dir_GET_TARGET_COMPILE}" STREQUAL "" 
@@ -1006,7 +1092,9 @@ function(add_test_executable_dir dir)
         GET_DIRNAME_ARGS ${add_test_executable_dir_GET_DIRNAME_ARGS}
         GET_GROUP_NAME_ARGS ${add_test_executable_dir_GET_GROUP_NAME_ARGS}
         GET_HEADER_DIR_ARGS ${add_test_executable_dir_GET_HEADER_DIR_ARGS}
+        GET_HEADER_GROUP_NAME_ARGS ${add_test_executable_dir_GET_HEADER_GROUP_NAME_ARGS}
         GET_HEADER_ARGS ${add_test_executable_dir_GET_HEADER_ARGS}
+        GET_OTHER_SRC_GROUP_NAME_ARGS ${add_test_executable_dir_GET_OTHER_SRC_GROUP_NAME_ARGS}
         GET_TARGET_COMPILE_ARGS ${add_test_executable_dir_GET_TARGET_COMPILE_ARGS}
         GET_TARGET_DIR_ARGS ${add_test_executable_dir_GET_TARGET_DIR_ARGS}
         GET_TARGET_INCLUDE_ARGS ${add_test_executable_dir_GET_TARGET_INCLUDE_ARGS}

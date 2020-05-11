@@ -1,14 +1,13 @@
 
-
 function(add_test_executable_dir_recv base_dir dir 
     is_recursive is_output_target_name is_output_target_dir is_output_target_lib
     is_output_target_include_dir is_output_target_compile_def
     is_output_target_compile_option is_output_target_property
-    is_output_target_cmd_arg is_output_src is_output_header
+    is_output_target_test_cmd_arg is_output_src is_output_header
     is_output_group_name level list_target_name 
     list_target_dir list_target_lib list_target_include_dir 
     list_target_compile_def list_target_compile_option
-    list_target_property list_target_cmd_arg list_src list_header  
+    list_target_property list_target_test_cmd_arg list_src list_header  
     list_group_name)
 
     string(CONCAT one_options "HEADER_RECURSIVE_ARG"
@@ -36,7 +35,7 @@ function(add_test_executable_dir_recv base_dir dir
 
     string(CONCAT list_options "${list_options}"
         ";LIST_COMPILE_DEF;LIST_COMPILE_OPTION;LIST_INCLUDE_DIR;LIST_LIB"
-        ";LIST_OTHER_SRC;LIST_PROPERTY;LIST_COMMAND_ARG")
+        ";LIST_OTHER_SRC;LIST_PROPERTY;LIST_TEST_COMMAND_ARG")
 
     cmake_parse_arguments(add_test_executable_dir_recv "" 
         "${one_options}" "${list_options}" ${ARGN}) 
@@ -83,7 +82,7 @@ function(add_test_executable_dir_recv base_dir dir
     set(list_lib ${add_test_executable_dir_recv_LIST_LIB})
     set(list_other_src ${add_test_executable_dir_recv_LIST_OTHER_SRC})
     set(list_property ${add_test_executable_dir_recv_LIST_PROPERTY})
-    set(list_command_arg ${add_test_executable_dir_recv_LIST_COMMAND_ARG})
+    set(list_test_command_arg ${add_test_executable_dir_recv_LIST_TEST_COMMAND_ARG})
 
     set(include_dir ${add_test_executable_dir_recv_INCLUDE_DIR})
     
@@ -94,7 +93,7 @@ function(add_test_executable_dir_recv base_dir dir
     set(foreach_list_target_compile_def "")
     set(foreach_list_target_compile_option "")
     set(foreach_list_target_property "")
-    set(foreach_list_target_cmd_arg "") 
+    set(foreach_list_target_test_cmd_arg "") 
     set(foreach_list_src "") 
     set(foreach_list_header "") 
     set(foreach_list_group_name "")
@@ -155,7 +154,7 @@ function(add_test_executable_dir_recv base_dir dir
                 set(next_list_target_compile_def "")
                 set(next_list_target_compile_option "")
                 set(next_list_target_property "")
-                set(next_list_target_cmd_arg "") 
+                set(next_list_target_test_cmd_arg "") 
                 set(next_list_src "") 
                 set(next_list_header "") 
                 set(next_list_group_name "")
@@ -185,12 +184,13 @@ function(add_test_executable_dir_recv base_dir dir
                     ${is_recursive} ${is_output_target_name} ${is_output_target_dir} 
                     ${is_output_target_lib} ${is_output_target_include_dir} 
                     ${is_output_target_compile_def} ${is_output_target_compile_option} 
-                    ${is_output_target_property} ${is_output_target_cmd_arg} 
+                    ${is_output_target_property} ${is_output_target_test_cmd_arg} 
                     ${is_output_src} ${is_output_header} ${is_output_group_name} ${next_level} 
                     next_list_target_name next_list_target_dir next_list_target_lib 
                     next_list_target_include_dir next_list_target_compile_def
-                    next_list_target_compile_option next_list_target_property next_list_target_cmd_arg 
-                    next_list_src next_list_header next_list_group_name
+                    next_list_target_compile_option next_list_target_property 
+                    next_list_target_test_cmd_arg next_list_src next_list_header 
+                    next_list_group_name
                     PREFIX "${prefix}${dir_target_name}"
                     PREFIX_DIR "${next_prefix_dir}"
                     HEADER_RECURSIVE_ARG ${header_recursive_arg}
@@ -226,7 +226,7 @@ function(add_test_executable_dir_recv base_dir dir
                     LIST_LIB ${list_lib}
                     LIST_OTHER_SRC ${list_other_src}
                     LIST_PROPERTY ${list_property}
-                    LIST_COMMAND_ARG ${list_command_arg}
+                    LIST_TEST_COMMAND_ARG ${list_test_command_arg}
                     INCLUDE_DIR ${include_dir})
                     
                 if (is_output_target_name)
@@ -257,8 +257,8 @@ function(add_test_executable_dir_recv base_dir dir
                     list(APPEND foreach_list_target_property ${next_list_target_property})
                 endif()
 
-                if (is_output_target_cmd_arg)
-                    list(APPEND foreach_list_target_cmd_arg ${next_list_target_cmd_arg}) 
+                if (is_output_target_test_cmd_arg)
+                    list(APPEND foreach_list_target_test_cmd_arg ${next_list_target_test_cmd_arg}) 
                 endif()
 
                 if (is_output_src)
@@ -372,8 +372,8 @@ function(add_test_executable_dir_recv base_dir dir
                         CURR_DIRNAME ${curr_dirname} INCLUDE_DIR ${include_dir} 
                         ARGS ${get_target_properties_args})
 
-                    add_test_executable_dir_get_test_command(target_list_command_arg
-                        DEFAULT_LIST_ARG ${list_command_arg}
+                    add_test_executable_dir_get_test_command(target_list_test_command_arg
+                        DEFAULT_LIST_ARG ${list_test_command_arg}
                         TARGET_NAME ${target_name} TARGET_DIR ${prefix_dir}
                         BASE_DIR ${base_dir} PATH ${it} RELATIVE_PATH ${relative_path} 
                         FILENAME ${filename} NAME ${src_name} TAG ${src_tag} EXT ${src_ext} 
@@ -538,12 +538,14 @@ function(add_test_executable_dir_recv base_dir dir
                         endif()
                         
                         if(NOT DEFINED CMAKE_SCRIPT_MODE_FILE)
-                            add_test(NAME "${target_name}" COMMAND ${target_name} ${target_list_command_arg})
+                            add_test(NAME "${target_name}" COMMAND ${target_name} 
+                                ${target_list_test_command_arg})
                         endif()
 
-                        if (NOT "${target_list_command_arg}" STREQUAL "")
+                        if (NOT "${target_list_test_command_arg}" STREQUAL "")
                             if (is_output_target_cmd_arg)
-                                list(APPEND foreach_list_target_cmd_arg ${target_list_command_arg}) 
+                                list(APPEND foreach_list_target_cmd_arg 
+                                    ${target_list_test_command_arg}) 
                             endif()
 
                         endif()
@@ -661,7 +663,7 @@ function(add_test_executable_dir dir)
     
     string(CONCAT list_options "${list_options}"
         ";LIST_COMPILE_DEF;LIST_COMPILE_OPTION;LIST_INCLUDE_DIR;LIST_LIB"
-        ";LIST_OTHER_SRC;LIST_PROPERTY;LIST_COMMAND_ARG")
+        ";LIST_OTHER_SRC;LIST_PROPERTY;LIST_TEST_COMMAND_ARG")
 
     string(CONCAT one_options "${one_options}" 
         ";INCLUDE_DIR")
@@ -670,7 +672,7 @@ function(add_test_executable_dir dir)
         ";LIST_TARGET_NAME;LIST_TARGET_DIR;LIST_TARGET_LIB"
         ";LIST_TARGET_INCLUDE_DIR;LIST_TARGET_COMPILE_DEF"
         ";LIST_TARGET_COMPILE_OPTION;LIST_TARGET_PROPERTY"
-        ";LIST_TARGET_CMD_ARG;LIST_SRC;LIST_HEADER"
+        ";LIST_TARGET_TEST_CMD_ARG;LIST_SRC;LIST_HEADER"
         ";LIST_GROUP_NAME")
 
     cmake_parse_arguments(add_test_executable_dir "${bool_options}" 
@@ -1052,9 +1054,9 @@ function(add_test_executable_dir dir)
         set(enable_output_target_property TRUE)
     endif()
 
-    set(enable_output_target_cmd_arg FALSE) 
-    if (NOT "${add_test_executable_dir_LIST_TARGET_CMD_ARG}" STREQUAL "")
-        set(enable_output_target_cmd_arg TRUE)
+    set(enable_output_target_test_cmd_arg FALSE) 
+    if (NOT "${add_test_executable_dir_LIST_TARGET_TEST_CMD_ARG}" STREQUAL "")
+        set(enable_output_target_test_cmd_arg TRUE)
     endif()
 
     set(enable_output_src FALSE) 
@@ -1079,7 +1081,7 @@ function(add_test_executable_dir dir)
     set(list_target_compile_def "")
     set(list_target_compile_option "")
     set(list_target_property "")
-    set(list_target_cmd_arg "") 
+    set(list_target_test_cmd_arg "") 
     set(list_src "") 
     set(list_header "") 
     set(list_group_name "")
@@ -1088,11 +1090,11 @@ function(add_test_executable_dir dir)
         ${is_recursive} ${enable_output_target_name} ${enable_output_target_dir}
         ${enable_output_target_lib} ${enable_output_target_include_dir}
         ${enable_output_target_compile_def} ${enable_output_target_compile_option}
-        ${enable_output_target_property} ${enable_output_target_cmd_arg}
+        ${enable_output_target_property} ${enable_output_target_test_cmd_arg}
         ${enable_output_src} ${enable_output_header} ${enable_output_group_name} 0 
         list_target_name list_target_dir list_target_lib
         list_target_include_dir list_target_compile_def list_target_compile_option
-        list_target_property list_target_cmd_arg list_src list_header list_group_name
+        list_target_property list_target_test_cmd_arg list_src list_header list_group_name
         PREFIX ${add_test_executable_dir_PREFIX}
         PREFIX_DIR ${add_test_executable_dir_PREFIX_DIR}
         HEADER_RECURSIVE_ARG ${header_recursive_arg}
@@ -1128,7 +1130,7 @@ function(add_test_executable_dir dir)
         LIST_LIB ${add_test_executable_dir_LIST_LIB}
         LIST_OTHER_SRC ${add_test_executable_dir_LIST_OTHER_SRC}
         LIST_PROPERTY ${add_test_executable_dir_LIST_PROPERTY}
-        LIST_COMMAND_ARG ${add_test_executable_dir_LIST_COMMAND_ARG}
+        LIST_TEST_COMMAND_ARG ${add_test_executable_dir_LIST_TEST_COMMAND_ARG}
         INCLUDE_DIR ${base_dir})
 
     if (enable_output_target_name)
@@ -1159,8 +1161,8 @@ function(add_test_executable_dir dir)
         set(${add_test_executable_dir_LIST_TARGET_PROPERTY} ${list_target_property} PARENT_SCOPE)
     endif()
 
-    if (enable_output_target_cmd_arg)
-        set(${add_test_executable_dir_LIST_TARGET_CMD_ARG} ${list_target_cmd_arg} PARENT_SCOPE) 
+    if (enable_output_target_test_cmd_arg)
+        set(${add_test_executable_dir_LIST_TARGET_TEST_CMD_ARG} ${list_target_test_cmd_arg} PARENT_SCOPE) 
     endif()
 
     if (enable_output_src)

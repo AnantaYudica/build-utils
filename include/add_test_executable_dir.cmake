@@ -280,8 +280,7 @@ function(add_test_executable_dir_recv base_dir dir
                     FILENAME ${filename} NAME ${src_name} TAG ${src_tag} EXT ${src_ext} 
                     CURR_DIR ${dir} RELATIVE_CURR_DIR ${relative_dir} 
                     CURR_DIRNAME ${curr_dirname} INCLUDE_DIR ${include_dir} 
-                    LIST_TAG ${list_src_tag} ${case_sensitive_arg}
-                    ARGS ${src_condition_args})
+                     ${case_sensitive_arg} ARGS ${src_condition_args})
 
                 if (ok)
 

@@ -2,7 +2,7 @@
 function(add_test_executable_dir_src_condition cond)
 
     string(CONCAT one_options "BASE_DIR;PATH;RELATIVE_PATH;FILENAME"
-        ";CURR_DIR;RELATIVE_CURR_DIR;CURR_DIRNAME;INCLUDE_DIR") 
+        ";CURR_DIR;RELATIVE_CURR_DIR;CURR_DIRNAME;INCLUDE_DIR;NAME;TAG;EXT") 
     cmake_parse_arguments(add_test_executable_dir_src_condition "CASE_SENSITIVE" 
         "${one_options}" "ARGS" ${ARGN}) 
 

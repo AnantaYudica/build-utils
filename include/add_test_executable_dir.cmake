@@ -900,7 +900,7 @@ function(add_test_executable_dir dir)
         AND ("${header_filter}" STREQUAL ""))
         
         set(header_condition ${base_dir}/add_test_executable_dir/header_condition/default.cmake)
-        set(header_filter ${base_dir}/add_test_executable_dir/header_condition/default.cmake)
+        set(header_filter ${base_dir}/add_test_executable_dir/header_filter/default.cmake)
     elseif ("${header_condition}" STREQUAL ""
         AND (NOT "${header_filter}" STREQUAL ""))
 
@@ -908,7 +908,7 @@ function(add_test_executable_dir dir)
     elseif(NOT "${header_condition}" STREQUAL ""
         AND ("${header_filter}" STREQUAL ""))
 
-        set(header_filter ${base_dir}/add_test_executable_dir/header_condition/list_ext.cmake)
+        set(header_filter ${base_dir}/add_test_executable_dir/header_filter/list_ext.cmake)
     endif()
 
     include(${header_condition})

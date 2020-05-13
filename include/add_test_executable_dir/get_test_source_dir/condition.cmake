@@ -27,7 +27,9 @@ function(get_test_source_dir_condition output)
     endif()
 
     set(case_sensitive_arg "")
-    if(NOT "${get_test_source_dir_condition_CASE_SENSITIVE}" STREQUAL "")
+    if(NOT "${get_test_source_dir_condition_CASE_SENSITIVE}" STREQUAL ""
+        AND (get_test_source_dir_condition_CASE_SENSITIVE))
+        
         set(case_sensitive_arg "CASE_SENSITIVE")
     endif()
 

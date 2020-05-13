@@ -14,8 +14,8 @@ function(add_test_executable_dir_header_condition output)
     set(filename "${add_test_executable_dir_header_condition_FILENAME}")
 
     set(is_case_sensitive FALSE)
-    if (NOT "${get_test_source_dir_filter_CASE_SENSITIVE}" STREQUAL "")
-        set(is_case_sensitive ${get_test_source_dir_filter_CASE_SENSITIVE})
+    if (NOT "${add_test_executable_dir_header_condition_CASE_SENSITIVE}" STREQUAL "")
+        set(is_case_sensitive ${add_test_executable_dir_header_condition_CASE_SENSITIVE})
     endif()
   
     set(list_tag ${args_LIST_TAG})

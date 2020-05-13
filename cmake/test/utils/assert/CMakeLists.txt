@@ -1,3 +1,7 @@
+if (NOT DEFINED ASSERT_DEBUG)
+    set(ASSERT_DEBUG FALSE CACHE BOOL "debug mode" FORCE)
+endif()
+
 function(assert_condition is_not is_equal is_less is_greater is_str a b a_name b_name result msg)
     set(res FALSE)
     set(operator "")
@@ -88,12 +92,19 @@ function(assert_condition is_not is_equal is_less is_greater is_str a b a_name b
     endif()
 endfunction(assert_condition)
 
+function(assert_debug msg)
+    if (ASSERT_DEBUG)
+        message(STATUS "${msg}")
+    endif()
+endfunction(assert_debug)
+
 function(assert)
     cmake_parse_arguments(assert "DEBUG;NOT;EQUAL;LESS;GREATER;STR;FOREACH;CONTAIN;COUNT" 
         "CALL;RESULT;COUNT_IF_EQUAL;COUNT_IF_STREQUAL" "LIST_RESULT;ARGS" ${ARGN}) 
-    if (assert_DEBUG)
-        message(STATUS "args : ${ARGN}")
-    endif()
+    set(debug_before ${ASSERT_DEBUG})
+    set(ASSERT_DEBUG ${assert_DEBUG} CACHE BOOL "debug mode" FORCE)
+
+    assert_debug("args : ${ARGN}")
 
     if("${assert_CALL}" STREQUAL "" OR (NOT EXISTS "${assert_CALL}"))
         include(${TEST_UTILS_DIR}/assert/call.cmake)
@@ -105,9 +116,7 @@ function(assert)
     
     set(out "")
     assert_call(OUTPUT out ARGS ${assert_ARGS})
-    if (assert_DEBUG)
-        message(STATUS "Call Output : ${out}")
-    endif()
+    assert_debug("Call Output : ${out}")
 
     set(enable_count_if_equal FALSE)
     set(enable_count_if_strequal FALSE)
@@ -196,5 +205,7 @@ function(assert)
             message(FATAL_ERROR "Error Assert Condition : ${msg}")
         endif()
     endif()
+
+    set(ASSERT_DEBUG ${debug_before} CACHE BOOL "debug mode" FORCE)
 
 endfunction(assert)

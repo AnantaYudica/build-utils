@@ -876,29 +876,43 @@ function(add_test_executable_dir dir)
         OR (NOT EXISTS "${add_test_executable_dir_HEADER_CONDITION}"))
         
         if (NOT "${list_header_tag}" STREQUAL "")
-            include(${base_dir}/add_test_executable_dir/header_condition/list_tag.cmake)
+            set(header_condition ${base_dir}/add_test_executable_dir/header_condition/list_tag.cmake)
             list(APPEND add_test_executable_dir_HEADER_CONDITION_ARGS "LIST_TAG"
                 ${list_header_tag})
-        else()
-            include(${base_dir}/add_test_executable_dir/header_condition/default.cmake)
         endif()
     else()
-        include(${add_test_executable_dir_HEADER_CONDITION})
+        set(header_condition ${add_test_executable_dir_HEADER_CONDITION})
     endif()
 
     if("${add_test_executable_dir_HEADER_FILTER}" STREQUAL "" 
         OR (NOT EXISTS "${add_test_executable_dir_HEADER_FILTER}"))
         
         if (NOT "${list_header_ext}" STREQUAL "")
-            include(${base_dir}/add_test_executable_dir/header_filter/list_ext.cmake)
+            set(header_filter ${base_dir}/add_test_executable_dir/header_filter/list_ext.cmake)
             list(APPEND add_test_executable_dir_HEADER_FILTER_ARGS "LIST_EXT"
                 ${list_header_ext})
-        else()
-            include(${base_dir}/add_test_executable_dir/header_filter/default.cmake)
         endif()
     else()
-        include(${add_test_executable_dir_HEADER_FILTER})
+        set(header_filter ${add_test_executable_dir_HEADER_FILTER})
     endif()
+
+    if ("${header_condition}" STREQUAL ""
+        AND ("${header_filter}" STREQUAL ""))
+        
+        set(header_condition ${base_dir}/add_test_executable_dir/header_condition/default.cmake)
+        set(header_filter ${base_dir}/add_test_executable_dir/header_condition/default.cmake)
+    elseif ("${header_condition}" STREQUAL ""
+        AND (NOT "${header_filter}" STREQUAL ""))
+
+        set(header_condition ${base_dir}/add_test_executable_dir/header_condition/list_tag.cmake)
+    elseif(NOT "${header_condition}" STREQUAL ""
+        AND ("${header_filter}" STREQUAL ""))
+
+        set(header_filter ${base_dir}/add_test_executable_dir/header_condition/list_ext.cmake)
+    endif()
+
+    include(${header_condition})
+    include(${header_filter})
 
     if("${add_test_executable_dir_SRC_CONDITION}" STREQUAL "" 
         OR (NOT EXISTS "${add_test_executable_dir_SRC_CONDITION}"))

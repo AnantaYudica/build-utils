@@ -30,7 +30,7 @@ function(get_test_source_dir_recv base_dir dir list_output is_recursive level)
                 LEVEL ${level} BASE_DIR ${base_dir} PATH ${it} 
                 RELATIVE_PATH ${relative_path} FILENAME ${filename} 
                 CURR_DIR ${dir} RELATIVE_CURR_DIR ${relative_curr_dir}
-                CURR_DIRNAME ${curr_dirname} ARGS ${filter_args} INCLUDE_DIR ${include_dir} 
+                CURR_DIRNAME ${curr_dirname} INCLUDE_DIR ${include_dir} 
                 ARGS ${filter_args} ${case_sensitive_arg})
         endif()
 

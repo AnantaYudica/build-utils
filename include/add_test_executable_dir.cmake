@@ -310,7 +310,7 @@ function(add_test_executable_dir_recv base_dir dir
                         HEADER_CONDITION_ARGS ${header_condition_args}
                         HEADER_FILTER_ARGS ${header_filter_args}
                         ARGS ${get_header_args} ${header_recursive_arg} 
-                        ${header_expand_args})
+                        ${header_case_sensitive_arg} ${header_expand_args})
 
                     add_test_executable_dir_get_group_name(
                         DEFAULT_HEADER "${header_group_name}" 

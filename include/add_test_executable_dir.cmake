@@ -307,6 +307,8 @@ function(add_test_executable_dir_recv base_dir dir
                         FILENAME ${filename} NAME ${src_name} TAG ${tag} EXT ${src_ext} 
                         CURR_DIR ${dir} RELATIVE_CURR_DIR ${relative_dir} 
                         CURR_DIRNAME ${curr_dirname} INCLUDE_DIR ${include_dir} 
+                        HEADER_CONDITION_ARGS ${header_condition_args}
+                        HEADER_FILTER_ARGS ${header_filter_args}
                         ARGS ${get_header_args} ${header_recursive_arg} 
                         ${header_expand_args})
 

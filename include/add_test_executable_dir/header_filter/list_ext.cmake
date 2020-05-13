@@ -27,7 +27,14 @@ function(add_test_executable_dir_header_filter output)
     set(result FALSE)
     if (NOT "${list_ext}" STREQUAL "" AND (NOT is_directory))
     
-        get_filename_component(filename_ext ${it} EXT)
+        set(filename ${add_test_executable_dir_header_filter_FILENAME})
+        
+        if (NOT COMMAND get_test_name_tag_ext_file)
+            include_build_util(NAME get_test_name_tag_ext_file INCLUDE_DIR ${include_dir})
+        endif()
+        
+        get_test_name_tag_ext_file("${filename}" EXT filename_ext 
+            INCLUDE_DIR ${INCLUDE_DIR})
 
         if (NOT is_case_sensitive)
             string(TOLOWER "${filename_ext}" filename_ext)

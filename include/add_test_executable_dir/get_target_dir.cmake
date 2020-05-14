@@ -5,6 +5,6 @@ function(add_test_executable_dir_get_target_dir out_dir_name)
     cmake_parse_arguments(add_test_executable_dir_get_target_dir "" 
         "${one_options}" "ARGS" ${ARGN}) 
 
-    set(${out_dir_name} "${add_test_executable_dir_get_target_dir_DIRNAME}")
+    set(${out_dir_name} "${add_test_executable_dir_get_target_dir_DIRNAME}" PARENT_SCOPE)
 
 endfunction(add_test_executable_dir_get_target_dir)

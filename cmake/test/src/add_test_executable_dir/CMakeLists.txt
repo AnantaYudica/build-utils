@@ -25,7 +25,7 @@ include(${TEST_BASE_SOURCE_DIR}/parse_args.cmake)
 
 set(assert_call_result_list_target_name ${TEST_BASE_SOURCE_DIR}/assert_call_1.cmake)
 set(assert_call_result_list_target_dir ${TEST_BASE_SOURCE_DIR}/assert_call_2.cmake)
-set(assert_call_result_list_target_lib ${TEST_BASE_SOURCE_DIR}/assert_call_3.cmake)
+set(SUBassert_call_result_list_target_link_arg ${TEST_BASE_SOURCE_DIR}/assert_call_3.cmake)
 set(assert_call_result_list_target_include_dir ${TEST_BASE_SOURCE_DIR}/assert_call_4.cmake)
 set(assert_call_result_list_target_compile_def ${TEST_BASE_SOURCE_DIR}/assert_call_5.cmake)
 set(assert_call_result_list_target_compile_option ${TEST_BASE_SOURCE_DIR}/assert_call_6.cmake)
@@ -48,7 +48,7 @@ assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_name}
 assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_dir} 
     LIST_RESULT "EMPTY" 
     ARGS "${args_1}")
-assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_lib} 
+assert(EQUAL STR FOREACH CALL ${SUBassert_call_result_list_target_link_arg} 
     LIST_RESULT "EMPTY" 
     ARGS "${args_1}")
 assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_include_dir} 
@@ -103,7 +103,7 @@ assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_name}
 assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_dir} 
     LIST_RESULT "${list_target_dir_2}" 
     ARGS "${args_2}")
-assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_lib} 
+assert(EQUAL STR FOREACH CALL ${SUBassert_call_result_list_target_link_arg} 
     LIST_RESULT "EMPTY" 
     ARGS "${args_2}")
 assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_include_dir} 
@@ -195,7 +195,7 @@ assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_name}
 assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_dir} 
     LIST_RESULT "${list_target_dir_4}" 
     ARGS "${args_4}")
-assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_lib} 
+assert(EQUAL STR FOREACH CALL ${SUBassert_call_result_list_target_link_arg} 
     LIST_RESULT "EMPTY" 
     ARGS "${args_4}")
 assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_include_dir} 
@@ -292,17 +292,17 @@ assert(EQUAL STR FOREACH CONTAIN
 string(CONCAT args_9 "dir;${TEST_BASE_SOURCE_DIR}/dir_1;include_dir;${INCLUDE_DIR};recursive"
     ";list_lib;PUBLIC;lib_a;PUBLIC;lib_b")
 
-assert(EQUAL FOREACH COUNT CALL ${assert_call_result_list_target_lib} 
+assert(EQUAL FOREACH COUNT CALL ${SUBassert_call_result_list_target_link_arg} 
     RESULT 24
     ARGS "${args_9}")
     
 assert(EQUAL FOREACH COUNT_IF_STREQUAL "lib_a"
-    CALL ${assert_call_result_list_target_lib} 
+    CALL ${SUBassert_call_result_list_target_link_arg} 
     RESULT 6
     ARGS "${args_9}")
 
 assert(EQUAL STR FOREACH CONTAIN
-    CALL ${assert_call_result_list_target_lib} 
+    CALL ${SUBassert_call_result_list_target_link_arg} 
     LIST_RESULT "PUBLIC;lib_a;lib_b"
     ARGS "${args_9}")
 

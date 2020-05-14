@@ -3,7 +3,7 @@ function(assert_call)
 
     parse_args(dir result_call_args ARGS ${assert_call_ARGS})
 
-    add_test_executable_dir(${dir} ${result_call_args} LIST_TARGET_LIB output)
+    add_test_executable_dir(${dir} ${result_call_args} LIST_TARGET_LINK_ARG output)
 
     if (NOT "${output}" STREQUAL "")
         set(${assert_call_OUTPUT} "${output}" PARENT_SCOPE)

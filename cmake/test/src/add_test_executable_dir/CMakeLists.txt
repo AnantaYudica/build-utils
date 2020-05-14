@@ -84,7 +84,7 @@ assert(EQUAL FOREACH COUNT_IF_STREQUAL "Source Files" CALL ${assert_call_result_
 
 set(args_2 "dir;${TEST_BASE_SOURCE_DIR}/dir_1;include_dir;${INCLUDE_DIR};recursive")
 string(CONCAT list_target_name_2
-    "test1;test1;test1;test2;test1;test2")
+    "sub1sub1test1;sub1test1;sub2sub1test1;sub2sub1test2;test1;test2")
 string(CONCAT list_target_dir_2
     "sub1/sub1;sub1;sub2/sub1;sub2/sub1")
 string(CONCAT list_src_2 
@@ -140,7 +140,8 @@ assert(EQUAL FOREACH COUNT_IF_STREQUAL "Source Files" CALL ${assert_call_result_
 string(CONCAT args_3 "dir;${TEST_BASE_SOURCE_DIR}/dir_1;include_dir;${INCLUDE_DIR};recursive"
     ";prefix;begin")
 string(CONCAT list_target_name_3
-    "begintest1;begintest1;begintest1;begintest2;begintest1;begintest2")
+    "beginsub1sub1test1;beginsub1test1;beginsub2sub1test1;beginsub2sub1test2"
+    ";begintest1;begintest2")
 string(CONCAT list_target_dir_3
     "sub1/sub1;sub1;sub2/sub1;sub2/sub1")
 string(CONCAT list_src_3 
@@ -175,7 +176,7 @@ assert(EQUAL FOREACH COUNT_IF_STREQUAL "Source Files" CALL ${assert_call_result_
 string(CONCAT args_4 "dir;${TEST_BASE_SOURCE_DIR}/dir_1;include_dir;${INCLUDE_DIR};recursive"
     ";prefix_dir;root")
 string(CONCAT list_target_name_4
-    "test1;test1;test1;test2;test1;test2")
+    "sub1sub1test1;sub1test1;sub2sub1test1;sub2sub1test2;test1;test2")
 string(CONCAT list_target_dir_4
     "root/sub1/sub1;root/sub1;root/sub2/sub1;root/sub2/sub1;root;root")
 string(CONCAT list_src_4 

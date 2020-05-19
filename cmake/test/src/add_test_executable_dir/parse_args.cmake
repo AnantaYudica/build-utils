@@ -6,17 +6,18 @@ function(parse_args output_dir output_call_args)
     string(CONCAT one_options "dir;prefix;prefix_dir")
 
     string(CONCAT one_options "${one_options}" 
-        ";get_dirname;get_group_name;get_header_dir;get_header"
-        ";get_target_compile;get_target_dir;get_target_include"
-        ";get_target_link;get_target_name;get_target_other_src"
-        ";get_target_properties;get_test_cmd_args;header_condition"
-        ";header_filter;src_condition;src_filter")
+        ";get_dirname;get_group_name;get_header_dir;get_header_group_name"
+        ";get_header;get_other_src_group_name;get_target_compile"
+        ";get_target_dir;get_target_include;get_target_link"
+        ";get_target_name;get_target_other_src;get_target_properties"
+        ";get_test_cmd_args;header_condition;header_filter;src_condition;src_filter")
 
     string(CONCAT list_options "get_dirname_args;get_group_name_args"
-        ";get_header_dir_args;get_header_args;get_target_compile_args"
+        ";get_header_dir_args;get_header_group_name_args;get_header_args"
+        ";get_other_src_group_name_args;get_target_compile_args"
         ";get_target_dir_args;get_target_include_args;get_target_link_args"
-        ";get_target_name_args;get_target_other_src_args;get_target_properties_args"
-        ";get_test_cmd_args_args;header_condition_args"
+        ";get_target_name_args;get_target_other_src_args"
+        ";get_target_properties_args;get_test_cmd_args_args;header_condition_args"
         ";header_filter_args;src_condition_args;src_filter_args")
 
     string(CONCAT one_options "${one_options}" 
@@ -86,8 +87,16 @@ function(parse_args output_dir output_call_args)
         list(APPEND call_args "GET_HEADER_DIR" ${args_get_header_dir})
     endif()
 
+    if (NOT "${args_get_header_group_name}" STREQUAL "")
+        list(APPEND call_args "GET_HEADER_GROUP_NAME" ${args_get_header_group_name})
+    endif()
+
     if (NOT "${args_get_header}" STREQUAL "")
         list(APPEND call_args "GET_HEADER" ${args_get_header})
+    endif()
+
+    if (NOT "${args_get_other_src_group_name}" STREQUAL "")
+        list(APPEND call_args "GET_OTHER_SRC_GROUP_NAME" ${args_get_other_src_group_name})
     endif()
 
     if (NOT "${args_get_target_compile}" STREQUAL "")
@@ -150,8 +159,16 @@ function(parse_args output_dir output_call_args)
         list(APPEND call_args "GET_HEADER_DIR_ARGS" ${args_get_header_dir_args})
     endif()
 
+    if (NOT "${args_get_header_group_name_args}" STREQUAL "")
+        list(APPEND call_args "GET_HEADER_GROUP_NAME_ARGS" ${args_get_header_group_name_args})
+    endif()
+
     if (NOT "${args_get_header_args}" STREQUAL "")
         list(APPEND call_args "GET_HEADER_ARGS" ${args_get_header_args})
+    endif()
+    
+    if (NOT "${args_get_other_src_group_name_args}" STREQUAL "")
+        list(APPEND call_args "GET_OTHER_SRC_GROUP_NAME_ARGS" ${args_get_other_src_group_name_args})
     endif()
     
     if (NOT "${args_get_target_compile_args}" STREQUAL "")

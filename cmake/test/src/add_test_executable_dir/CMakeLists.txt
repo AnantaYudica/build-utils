@@ -290,7 +290,7 @@ assert(EQUAL STR FOREACH CONTAIN
     ARGS "${args_8}")
 
 string(CONCAT args_9 "dir;${TEST_BASE_SOURCE_DIR}/dir_1;include_dir;${INCLUDE_DIR};recursive"
-    ";list_lib;PUBLIC;lib_a;PUBLIC;lib_b")
+    ";list_link_arg;PUBLIC;lib_a;PUBLIC;lib_b")
 
 assert(EQUAL FOREACH COUNT CALL ${SUBassert_call_result_list_target_link_arg} 
     RESULT 24

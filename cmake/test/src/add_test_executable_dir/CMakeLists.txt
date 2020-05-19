@@ -245,7 +245,7 @@ assert(EQUAL FOREACH COUNT_IF_STREQUAL "Source Group Files" CALL ${assert_call_r
     ARGS "${args_5}")
 
 string(CONCAT args_6 "dir;${TEST_BASE_SOURCE_DIR}/dir_1;include_dir;${INCLUDE_DIR};recursive"
-    ";list_compile_def;PUBLIC;-DTEST1;PUBLIC;-DTEST2")
+    ";list_compile_def_arg;PUBLIC;-DTEST1;PUBLIC;-DTEST2")
 
 assert(EQUAL FOREACH COUNT 
     CALL ${assert_call_result_list_target_compile_def_arg} RESULT 24 

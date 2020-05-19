@@ -258,7 +258,7 @@ assert(EQUAL STR FOREACH CONTAIN
     ARGS "${args_6}")
 
 string(CONCAT args_7 "dir;${TEST_BASE_SOURCE_DIR}/dir_1;include_dir;${INCLUDE_DIR};recursive"
-    ";list_compile_option;PUBLIC;-Wall;PUBLIC;-Werror")
+    ";list_compile_option_arg;PUBLIC;-Wall;PUBLIC;-Werror")
 
 assert(EQUAL FOREACH COUNT CALL ${assert_call_result_list_target_compile_option_arg} 
     RESULT 24 

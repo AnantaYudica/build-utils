@@ -1,4 +1,4 @@
-function(add_test_executable_dir_get_target_include out_list_arg)
+function(add_test_executable_dir_get_target_include out_list_include_dir_arg)
     
     string(CONCAT one_options "TARGET_NAME;TARGET_DIR"
         ";BASE_DIR;PATH;RELATIVE_PATH;FILENAME;NAME;TAG;EXT"
@@ -9,6 +9,6 @@ function(add_test_executable_dir_get_target_include out_list_arg)
 
     set(default_list_arg ${add_test_executable_dir_get_target_include_DEFAULT_LIST_ARG})
 
-    set(${out_list_arg} "${default_list_arg}" PARENT_SCOPE)
+    set(${out_list_include_dir_arg} "${default_list_arg}" PARENT_SCOPE)
     
 endfunction(add_test_executable_dir_get_target_include)

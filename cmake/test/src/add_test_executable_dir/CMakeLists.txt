@@ -28,7 +28,7 @@ set(assert_call_result_list_target_dir ${TEST_BASE_SOURCE_DIR}/assert_call_2.cma
 set(SUBassert_call_result_list_target_link_arg ${TEST_BASE_SOURCE_DIR}/assert_call_3.cmake)
 set(assert_call_result_list_target_include_dir_arg ${TEST_BASE_SOURCE_DIR}/assert_call_4.cmake)
 set(assert_call_result_list_target_compile_def_arg ${TEST_BASE_SOURCE_DIR}/assert_call_5.cmake)
-set(assert_call_result_list_target_compile_option ${TEST_BASE_SOURCE_DIR}/assert_call_6.cmake)
+set(assert_call_result_list_target_compile_option_arg ${TEST_BASE_SOURCE_DIR}/assert_call_6.cmake)
 set(assert_call_result_list_target_property ${TEST_BASE_SOURCE_DIR}/assert_call_7.cmake)
 set(assert_call_result_list_target_test_cmd_arg ${TEST_BASE_SOURCE_DIR}/assert_call_8.cmake)
 set(assert_call_result_list_src ${TEST_BASE_SOURCE_DIR}/assert_call_9.cmake)
@@ -57,7 +57,7 @@ assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_include_dir_arg}
 assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_compile_def_arg} 
     LIST_RESULT "EMPTY" 
     ARGS "${args_1}")
-assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_compile_option} 
+assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_compile_option_arg} 
     LIST_RESULT "EMPTY" 
     ARGS "${args_1}")
 assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_property} 
@@ -112,7 +112,7 @@ assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_include_dir_arg}
 assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_compile_def_arg} 
     LIST_RESULT "EMPTY" 
     ARGS "${args_2}")
-assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_compile_option} 
+assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_compile_option_arg} 
     LIST_RESULT "EMPTY" 
     ARGS "${args_2}")
 assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_property} 
@@ -204,7 +204,7 @@ assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_include_dir_arg}
 assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_compile_def_arg} 
     LIST_RESULT "EMPTY" 
     ARGS "${args_4}")
-assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_compile_option} 
+assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_compile_option_arg} 
     LIST_RESULT "EMPTY" 
     ARGS "${args_4}")
 assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_property} 
@@ -260,15 +260,15 @@ assert(EQUAL STR FOREACH CONTAIN
 string(CONCAT args_7 "dir;${TEST_BASE_SOURCE_DIR}/dir_1;include_dir;${INCLUDE_DIR};recursive"
     ";list_compile_option;PUBLIC;-Wall;PUBLIC;-Werror")
 
-assert(EQUAL FOREACH COUNT CALL ${assert_call_result_list_target_compile_option} 
+assert(EQUAL FOREACH COUNT CALL ${assert_call_result_list_target_compile_option_arg} 
     RESULT 24 
     ARGS "${args_7}")
 assert(EQUAL FOREACH COUNT_IF_STREQUAL "-Wall"
-    CALL ${assert_call_result_list_target_compile_option} 
+    CALL ${assert_call_result_list_target_compile_option_arg} 
     RESULT 6 
     ARGS "${args_7}")
 assert(EQUAL STR FOREACH CONTAIN
-    CALL ${assert_call_result_list_target_compile_option} 
+    CALL ${assert_call_result_list_target_compile_option_arg} 
     LIST_RESULT "PUBLIC;-Wall;-Werror"
     ARGS "${args_7}")
 

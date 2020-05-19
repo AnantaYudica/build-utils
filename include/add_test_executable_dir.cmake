@@ -2,11 +2,11 @@
 function(add_test_executable_dir_recv base_dir dir 
     is_recursive is_output_target_name is_output_target_dir is_output_target_link_arg
     is_output_target_include_dir_arg is_output_target_compile_def_arg
-    is_output_target_compile_option is_output_target_property
+    is_output_target_compile_option_arg is_output_target_property
     is_output_target_test_cmd_arg is_output_src is_output_header
     is_output_group_name level list_target_name 
     list_target_dir list_target_link_arg list_target_include_dir_arg
-    list_target_compile_def_arg list_target_compile_option
+    list_target_compile_def_arg list_target_compile_option_arg
     list_target_property list_target_test_cmd_arg list_src list_header  
     list_group_name)
 
@@ -91,7 +91,7 @@ function(add_test_executable_dir_recv base_dir dir
     set(foreach_list_target_link_arg "")
     set(foreach_list_target_include_dir_arg "")
     set(foreach_list_target_compile_def_arg "")
-    set(foreach_list_target_compile_option "")
+    set(foreach_list_target_compile_option_arg "")
     set(foreach_list_target_property "")
     set(foreach_list_target_test_cmd_arg "") 
     set(foreach_list_src "") 
@@ -152,7 +152,7 @@ function(add_test_executable_dir_recv base_dir dir
                 set(next_list_target_link_arg "")
                 set(next_list_target_include_dir_arg "")
                 set(next_list_target_compile_def_arg "")
-                set(next_list_target_compile_option "")
+                set(next_list_target_compile_option_arg "")
                 set(next_list_target_property "")
                 set(next_list_target_test_cmd_arg "") 
                 set(next_list_src "") 
@@ -183,12 +183,12 @@ function(add_test_executable_dir_recv base_dir dir
                 add_test_executable_dir_recv("${base_dir}" "${dir}/${filename}"
                     ${is_recursive} ${is_output_target_name} ${is_output_target_dir} 
                     ${is_output_target_link_arg} ${is_output_target_include_dir_arg} 
-                    ${is_output_target_compile_def_arg} ${is_output_target_compile_option} 
+                    ${is_output_target_compile_def_arg} ${is_output_target_compile_option_arg} 
                     ${is_output_target_property} ${is_output_target_test_cmd_arg} 
                     ${is_output_src} ${is_output_header} ${is_output_group_name} ${next_level} 
                     next_list_target_name next_list_target_dir next_list_target_link_arg
                     next_list_target_include_dir_arg next_list_target_compile_def_arg
-                    next_list_target_compile_option next_list_target_property 
+                    next_list_target_compile_option_arg next_list_target_property 
                     next_list_target_test_cmd_arg next_list_src next_list_header 
                     next_list_group_name
                     PREFIX "${prefix}${dir_target_name}"
@@ -249,8 +249,8 @@ function(add_test_executable_dir_recv base_dir dir
                     list(APPEND foreach_list_target_compile_def_arg ${next_list_target_compile_def_arg})
                 endif()
 
-                if (is_output_target_compile_option)
-                    list(APPEND foreach_list_target_compile_option ${next_list_target_compile_option})
+                if (is_output_target_compile_option_arg)
+                    list(APPEND foreach_list_target_compile_option_arg ${next_list_target_compile_option_arg})
                 endif()
 
                 if (is_output_target_property)
@@ -345,7 +345,7 @@ function(add_test_executable_dir_recv base_dir dir
                         ARGS ${get_target_include_args})
 
                     add_test_executable_dir_get_target_compile(
-                        target_list_compile_def_arg target_list_compile_option
+                        target_list_compile_def_arg target_list_compile_option_arg
                         DEFAULT_LIST_DEF ${list_compile_def}
                         DEFAULT_LIST_OPTION ${list_compile_option}
                         TARGET_NAME ${target_name} TARGET_DIR ${prefix_dir}
@@ -517,13 +517,14 @@ function(add_test_executable_dir_recv base_dir dir
 
                         endif()
 
-                        if (NOT "${target_list_compile_option}" STREQUAL "")
+                        if (NOT "${target_list_compile_option_arg}" STREQUAL "")
                             if(NOT DEFINED CMAKE_SCRIPT_MODE_FILE)
-                                target_compile_options("${target_name}" ${target_list_compile_option})
+                                target_compile_options("${target_name}" ${target_list_compile_option_arg})
                             endif()
                             
-                            if (is_output_target_compile_option)
-                                list(APPEND foreach_list_target_compile_option ${target_list_compile_option})
+                            if (is_output_target_compile_option_arg)
+                                list(APPEND foreach_list_target_compile_option_arg 
+                                    ${target_list_compile_option_arg})
                             endif()
 
                         endif()
@@ -594,8 +595,8 @@ function(add_test_executable_dir_recv base_dir dir
         set(${list_target_compile_def_arg} ${foreach_list_target_compile_def_arg} PARENT_SCOPE) 
     endif()
     
-    if (is_output_target_compile_option)
-        set(${list_target_compile_option} ${foreach_list_target_compile_option} PARENT_SCOPE)
+    if (is_output_target_compile_option_arg)
+        set(${list_target_compile_option_arg} ${foreach_list_target_compile_option_arg} PARENT_SCOPE)
     endif()
 
     if (is_output_target_property)
@@ -672,7 +673,7 @@ function(add_test_executable_dir dir)
     string(CONCAT one_options "${one_options}" 
         ";LIST_TARGET_NAME;LIST_TARGET_DIR;LIST_TARGET_LINK_ARG"
         ";LIST_TARGET_INCLUDE_DIR_ARG;LIST_TARGET_COMPILE_DEF_ARG"
-        ";LIST_TARGET_COMPILE_OPTION;LIST_TARGET_PROPERTY"
+        ";LIST_TARGET_COMPILE_OPTION_ARG;LIST_TARGET_PROPERTY"
         ";LIST_TARGET_TEST_CMD_ARG;LIST_SRC;LIST_HEADER"
         ";LIST_GROUP_NAME")
 
@@ -1059,9 +1060,9 @@ function(add_test_executable_dir dir)
         set(enable_output_target_compile_def_arg TRUE)
     endif()
 
-    set(enable_output_target_compile_option FALSE)
-    if (NOT "${add_test_executable_dir_LIST_TARGET_COMPILE_OPTION}" STREQUAL "")
-        set(enable_output_target_compile_option TRUE)
+    set(enable_output_target_compile_option_arg FALSE)
+    if (NOT "${add_test_executable_dir_LIST_TARGET_COMPILE_OPTION_ARG}" STREQUAL "")
+        set(enable_output_target_compile_option_arg TRUE)
     endif()
 
     set(enable_output_target_property FALSE)
@@ -1094,7 +1095,7 @@ function(add_test_executable_dir dir)
     set(list_target_link_arg "")
     set(list_target_include_dir_arg "")
     set(list_target_compile_def_arg "")
-    set(list_target_compile_option "")
+    set(list_target_compile_option_arg "")
     set(list_target_property "")
     set(list_target_test_cmd_arg "") 
     set(list_src "") 
@@ -1104,11 +1105,11 @@ function(add_test_executable_dir dir)
     add_test_executable_dir_recv(${dir} ${dir}
         ${is_recursive} ${enable_output_target_name} ${enable_output_target_dir}
         ${enable_output_target_link_arg} ${enable_output_target_include_dir_arg}
-        ${enable_output_target_compile_def_arg} ${enable_output_target_compile_option}
+        ${enable_output_target_compile_def_arg} ${enable_output_target_compile_option_arg}
         ${enable_output_target_property} ${enable_output_target_test_cmd_arg}
         ${enable_output_src} ${enable_output_header} ${enable_output_group_name} 0 
         list_target_name list_target_dir list_target_link_arg
-        list_target_include_dir_arg list_target_compile_def_arg list_target_compile_option
+        list_target_include_dir_arg list_target_compile_def_arg list_target_compile_option_arg
         list_target_property list_target_test_cmd_arg list_src list_header list_group_name
         PREFIX ${add_test_executable_dir_PREFIX}
         PREFIX_DIR ${add_test_executable_dir_PREFIX_DIR}
@@ -1170,8 +1171,9 @@ function(add_test_executable_dir dir)
             ${list_target_compile_def_arg} PARENT_SCOPE)
     endif()
 
-    if (enable_output_target_compile_option)
-        set(${add_test_executable_dir_LIST_TARGET_COMPILE_OPTION} ${list_target_compile_option} PARENT_SCOPE)
+    if (enable_output_target_compile_option_arg)
+        set(${add_test_executable_dir_LIST_TARGET_COMPILE_OPTION_ARG} 
+            ${list_target_compile_option_arg} PARENT_SCOPE)
     endif()
 
     if (enable_output_target_property)

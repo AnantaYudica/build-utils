@@ -42,7 +42,7 @@ function(parse_args output_dir output_call_args)
         ";header_group_name;src_group_name;other_src_group_name")
     
     string(CONCAT list_options "${list_options}"
-        ";list_compile_def_arg;list_compile_option_arg;list_include_dir;list_lib"
+        ";list_compile_def_arg;list_compile_option_arg;list_include_dir_arg;list_lib"
         ";list_other_src;list_property;list_test_cmd_arg")
 
     string(CONCAT one_options "${one_options}" 
@@ -315,8 +315,8 @@ function(parse_args output_dir output_call_args)
         list(APPEND call_args "LIST_COMPILE_OPTION_ARG" ${args_list_compile_option_arg})
     endif()
     
-    if (NOT "${args_list_include_dir}" STREQUAL "")
-        list(APPEND call_args "LIST_INCLUDE_DIR" ${args_list_include_dir})
+    if (NOT "${args_list_include_dir_arg}" STREQUAL "")
+        list(APPEND call_args "LIST_INCLUDE_DIR_ARG" ${args_list_include_dir_arg})
     endif()
     
     if (NOT "${args_list_lib}" STREQUAL "")

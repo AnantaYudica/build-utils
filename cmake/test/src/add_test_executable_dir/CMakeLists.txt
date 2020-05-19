@@ -335,7 +335,7 @@ assert(EQUAL STR FOREACH CONTAIN CALL ${assert_call_result_list_group_name}
     ARGS "${args_10}")
 
 string(CONCAT args_11 "dir;${TEST_BASE_SOURCE_DIR}/dir_1;include_dir;${INCLUDE_DIR};recursive"
-    ";list_property;FOLDER;test")
+    ";list_property_arg;FOLDER;test")
 
 assert(EQUAL FOREACH COUNT CALL ${assert_call_result_list_target_property_arg} 
     RESULT 12 ARGS "${args_11}")

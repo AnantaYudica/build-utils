@@ -35,7 +35,7 @@ function(add_test_executable_dir_recv base_dir dir
 
     string(CONCAT list_options "${list_options}"
         ";LIST_COMPILE_DEF_ARG;LIST_COMPILE_OPTION_ARG;LIST_INCLUDE_DIR_ARG;LIST_LINK_ARG"
-        ";LIST_OTHER_SRC;LIST_PROPERTY;LIST_TEST_CMD_ARG")
+        ";LIST_OTHER_SRC;LIST_PROPERTY_ARG;LIST_TEST_CMD_ARG")
 
     cmake_parse_arguments(add_test_executable_dir_recv "" 
         "${one_options}" "${list_options}" ${ARGN}) 
@@ -81,7 +81,7 @@ function(add_test_executable_dir_recv base_dir dir
     set(list_include_dir_arg ${add_test_executable_dir_recv_LIST_INCLUDE_DIR_ARG})
     set(list_link_arg ${add_test_executable_dir_recv_LIST_LINK_ARG})
     set(list_other_src ${add_test_executable_dir_recv_LIST_OTHER_SRC})
-    set(list_property ${add_test_executable_dir_recv_LIST_PROPERTY})
+    set(list_property_arg ${add_test_executable_dir_recv_LIST_PROPERTY_ARG})
     set(list_test_cmd_arg ${add_test_executable_dir_recv_LIST_TEST_CMD_ARG})
 
     set(include_dir ${add_test_executable_dir_recv_INCLUDE_DIR})
@@ -225,7 +225,7 @@ function(add_test_executable_dir_recv base_dir dir
                     LIST_INCLUDE_DIR_ARG ${list_include_dir_arg}
                     LIST_LINK_ARG ${list_link_arg}
                     LIST_OTHER_SRC ${list_other_src}
-                    LIST_PROPERTY ${list_property}
+                    LIST_PROPERTY_ARG ${list_property_arg}
                     LIST_TEST_CMD_ARG ${list_test_cmd_arg}
                     INCLUDE_DIR ${include_dir})
                     
@@ -365,7 +365,7 @@ function(add_test_executable_dir_recv base_dir dir
                         ARGS ${get_target_other_src_args})
 
                     add_test_executable_dir_get_target_properties(target_list_property_arg
-                        DEFAULT_LIST_PROPERTY ${list_property}
+                        DEFAULT_LIST_ARG ${list_property_arg}
                         TARGET_NAME ${target_name} TARGET_DIR ${prefix_dir}
                         BASE_DIR ${base_dir} PATH ${it} RELATIVE_PATH ${relative_path} 
                         FILENAME ${filename} NAME ${src_name} TAG ${src_tag} EXT ${src_ext} 
@@ -665,7 +665,7 @@ function(add_test_executable_dir dir)
     
     string(CONCAT list_options "${list_options}"
         ";LIST_COMPILE_DEF_ARG;LIST_COMPILE_OPTION_ARG;LIST_INCLUDE_DIR_ARG;LIST_LINK_ARG"
-        ";LIST_OTHER_SRC;LIST_PROPERTY;LIST_TEST_CMD_ARG")
+        ";LIST_OTHER_SRC;LIST_PROPERTY_ARG;LIST_TEST_CMD_ARG")
 
     string(CONCAT one_options "${one_options}" 
         ";INCLUDE_DIR")
@@ -1145,7 +1145,7 @@ function(add_test_executable_dir dir)
         LIST_INCLUDE_DIR_ARG ${add_test_executable_dir_LIST_INCLUDE_DIR_ARG}
         LIST_LINK_ARG ${add_test_executable_dir_LIST_LINK_ARG}
         LIST_OTHER_SRC ${add_test_executable_dir_LIST_OTHER_SRC}
-        LIST_PROPERTY ${add_test_executable_dir_LIST_PROPERTY}
+        LIST_PROPERTY_ARG ${add_test_executable_dir_LIST_PROPERTY_ARG}
         LIST_TEST_CMD_ARG ${add_test_executable_dir_LIST_TEST_CMD_ARG}
         INCLUDE_DIR ${base_dir})
 

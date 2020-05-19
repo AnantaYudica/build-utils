@@ -29,7 +29,7 @@ set(SUBassert_call_result_list_target_link_arg ${TEST_BASE_SOURCE_DIR}/assert_ca
 set(assert_call_result_list_target_include_dir_arg ${TEST_BASE_SOURCE_DIR}/assert_call_4.cmake)
 set(assert_call_result_list_target_compile_def_arg ${TEST_BASE_SOURCE_DIR}/assert_call_5.cmake)
 set(assert_call_result_list_target_compile_option_arg ${TEST_BASE_SOURCE_DIR}/assert_call_6.cmake)
-set(assert_call_result_list_target_property ${TEST_BASE_SOURCE_DIR}/assert_call_7.cmake)
+set(assert_call_result_list_target_property_arg ${TEST_BASE_SOURCE_DIR}/assert_call_7.cmake)
 set(assert_call_result_list_target_test_cmd_arg ${TEST_BASE_SOURCE_DIR}/assert_call_8.cmake)
 set(assert_call_result_list_src ${TEST_BASE_SOURCE_DIR}/assert_call_9.cmake)
 set(assert_call_result_list_header ${TEST_BASE_SOURCE_DIR}/assert_call_10.cmake)
@@ -60,7 +60,7 @@ assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_compile_def_arg}
 assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_compile_option_arg} 
     LIST_RESULT "EMPTY" 
     ARGS "${args_1}")
-assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_property} 
+assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_property_arg} 
     LIST_RESULT "EMPTY" 
     ARGS "${args_1}")
 assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_test_cmd_arg} 
@@ -115,7 +115,7 @@ assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_compile_def_arg}
 assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_compile_option_arg} 
     LIST_RESULT "EMPTY" 
     ARGS "${args_2}")
-assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_property} 
+assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_property_arg} 
     LIST_RESULT "EMPTY" 
     ARGS "${args_2}")
 assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_test_cmd_arg} 
@@ -207,7 +207,7 @@ assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_compile_def_arg}
 assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_compile_option_arg} 
     LIST_RESULT "EMPTY" 
     ARGS "${args_4}")
-assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_property} 
+assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_property_arg} 
     LIST_RESULT "EMPTY" 
     ARGS "${args_4}")
 assert(EQUAL STR FOREACH CALL ${assert_call_result_list_target_test_cmd_arg} 
@@ -337,10 +337,10 @@ assert(EQUAL STR FOREACH CONTAIN CALL ${assert_call_result_list_group_name}
 string(CONCAT args_11 "dir;${TEST_BASE_SOURCE_DIR}/dir_1;include_dir;${INCLUDE_DIR};recursive"
     ";list_property;FOLDER;test")
 
-assert(EQUAL FOREACH COUNT CALL ${assert_call_result_list_target_property} 
+assert(EQUAL FOREACH COUNT CALL ${assert_call_result_list_target_property_arg} 
     RESULT 12 ARGS "${args_11}")
 
-assert(EQUAL STR FOREACH CONTAIN CALL ${assert_call_result_list_target_property} 
+assert(EQUAL STR FOREACH CONTAIN CALL ${assert_call_result_list_target_property_arg} 
     LIST_RESULT "FOLDER;test" 
     ARGS "${args_11}")
 

@@ -356,7 +356,7 @@ function(add_test_executable_dir_recv base_dir dir
                         ARGS ${get_target_compile_args})
 
                     add_test_executable_dir_get_target_other_src(target_list_other_src
-                        DEFAULT_LIST_SRC ${list_other_src}
+                        DEFAULT_LIST ${list_other_src}
                         TARGET_NAME ${target_name} TARGET_DIR ${prefix_dir}
                         BASE_DIR ${base_dir} PATH ${it} RELATIVE_PATH ${relative_path} 
                         FILENAME ${filename} NAME ${src_name} TAG ${src_tag} EXT ${src_ext} 

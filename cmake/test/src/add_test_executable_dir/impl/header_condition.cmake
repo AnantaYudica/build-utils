@@ -11,7 +11,7 @@ function(add_test_executable_dir_header_condition output)
         ${add_test_executable_dir_header_condition_ARGS}) 
 
     set(filename ${add_test_executable_dir_header_condition_FILENAME})
-assert_debug("HEADER_NAME_REGEX : ${args_HEADER_NAME_REGEX}")
+
     set(res FALSE)
     if ("${filename}" MATCHES "${args_HEADER_NAME_REGEX}")
         set(res TRUE)

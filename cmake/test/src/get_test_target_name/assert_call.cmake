@@ -1,0 +1,46 @@
+function(assert_call)
+    cmake_parse_arguments(assert_call "" "OUTPUT" "ARGS" ${ARGN}) 
+    
+    cmake_parse_arguments(args "" "prefix;name;tag;format;set_prefix;set_name;set_tag" 
+        "prefix_args;name_args;tag_args" ${assert_call_ARGS}) 
+
+    set(cmd_args "")
+
+    if (NOT "${args_prefix}" STREQUAL "")
+        list(APPEND cmd_args "PREFIX" "${args_prefix}")
+    endif()
+    if (NOT "${args_name}" STREQUAL "")
+        list(APPEND cmd_args "NAME" "${args_name}")
+    endif()
+    if (NOT "${args_tag}" STREQUAL "")
+        list(APPEND cmd_args "TAG" "${args_tag}")
+    endif()
+    if (NOT "${args_format}" STREQUAL "")
+        list(APPEND cmd_args "FORMAT" "${args_format}")
+    endif()
+    if (NOT "${args_set_prefix}" STREQUAL "")
+        list(APPEND cmd_args "SET_PREFIX" "${args_set_prefix}")
+    endif()
+    if (NOT "${args_set_name}" STREQUAL "")
+        list(APPEND cmd_args "SET_NAME" "${args_set_name}")
+    endif()
+    if (NOT "${args_set_tag}" STREQUAL "")
+        list(APPEND cmd_args "SET_TAG" "${args_set_tag}")
+    endif()
+    if (NOT "${args_prefix_args}" STREQUAL "")
+        list(APPEND cmd_args "PREFIX_ARGS" "${args_prefix_args}")
+    endif()
+    if (NOT "${args_name_args}" STREQUAL "")
+        list(APPEND cmd_args "NAME_ARGS" "${args_name_args}")
+    endif()
+    if (NOT "${args_tag_args}" STREQUAL "")
+        list(APPEND cmd_args "TAG_ARGS" "${args_tag_args}")
+    endif()
+
+    set(out "")
+    
+    get_test_target_name(out ${cmd_args} INCLUDE_DIR ${INCLUDE_DIR})
+
+    set(${assert_call_OUTPUT} ${out} PARENT_SCOPE)
+    
+endfunction(assert_call)

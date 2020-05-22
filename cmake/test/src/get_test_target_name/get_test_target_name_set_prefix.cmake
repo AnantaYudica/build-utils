@@ -1,0 +1,5 @@
+function(get_test_target_name_set_prefix prefix output)
+    cmake_parse_arguments(get_test_target_name_set_prefix "" "" "ARGS" ${ARGN}) 
+    list(GET get_test_target_name_set_prefix_ARGS 0 index)
+    set("${output}" "${prefix}-${index}" PARENT_SCOPE)
+endfunction(get_test_target_name_set_prefix )

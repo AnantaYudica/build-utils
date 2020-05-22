@@ -99,7 +99,10 @@ function(assert_debug msg)
 endfunction(assert_debug)
 
 function(assert)
-    cmake_parse_arguments(assert "DEBUG;NOT;EQUAL;LESS;GREATER;STR;FOREACH;CONTAIN;COUNT" 
+    string(CONCAT boolean_option
+        "DEBUG;NOT;EQUAL;LESS;GREATER;STR;FOREACH;CONTAIN;COUNT" 
+        ";DISTINCT;SORT")
+    cmake_parse_arguments(assert "${boolean_option}"
         "CALL;RESULT;COUNT_IF_EQUAL;COUNT_IF_STREQUAL" "LIST_RESULT;ARGS" ${ARGN}) 
     set(debug_before ${ASSERT_DEBUG})
     set(ASSERT_DEBUG ${assert_DEBUG} CACHE BOOL "debug mode" FORCE)
@@ -133,6 +136,16 @@ function(assert)
     endif()
 
     if(assert_FOREACH)
+        if (assert_DISTINCT)
+            list(REMOVE_DUPLICATES out)
+            list(REMOVE_DUPLICATES assert_LIST_RESULT)
+        endif()
+
+        if (assert_SORT)
+            list(SORT out)
+            list(SORT assert_LIST_RESULT)
+        endif()
+
         list(LENGTH out out_len)
         list(LENGTH assert_LIST_RESULT result_len)
         foreach(it RANGE 1 ${out_len} 1)

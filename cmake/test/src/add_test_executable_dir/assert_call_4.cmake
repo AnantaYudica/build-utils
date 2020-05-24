@@ -5,7 +5,7 @@ function(assert_call)
 
     add_test_executable_dir(${dir} ${result_call_args} LIST_TARGET_INCLUDE_DIR_ARG output)
 
-    if (NOT "${output}" STREQUAL "")
+    if (NOT "${EMPTY}${output}" STREQUAL "${EMPTY}")
         set(${assert_call_OUTPUT} "${output}" PARENT_SCOPE)
     else()
         set(${assert_call_OUTPUT} "EMPTY" PARENT_SCOPE)

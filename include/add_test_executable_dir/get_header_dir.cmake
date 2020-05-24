@@ -9,7 +9,7 @@ function(add_test_executable_dir_get_header_dir header_dir)
     set(dir ${add_test_executable_dir_get_header_dir_CURR_DIR})
     set(base_header_dir ${add_test_executable_dir_get_header_dir_BASE_HEADER_DIR})
 
-    if (NOT "${base_header_dir}" STREQUAL "")
+    if (NOT "${EMPTY}${base_header_dir}" STREQUAL "${EMPTY}")
         set(relative_dir ${add_test_executable_dir_get_header_dir_RELATIVE_CURR_DIR})
         get_filename_component(current_header_dir "${base_header_dir}/${relative_dir}" ABSOLUTE)
         set(${header_dir} ${current_header_dir} PARENT_SCOPE)

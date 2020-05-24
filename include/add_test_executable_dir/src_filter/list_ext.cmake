@@ -12,7 +12,7 @@ function(add_test_executable_dir_src_filter cond)
     set(is_case_sensitive ${add_test_executable_dir_src_filter_CASE_SENSITIVE})
     set(list_ext ${args_LIST_EXT})
 
-    if (NOT "${list_ext}" STREQUAL "" AND (NOT is_directory))
+    if (NOT "${EMPTY}${list_ext}" STREQUAL "${EMPTY}" AND (NOT is_directory))
         set(result FALSE)
 
         if(is_case_sensitive)

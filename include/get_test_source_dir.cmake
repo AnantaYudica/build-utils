@@ -70,17 +70,21 @@ function(get_test_source_dir dir list_output)
     set(condition_args ${get_test_source_dir_CONDITION_ARGS})
 
     set(base_dir "${BUILD_UTILS_INCLUDE_DIR}")
-    if (NOT "${get_test_source_dir_INCLUDE_DIR}" STREQUAL "")
+    if (NOT "${EMPTY}${get_test_source_dir_INCLUDE_DIR}" STREQUAL "${EMPTY}")
         set(base_dir "${get_test_source_dir_INCLUDE_DIR}")
     endif()
     
-    if("${get_test_source_dir_FILTER}" STREQUAL "" OR (NOT EXISTS "${get_test_source_dir_FILTER}"))
+    if("${EMPTY}${get_test_source_dir_FILTER}" STREQUAL "${EMPTY}" 
+        OR (NOT EXISTS "${get_test_source_dir_FILTER}"))
+        
         include(${base_dir}/get_test_source_dir/filter.cmake)
     else()
         include(${get_test_source_dir_FILTER})
     endif()
     
-    if("${get_test_source_dir_CONDITION}" STREQUAL "" OR (NOT EXISTS "${get_test_source_dir_CONDITION}"))
+    if("${EMPTY}${get_test_source_dir_CONDITION}" STREQUAL "${EMPTY}" 
+        OR (NOT EXISTS "${get_test_source_dir_CONDITION}"))
+        
         include(${base_dir}/get_test_source_dir/condition.cmake)
     else()
         include(${get_test_source_dir_CONDITION})

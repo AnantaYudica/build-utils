@@ -14,27 +14,27 @@ function(add_test_executable_dir_header_condition output)
     set(filename "${add_test_executable_dir_header_condition_FILENAME}")
 
     set(is_case_sensitive FALSE)
-    if (NOT "${add_test_executable_dir_header_condition_CASE_SENSITIVE}" STREQUAL "")
+    if (NOT "${EMPTY}${add_test_executable_dir_header_condition_CASE_SENSITIVE}" STREQUAL "${EMPTY}")
         set(is_case_sensitive ${add_test_executable_dir_header_condition_CASE_SENSITIVE})
     endif()
   
     set(list_tag ${args_LIST_TAG})
 
-    if (NOT "${list_tag}" STREQUAL "")
+    if (NOT "${EMPTY}${list_tag}" STREQUAL "${EMPTY}")
         set(call_args "")
-        if (NOT "${args_GET_NAME}" STREQUAL "")
+        if (NOT "${EMPTY}${args_GET_NAME}" STREQUAL "${EMPTY}")
             list(APPEND call_args "GET_NAME" ${args_GET_NAME})
         endif()
 
-        if (NOT "${args_GET_TAG}" STREQUAL "")
+        if (NOT "${EMPTY}${args_GET_TAG}" STREQUAL "${EMPTY}")
             list(APPEND call_args "GET_TAG" ${args_GET_TAG})
         endif()
 
-        if(NOT "${args_TAG_CONDITION}" STREQUAL "")
+        if(NOT "${EMPTY}${args_TAG_CONDITION}" STREQUAL "${EMPTY}")
             list(APPEND call_args "TAG_CONDITION" ${args_TAG_CONDITION})
         endif()
 
-        if (NOT "${args_TAG_DELIMITER}" STREQUAL "")
+        if (NOT "${EMPTY}${args_TAG_DELIMITER}" STREQUAL "${EMPTY}")
             list(APPEND call_args "TAG_DELIMITER" ${args_TAG_DELIMITER})
 
         endif() 

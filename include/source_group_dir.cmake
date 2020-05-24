@@ -108,11 +108,11 @@ function(source_group_dir prefix_name dir)
     set(get_prefix_name_args ${source_group_dir_GET_PREFIX_NAME_ARGS})
 
     set(base_dir "${BUILD_UTILS_INCLUDE_DIR}")
-    if (NOT "${source_group_dir_INCLUDE_DIR}" STREQUAL "")
+    if (NOT "${EMPTY}${source_group_dir_INCLUDE_DIR}" STREQUAL "${EMPTY}")
         set(base_dir "${source_group_dir_INCLUDE_DIR}")
     endif()
 
-    if("${source_group_dir_FILTER}" STREQUAL "" 
+    if("${EMPTY}${source_group_dir_FILTER}" STREQUAL "${EMPTY}" 
         OR (NOT EXISTS "${source_group_dir_FILTER}"))
         
         include(${base_dir}/source_group_dir/filter.cmake)
@@ -120,7 +120,7 @@ function(source_group_dir prefix_name dir)
         include(${source_group_dir_FILTER})
     endif()
 
-    if("${source_group_dir_CONDITION}" STREQUAL "" 
+    if("${EMPTY}${source_group_dir_CONDITION}" STREQUAL "${EMPTY}" 
         OR (NOT EXISTS "${source_group_dir_CONDITION}"))
         
         include(${base_dir}/source_group_dir/condition.cmake)
@@ -128,7 +128,7 @@ function(source_group_dir prefix_name dir)
         include(${source_group_dir_CONDITION})
     endif()
 
-    if("${source_group_dir_GET_PREFIX_NAME}" STREQUAL "" 
+    if("${EMPTY}${source_group_dir_GET_PREFIX_NAME}" STREQUAL "${EMPTY}" 
         OR (NOT EXISTS "${source_group_dir_GET_PREFIX_NAME}"))
 
         include(${base_dir}/source_group_dir/get_prefix_name.cmake)
@@ -138,13 +138,13 @@ function(source_group_dir prefix_name dir)
     
     set(enable_output_name FALSE)
     unset("${source_group_dir_LIST_NAME}")
-    if(NOT "${source_group_dir_LIST_NAME}" STREQUAL "")
+    if(NOT "${EMPTY}${source_group_dir_LIST_NAME}" STREQUAL "${EMPTY}")
         set(enable_output_name TRUE)
     endif()
 
     set(enable_output_path FALSE)
     unset("${source_group_dir_LIST_PATH}")
-    if(NOT "${source_group_dir_LIST_PATH}" STREQUAL "")
+    if(NOT "${EMPTY}${source_group_dir_LIST_PATH}" STREQUAL "${EMPTY}")
         set(enable_output_path TRUE)
     endif()
     

@@ -6,7 +6,7 @@ cmake_parse_arguments(set_variables ""
 
 set(l_base_source_dir "")
 
-if("${set_variables_BASE_SOURCE_DIR}" STREQUAL "")
+if("${EMPTY}${set_variables_BASE_SOURCE_DIR}" STREQUAL "${EMPTY}")
     get_filename_component(l_base_source_dir "${CMAKE_SOURCE_DIR}" ABSOLUTE)
 else()    
     get_filename_component(l_base_source_dir "${set_variables_BASE_SOURCE_DIR}" ABSOLUTE)
@@ -22,7 +22,7 @@ endif()
 
 set(l_include_dir "")
 
-if("${set_variables_INCLUDE_DIR}" STREQUAL "")
+if("${EMPTY}${set_variables_INCLUDE_DIR}" STREQUAL "${EMPTY}")
     get_filename_component(l_include_dir "${BASE_SOURCE_DIR}/../include" ABSOLUTE)
 else()
     get_filename_component(l_include_dir "${set_variables_INCLUDE_DIR}" ABSOLUTE)
@@ -39,7 +39,7 @@ endif()
 
 set(l_test_base_dir "")
 
-if ("${set_variables_TEST_BASE_DIR}" STREQUAL "")
+if ("${EMPTY}${set_variables_TEST_BASE_DIR}" STREQUAL "${EMPTY}")
     get_filename_component(l_test_base_dir "${BASE_SOURCE_DIR}/test" ABSOLUTE)
 else()
     get_filename_component(l_test_base_dir "${set_variables_TEST_BASE_DIR}" ABSOLUTE)
@@ -56,7 +56,7 @@ endif()
 
 set(l_test_utils_dir "")
 
-if ("${set_variables_TEST_UTILS_DIR}" STREQUAL "")
+if ("${EMPTY}${set_variables_TEST_UTILS_DIR}" STREQUAL "${EMPTY}")
     get_filename_component(l_test_utils_dir "${TEST_BASE_DIR}/utils" ABSOLUTE)
 else()
     get_filename_component(l_test_utils_dir "${set_variables_TEST_UTILS_DIR}" ABSOLUTE)
@@ -73,7 +73,7 @@ endif()
 
 set(l_test_source_dir "")
 
-if("${set_variables_TEST_SOURCE_DIR}" STREQUAL "")
+if("${EMPTY}${set_variables_TEST_SOURCE_DIR}" STREQUAL "${EMPTY}")
     get_filename_component(l_test_source_dir "${TEST_BASE_DIR}/build_utils" ABSOLUTE)
 else()
     get_filename_component(l_test_source_dir "${set_variables_TEST_SOURCE_DIR}" ABSOLUTE)
@@ -88,13 +88,13 @@ else()
     message(FATAL_ERROR "variable \"TEST_SOURCE_DIR\"" )
 endif()
 
-if("${set_variables_TEST_NAME}" STREQUAL "")
+if("${EMPTY}${set_variables_TEST_NAME}" STREQUAL "${EMPTY}")
     set(l_test_source_dir "Not Defined" CACHE PATH "test source name" FORCE)
 else()
     set(l_test_source_dir "${set_variables_TEST_NAME}" CACHE PATH "test source name" FORCE)
 endif()
 
-if("${set_variables_TEST_BASE_SOURCE_DIR}" STREQUAL "")
+if("${EMPTY}${set_variables_TEST_BASE_SOURCE_DIR}" STREQUAL "${EMPTY}")
     set(TEST_BASE_SOURCE_DIR ${TEST_SOURCE_DIR} CACHE PATH "test base source dir" FORCE)
 else()
     set(l_test_base_source_dir "")

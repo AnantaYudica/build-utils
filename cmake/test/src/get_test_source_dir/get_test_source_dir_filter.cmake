@@ -7,7 +7,7 @@ function(get_test_source_dir_filter output)
     cmake_parse_arguments(args "" "level" "" ${get_test_source_dir_filter_ARGS})
 
     set(level 2)
-    if (NOT "${args_level}" STREQUAL "")
+    if (NOT "${EMPTY}${args_level}" STREQUAL "${EMPTY}")
         set(level ${args_level})
     endif()
         

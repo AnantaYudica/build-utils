@@ -174,7 +174,7 @@ function(add_test_executable_dir_recv base_dir dir
                     CURR_DIRNAME ${curr_dirname} INCLUDE_DIR ${include_dir} 
                     ARGS ${get_dirname_args})
 
-                if (NOT "${prefix_dir}" STREQUAL "")
+                if (NOT "${EMPTY}${prefix_dir}" STREQUAL "${EMPTY}")
                     set(next_prefix_dir ${prefix_dir}/${dirname})
                 else()
                     set(next_prefix_dir ${dirname})
@@ -382,7 +382,7 @@ function(add_test_executable_dir_recv base_dir dir
                         CURR_DIRNAME ${curr_dirname} INCLUDE_DIR ${include_dir} 
                         ARGS ${get_test_cmd_args_args})
 
-                    if (NOT "${target_list_header}" STREQUAL "")
+                    if (NOT "${EMPTY}${target_list_header}" STREQUAL "${EMPTY}")
 
                         set(foreach_header_group_name "")
                         foreach(it_header_path ${target_list_header})
@@ -428,7 +428,7 @@ function(add_test_executable_dir_recv base_dir dir
                         endif()
                     endif()
 
-                    if (NOT "${src_group_name}" STREQUAL "")
+                    if (NOT "${EMPTY}${src_group_name}" STREQUAL "${EMPTY}")
                         if(NOT DEFINED CMAKE_SCRIPT_MODE_FILE)
                             source_group("${src_group_name}" FILES ${it})
                         endif()
@@ -438,8 +438,8 @@ function(add_test_executable_dir_recv base_dir dir
                         endif()
                     endif()
 
-                    if (NOT "${other_src_group_name}" STREQUAL ""
-                        AND (NOT "${target_list_other_src}" STREQUAL ""))
+                    if (NOT "${EMPTY}${other_src_group_name}" STREQUAL "${EMPTY}"
+                        AND (NOT "${EMPTY}${target_list_other_src}" STREQUAL "${EMPTY}"))
 
                         set(foreach_other_src_group_name "")
                         foreach(it_other_src_path ${target_list_other_src})
@@ -481,12 +481,12 @@ function(add_test_executable_dir_recv base_dir dir
                         endif()
                     endif()
 
-                    if (NOT "${target_name}" STREQUAL "")
+                    if (NOT "${EMPTY}${target_name}" STREQUAL "${EMPTY}")
                         if(NOT DEFINED CMAKE_SCRIPT_MODE_FILE)
                             add_executable("${target_name}" ${it} ${target_list_other_src} ${target_list_header})
                         endif()
 
-                        if (NOT "${target_list_property_arg}" STREQUAL "")
+                        if (NOT "${EMPTY}${target_list_property_arg}" STREQUAL "${EMPTY}")
                             if(NOT DEFINED CMAKE_SCRIPT_MODE_FILE)
                                 set_target_properties("${target_name}" PROPERTIES ${target_list_property_arg})
                             endif()
@@ -496,7 +496,7 @@ function(add_test_executable_dir_recv base_dir dir
                             endif()
                         endif()
 
-                        if (NOT "${target_list_include_dir_arg}" STREQUAL "")
+                        if (NOT "${EMPTY}${target_list_include_dir_arg}" STREQUAL "${EMPTY}")
                             if(NOT DEFINED CMAKE_SCRIPT_MODE_FILE)
                                 target_include_directories("${target_name}" ${target_list_include_dir_arg})
                             endif()
@@ -506,7 +506,7 @@ function(add_test_executable_dir_recv base_dir dir
                             endif()
                         endif()
 
-                        if (NOT "${target_list_compile_def_arg}" STREQUAL "")
+                        if (NOT "${EMPTY}${target_list_compile_def_arg}" STREQUAL "${EMPTY}")
                             if(NOT DEFINED CMAKE_SCRIPT_MODE_FILE)
                                 target_compile_definitions("${target_name}" ${target_list_compile_def_arg})
                             endif()
@@ -517,7 +517,7 @@ function(add_test_executable_dir_recv base_dir dir
 
                         endif()
 
-                        if (NOT "${target_list_compile_option_arg}" STREQUAL "")
+                        if (NOT "${EMPTY}${target_list_compile_option_arg}" STREQUAL "${EMPTY}")
                             if(NOT DEFINED CMAKE_SCRIPT_MODE_FILE)
                                 target_compile_options("${target_name}" ${target_list_compile_option_arg})
                             endif()
@@ -529,7 +529,7 @@ function(add_test_executable_dir_recv base_dir dir
 
                         endif()
 
-                        if (NOT "${target_list_link_arg}" STREQUAL "")
+                        if (NOT "${EMPTY}${target_list_link_arg}" STREQUAL "${EMPTY}")
                             if(NOT DEFINED CMAKE_SCRIPT_MODE_FILE)
                                 target_link_libraries("${target_name}" ${target_list_link_arg})
                             endif()
@@ -544,7 +544,7 @@ function(add_test_executable_dir_recv base_dir dir
                                 ${target_list_test_cmd_arg})
                         endif()
 
-                        if (NOT "${target_list_test_cmd_arg}" STREQUAL "")
+                        if (NOT "${EMPTY}${target_list_test_cmd_arg}" STREQUAL "${EMPTY}")
                             if (is_output_target_test_cmd_arg)
                                 list(APPEND foreach_list_target_test_cmd_arg 
                                     ${target_list_test_cmd_arg}) 
@@ -681,13 +681,13 @@ function(add_test_executable_dir dir)
         "${one_options}" "${list_options}" ${ARGN}) 
 
     set(base_dir "${BUILD_UTILS_INCLUDE_DIR}")
-    if (NOT "${add_test_executable_dir_INCLUDE_DIR}" STREQUAL "")
+    if (NOT "${EMPTY}${add_test_executable_dir_INCLUDE_DIR}" STREQUAL "${EMPTY}")
         set(base_dir "${add_test_executable_dir_INCLUDE_DIR}")
     endif()
     
     set(case_sensitive_arg "")
     set(is_case_sensitive FALSE)
-    if (NOT "${add_test_executable_dir_CASE_SENSITIVE}" STREQUAL "")
+    if (NOT "${EMPTY}${add_test_executable_dir_CASE_SENSITIVE}" STREQUAL "${EMPTY}")
         set(is_case_sensitive ${add_test_executable_dir_CASE_SENSITIVE})
         if (is_case_sensitive)
             set(case_sensitive_arg "CASE_SENSITIVE")
@@ -696,7 +696,7 @@ function(add_test_executable_dir dir)
     
     set(header_case_sensitive_arg "")
     set(is_header_case_sensitive FALSE)
-    if (NOT "${add_test_executable_dir_HEADER_CASE_SENSITIVE}" STREQUAL "")
+    if (NOT "${EMPTY}${add_test_executable_dir_HEADER_CASE_SENSITIVE}" STREQUAL "${EMPTY}")
         set(is_header_case_sensitive ${add_test_executable_dir_HEADER_CASE_SENSITIVE})
         if (is_header_case_sensitive)
             set(header_case_sensitive_arg "CASE_SENSITIVE")
@@ -704,16 +704,16 @@ function(add_test_executable_dir dir)
     endif()
 
     set(list_src_ext "")
-    if (NOT "${add_test_executable_dir_LIST_SRC_EXT}" STREQUAL "")
+    if (NOT "${EMPTY}${add_test_executable_dir_LIST_SRC_EXT}" STREQUAL "${EMPTY}")
         list(APPEND list_src_ext ${add_test_executable_dir_LIST_SRC_EXT})
-    elseif(NOT "${add_test_executable_dir_SRC_EXT}" STREQUAL "")
+    elseif(NOT "${EMPTY}${add_test_executable_dir_SRC_EXT}" STREQUAL "${EMPTY}")
         list(APPEND list_src_ext ${add_test_executable_dir_SRC_EXT})
     endif()
 
     set(list_src_tag "")
-    if (NOT "${add_test_executable_dir_LIST_SRC_TAG}" STREQUAL "")
+    if (NOT "${EMPTY}${add_test_executable_dir_LIST_SRC_TAG}" STREQUAL "${EMPTY}")
         list(APPEND list_src_tag ${add_test_executable_dir_LIST_SRC_TAG})
-    elseif(NOT "${add_test_executable_dir_SRC_TAG}" STREQUAL "")
+    elseif(NOT "${EMPTY}${add_test_executable_dir_SRC_TAG}" STREQUAL "${EMPTY}")
         list(APPEND list_src_tag ${add_test_executable_dir_SRC_TAG})
     endif()
 
@@ -733,16 +733,16 @@ function(add_test_executable_dir dir)
     endif()
 
     set(list_header_ext "")
-    if (NOT "${add_test_executable_dir_LIST_HEADER_EXT}" STREQUAL "")
+    if (NOT "${EMPTY}${add_test_executable_dir_LIST_HEADER_EXT}" STREQUAL "${EMPTY}")
         list(APPEND list_header_ext ${add_test_executable_dir_LIST_HEADER_EXT})
-    elseif(NOT "${add_test_executable_dir_HEADER_EXT}" STREQUAL "")
+    elseif(NOT "${EMPTY}${add_test_executable_dir_HEADER_EXT}" STREQUAL "${EMPTY}")
         list(APPEND list_header_ext ${add_test_executable_dir_HEADER_EXT})
     endif()
 
     set(list_header_tag "")
-    if (NOT "${add_test_executable_dir_LIST_HEADER_TAG}" STREQUAL "")
+    if (NOT "${EMPTY}${add_test_executable_dir_LIST_HEADER_TAG}" STREQUAL "${EMPTY}")
         list(APPEND list_header_tag ${add_test_executable_dir_LIST_HEADER_TAG})
-    elseif(NOT "${add_test_executable_dir_HEADER_TAG}" STREQUAL "")
+    elseif(NOT "${EMPTY}${add_test_executable_dir_HEADER_TAG}" STREQUAL "${EMPTY}")
         list(APPEND list_header_tag ${add_test_executable_dir_HEADER_TAG})
     endif()
 
@@ -761,7 +761,7 @@ function(add_test_executable_dir dir)
         set(list_header_tag ${list_header_tag_tmp})
     endif()
 
-    if("${add_test_executable_dir_GET_DIRNAME}" STREQUAL "" 
+    if("${EMPTY}${add_test_executable_dir_GET_DIRNAME}" STREQUAL "${EMPTY}" 
         OR (NOT EXISTS "${add_test_executable_dir_GET_DIRNAME}"))
         
         include(${base_dir}/add_test_executable_dir/get_dirname.cmake)
@@ -769,7 +769,7 @@ function(add_test_executable_dir dir)
         include(${add_test_executable_dir_GET_DIRNAME})
     endif()
 
-    if("${add_test_executable_dir_GET_GROUP_NAME}" STREQUAL "" 
+    if("${EMPTY}${add_test_executable_dir_GET_GROUP_NAME}" STREQUAL "${EMPTY}" 
         OR (NOT EXISTS "${add_test_executable_dir_GET_GROUP_NAME}"))
         
         include(${base_dir}/add_test_executable_dir/get_group_name.cmake)
@@ -777,7 +777,7 @@ function(add_test_executable_dir dir)
         include(${add_test_executable_dir_GET_GROUP_NAME})
     endif()
 
-    if("${add_test_executable_dir_GET_HEADER_DIR}" STREQUAL "" 
+    if("${EMPTY}${add_test_executable_dir_GET_HEADER_DIR}" STREQUAL "${EMPTY}" 
         OR (NOT EXISTS "${add_test_executable_dir_GET_HEADER_DIR}"))
         
         include(${base_dir}/add_test_executable_dir/get_header_dir.cmake)
@@ -785,7 +785,7 @@ function(add_test_executable_dir dir)
         include(${add_test_executable_dir_GET_HEADER_DIR})
     endif()
 
-    if ("${add_test_executable_dir_GET_HEADER_GROUP_NAME}" STREQUAL ""
+    if ("${EMPTY}${add_test_executable_dir_GET_HEADER_GROUP_NAME}" STREQUAL "${EMPTY}"
         OR (NOT EXISTS "${add_test_executable_dir_GET_HEADER_GROUP_NAME}"))
 
         include(${base_dir}/add_test_executable_dir/get_header_group_name.cmake)
@@ -793,7 +793,7 @@ function(add_test_executable_dir dir)
         include(${add_test_executable_dir_GET_HEADER_GROUP_NAME})
     endif()
 
-    if("${add_test_executable_dir_GET_HEADER}" STREQUAL "" 
+    if("${EMPTY}${add_test_executable_dir_GET_HEADER}" STREQUAL "${EMPTY}" 
         OR (NOT EXISTS "${add_test_executable_dir_GET_HEADER}"))
         
         include(${base_dir}/add_test_executable_dir/get_header.cmake)
@@ -801,7 +801,7 @@ function(add_test_executable_dir dir)
         include(${add_test_executable_dir_GET_HEADER})
     endif()
 
-    if ("${add_test_executable_dir_GET_OTHER_SRC_GROUP_NAME}" STREQUAL ""
+    if ("${EMPTY}${add_test_executable_dir_GET_OTHER_SRC_GROUP_NAME}" STREQUAL "${EMPTY}"
         OR (NOT EXISTS "${add_test_executable_dir_GET_OTHER_SRC_GROUP_NAME}"))
 
         include(${base_dir}/add_test_executable_dir/get_other_src_group_name.cmake)
@@ -809,7 +809,7 @@ function(add_test_executable_dir dir)
         include(${add_test_executable_dir_GET_OTHER_SRC_GROUP_NAME})
     endif()
 
-    if("${add_test_executable_dir_GET_TARGET_COMPILE}" STREQUAL "" 
+    if("${EMPTY}${add_test_executable_dir_GET_TARGET_COMPILE}" STREQUAL "${EMPTY}" 
         OR (NOT EXISTS "${add_test_executable_dir_GET_TARGET_COMPILE}"))
         
         include(${base_dir}/add_test_executable_dir/get_target_compile.cmake)
@@ -817,7 +817,7 @@ function(add_test_executable_dir dir)
         include(${add_test_executable_dir_GET_TARGET_COMPILE})
     endif()
 
-    if("${add_test_executable_dir_GET_TARGET_DIR}" STREQUAL "" 
+    if("${EMPTY}${add_test_executable_dir_GET_TARGET_DIR}" STREQUAL "${EMPTY}" 
         OR (NOT EXISTS "${add_test_executable_dir_GET_TARGET_DIR}"))
         
         include(${base_dir}/add_test_executable_dir/get_target_dir.cmake)
@@ -825,7 +825,7 @@ function(add_test_executable_dir dir)
         include(${add_test_executable_dir_GET_TARGET_DIR})
     endif()
     
-    if("${add_test_executable_dir_GET_TARGET_INCLUDE}" STREQUAL "" 
+    if("${EMPTY}${add_test_executable_dir_GET_TARGET_INCLUDE}" STREQUAL "${EMPTY}" 
         OR (NOT EXISTS "${add_test_executable_dir_GET_TARGET_INCLUDE}"))
         
         include(${base_dir}/add_test_executable_dir/get_target_include.cmake)
@@ -833,7 +833,7 @@ function(add_test_executable_dir dir)
         include(${add_test_executable_dir_GET_TARGET_INCLUDE})
     endif()
     
-    if("${add_test_executable_dir_GET_TARGET_LINK}" STREQUAL "" 
+    if("${EMPTY}${add_test_executable_dir_GET_TARGET_LINK}" STREQUAL "${EMPTY}" 
         OR (NOT EXISTS "${add_test_executable_dir_GET_TARGET_LINK}"))
         
         include(${base_dir}/add_test_executable_dir/get_target_link.cmake)
@@ -841,7 +841,7 @@ function(add_test_executable_dir dir)
         include(${add_test_executable_dir_GET_TARGET_LINK})
     endif()
 
-    if("${add_test_executable_dir_GET_TARGET_NAME}" STREQUAL "" 
+    if("${EMPTY}${add_test_executable_dir_GET_TARGET_NAME}" STREQUAL "${EMPTY}" 
         OR (NOT EXISTS "${add_test_executable_dir_GET_TARGET_NAME}"))
         
         include(${base_dir}/add_test_executable_dir/get_target_name.cmake)
@@ -849,7 +849,7 @@ function(add_test_executable_dir dir)
         include(${add_test_executable_dir_GET_TARGET_NAME})
     endif()
     
-    if("${add_test_executable_dir_GET_TARGET_OTHER_SRC}" STREQUAL "" 
+    if("${EMPTY}${add_test_executable_dir_GET_TARGET_OTHER_SRC}" STREQUAL "${EMPTY}" 
         OR (NOT EXISTS "${add_test_executable_dir_GET_TARGET_OTHER_SRC}"))
         
         include(${base_dir}/add_test_executable_dir/get_target_other_src.cmake)
@@ -857,7 +857,7 @@ function(add_test_executable_dir dir)
         include(${add_test_executable_dir_GET_TARGET_OTHER_SRC})
     endif()
 
-    if("${add_test_executable_dir_GET_TARGET_PROPERTIES}" STREQUAL "" 
+    if("${EMPTY}${add_test_executable_dir_GET_TARGET_PROPERTIES}" STREQUAL "${EMPTY}" 
         OR (NOT EXISTS "${add_test_executable_dir_GET_TARGET_PROPERTIES}"))
         
         include(${base_dir}/add_test_executable_dir/get_target_properties.cmake)
@@ -865,7 +865,7 @@ function(add_test_executable_dir dir)
         include(${add_test_executable_dir_GET_TARGET_PROPERTIES})
     endif()
 
-    if("${add_test_executable_dir_GET_TEST_CMD_ARGS}" STREQUAL "" 
+    if("${EMPTY}${add_test_executable_dir_GET_TEST_CMD_ARGS}" STREQUAL "${EMPTY}" 
         OR (NOT EXISTS "${add_test_executable_dir_GET_TEST_CMD_ARGS}"))
         
         include(${base_dir}/add_test_executable_dir/get_test_cmd_args.cmake)
@@ -873,10 +873,10 @@ function(add_test_executable_dir dir)
         include(${add_test_executable_dir_GET_TEST_CMD_ARGS})
     endif()
 
-    if("${add_test_executable_dir_HEADER_CONDITION}" STREQUAL "" 
+    if("${EMPTY}${add_test_executable_dir_HEADER_CONDITION}" STREQUAL "${EMPTY}" 
         OR (NOT EXISTS "${add_test_executable_dir_HEADER_CONDITION}"))
         
-        if (NOT "${list_header_tag}" STREQUAL "")
+        if (NOT "${EMPTY}${list_header_tag}" STREQUAL "${EMPTY}")
             set(header_condition ${base_dir}/add_test_executable_dir/header_condition/list_tag.cmake)
             list(APPEND add_test_executable_dir_HEADER_CONDITION_ARGS "LIST_TAG"
                 ${list_header_tag})
@@ -885,10 +885,10 @@ function(add_test_executable_dir dir)
         set(header_condition ${add_test_executable_dir_HEADER_CONDITION})
     endif()
 
-    if("${add_test_executable_dir_HEADER_FILTER}" STREQUAL "" 
+    if("${EMPTY}${add_test_executable_dir_HEADER_FILTER}" STREQUAL "${EMPTY}" 
         OR (NOT EXISTS "${add_test_executable_dir_HEADER_FILTER}"))
         
-        if (NOT "${list_header_ext}" STREQUAL "")
+        if (NOT "${EMPTY}${list_header_ext}" STREQUAL "${EMPTY}")
             set(header_filter ${base_dir}/add_test_executable_dir/header_filter/list_ext.cmake)
             list(APPEND add_test_executable_dir_HEADER_FILTER_ARGS "LIST_EXT"
                 ${list_header_ext})
@@ -897,17 +897,17 @@ function(add_test_executable_dir dir)
         set(header_filter ${add_test_executable_dir_HEADER_FILTER})
     endif()
 
-    if ("${header_condition}" STREQUAL ""
-        AND ("${header_filter}" STREQUAL ""))
+    if ("${EMPTY}${header_condition}" STREQUAL "${EMPTY}"
+        AND ("${EMPTY}${header_filter}" STREQUAL "${EMPTY}"))
         
         set(header_condition ${base_dir}/add_test_executable_dir/header_condition/default.cmake)
         set(header_filter ${base_dir}/add_test_executable_dir/header_filter/default.cmake)
-    elseif ("${header_condition}" STREQUAL ""
-        AND (NOT "${header_filter}" STREQUAL ""))
+    elseif ("${EMPTY}${header_condition}" STREQUAL "${EMPTY}"
+        AND (NOT "${EMPTY}${header_filter}" STREQUAL "${EMPTY}"))
 
         set(header_condition ${base_dir}/add_test_executable_dir/header_condition/list_tag.cmake)
-    elseif(NOT "${header_condition}" STREQUAL ""
-        AND ("${header_filter}" STREQUAL ""))
+    elseif(NOT "${EMPTY}${header_condition}" STREQUAL "${EMPTY}"
+        AND ("${EMPTY}${header_filter}" STREQUAL "${EMPTY}"))
 
         set(header_filter ${base_dir}/add_test_executable_dir/header_filter/list_ext.cmake)
     endif()
@@ -915,10 +915,10 @@ function(add_test_executable_dir dir)
     include(${header_condition})
     include(${header_filter})
 
-    if("${add_test_executable_dir_SRC_CONDITION}" STREQUAL "" 
+    if("${EMPTY}${add_test_executable_dir_SRC_CONDITION}" STREQUAL "${EMPTY}" 
         OR (NOT EXISTS "${add_test_executable_dir_SRC_CONDITION}"))
         
-        if(NOT "${list_src_tag}" STREQUAL "")
+        if(NOT "${EMPTY}${list_src_tag}" STREQUAL "${EMPTY}")
             include(${base_dir}/add_test_executable_dir/src_condition/list_tag.cmake)
             list(APPEND add_test_executable_dir_SRC_CONDITION_ARGS "LIST_TAG"
                 ${list_src_tag})
@@ -929,10 +929,10 @@ function(add_test_executable_dir dir)
         include(${add_test_executable_dir_SRC_CONDITION})
     endif()
 
-    if("${add_test_executable_dir_SRC_FILTER}" STREQUAL "" 
+    if("${EMPTY}${add_test_executable_dir_SRC_FILTER}" STREQUAL "${EMPTY}" 
         OR (NOT EXISTS "${add_test_executable_dir_SRC_FILTER}"))
         
-        if (NOT "${list_src_ext}" STREQUAL "")
+        if (NOT "${EMPTY}${list_src_ext}" STREQUAL "${EMPTY}")
             include(${base_dir}/add_test_executable_dir/src_filter/list_ext.cmake)
             list(APPEND add_test_executable_dir_SRC_FILTER_ARGS "LIST_EXT"
                 ${list_src_ext})
@@ -944,13 +944,13 @@ function(add_test_executable_dir dir)
     endif()
 
     set(is_recursive FALSE)
-    if (NOT "${add_test_executable_dir_RECURSIVE}" STREQUAL "")
+    if (NOT "${EMPTY}${add_test_executable_dir_RECURSIVE}" STREQUAL "${EMPTY}")
         set(is_recursive ${add_test_executable_dir_RECURSIVE})
     endif()
 
     set(header_recursive_arg "")
     set(is_header_recursive FALSE)
-    if (NOT "${add_test_executable_dir_HEADER_RECURSIVE}" STREQUAL "")
+    if (NOT "${EMPTY}${add_test_executable_dir_HEADER_RECURSIVE}" STREQUAL "${EMPTY}")
         set(is_header_recursive ${add_test_executable_dir_HEADER_RECURSIVE})
         if (is_header_recursive)
             set(header_recursive_arg "RECURSIVE")
@@ -958,7 +958,7 @@ function(add_test_executable_dir dir)
     endif()
 
     set(src_expand_args "")
-    if (NOT "${add_test_executable_dir_SRC_GET_TAG}" STREQUAL "")
+    if (NOT "${EMPTY}${add_test_executable_dir_SRC_GET_TAG}" STREQUAL "${EMPTY}")
         list(APPEND src_expand_args 
             "GET_TAG" ${add_test_executable_dir_SRC_GET_TAG})
     endif()
@@ -968,18 +968,18 @@ function(add_test_executable_dir dir)
             "GET_NAME" ${add_test_executable_dir_SRC_GET_NAME})
     endif()
 
-    if(NOT "${add_test_executable_dir_SRC_TAG_CONDITION}" STREQUAL "")
+    if(NOT "${EMPTY}${add_test_executable_dir_SRC_TAG_CONDITION}" STREQUAL "${EMPTY}")
         list(APPEND src_expand_args 
             "TAG_CONDITION" ${add_test_executable_dir_SRC_TAG_CONDITION})
     endif()
 
-    if (NOT "${add_test_executable_dir_SRC_TAG_DELIMITER}" STREQUAL "")
+    if (NOT "${EMPTY}${add_test_executable_dir_SRC_TAG_DELIMITER}" STREQUAL "${EMPTY}")
         list(APPEND src_expand_args 
             "TAG_DELIMITER" ${add_test_executable_dir_SRC_TAG_DELIMITER})
     endif() 
     
     set(header_expand_args "")
-    if (NOT "${add_test_executable_dir_HEADER_GET_TAG}" STREQUAL "")
+    if (NOT "${EMPTY}${add_test_executable_dir_HEADER_GET_TAG}" STREQUAL "${EMPTY}")
         list(APPEND header_expand_args 
             "GET_TAG" ${add_test_executable_dir_HEADER_GET_TAG})
     endif()
@@ -989,18 +989,18 @@ function(add_test_executable_dir dir)
             "GET_NAME" ${add_test_executable_dir_HEADER_GET_NAME})
     endif()
 
-    if(NOT "${add_test_executable_dir_HEADER_TAG_CONDITION}" STREQUAL "")
+    if(NOT "${EMPTY}${add_test_executable_dir_HEADER_TAG_CONDITION}" STREQUAL "${EMPTY}")
         list(APPEND header_expand_args 
             "TAG_CONDITION" ${add_test_executable_dir_HEADER_TAG_CONDITION})
     endif()
 
-    if (NOT "${add_test_executable_dir_HEADER_TAG_DELIMITER}" STREQUAL "")
+    if (NOT "${EMPTY}${add_test_executable_dir_HEADER_TAG_DELIMITER}" STREQUAL "${EMPTY}")
         list(APPEND header_expand_args 
             "TAG_DELIMITER" ${add_test_executable_dir_HEADER_TAG_DELIMITER})
     endif() 
 
     set(base_header_dir "")
-    if (NOT "${add_test_executable_dir_BASE_HEADER_DIR}" STREQUAL "")
+    if (NOT "${EMPTY}${add_test_executable_dir_BASE_HEADER_DIR}" STREQUAL "${EMPTY}")
         set(base_header_dir "${add_test_executable_dir_BASE_HEADER_DIR}")
     endif()
 
@@ -1009,7 +1009,7 @@ function(add_test_executable_dir dir)
     else()
         set(src_group_name "${add_test_executable_dir_DEFAULT_SRC_GROUP_NAME}")
     endif()
-    if (NOT "${add_test_executable_dir_SRC_GROUP_NAME}" STREQUAL "")
+    if (NOT "${EMPTY}${add_test_executable_dir_SRC_GROUP_NAME}" STREQUAL "${EMPTY}")
         set(src_group_name ${add_test_executable_dir_SRC_GROUP_NAME})
     endif()
 
@@ -1018,7 +1018,7 @@ function(add_test_executable_dir dir)
     else()
         set(header_group_name "${add_test_executable_dir_DEFAULT_HEADER_GROUP_NAME}")
     endif()
-    if (NOT "${add_test_executable_dir_HEADER_GROUP_NAME}" STREQUAL "")
+    if (NOT "${EMPTY}${add_test_executable_dir_HEADER_GROUP_NAME}" STREQUAL "${EMPTY}")
         set(header_group_name ${add_test_executable_dir_HEADER_GROUP_NAME})
     endif()
 
@@ -1027,7 +1027,7 @@ function(add_test_executable_dir dir)
     else()
         set(other_src_group_name "${add_test_executable_dir_DEFAULT_OTHER_SRC_GROUP_NAME}")
     endif()
-    if (NOT "${add_test_executable_dir_OTHER_SRC_GROUP_NAME}" STREQUAL "")
+    if (NOT "${EMPTY}${add_test_executable_dir_OTHER_SRC_GROUP_NAME}" STREQUAL "${EMPTY}")
         set(other_src_group_name ${add_test_executable_dir_OTHER_SRC_GROUP_NAME})
     endif()
     
@@ -1036,57 +1036,57 @@ function(add_test_executable_dir dir)
     endif()
 
     set(enable_output_target_name FALSE)
-    if (NOT "${add_test_executable_dir_LIST_TARGET_NAME}" STREQUAL "")
+    if (NOT "${EMPTY}${add_test_executable_dir_LIST_TARGET_NAME}" STREQUAL "${EMPTY}")
         set(enable_output_target_name TRUE)
     endif()
 
     set(enable_output_target_dir FALSE)
-    if (NOT "${add_test_executable_dir_LIST_TARGET_DIR}" STREQUAL "")
+    if (NOT "${EMPTY}${add_test_executable_dir_LIST_TARGET_DIR}" STREQUAL "${EMPTY}")
         set(enable_output_target_dir TRUE)
     endif()
 
     set(enable_output_target_link_arg FALSE)
-    if (NOT "${add_test_executable_dir_LIST_TARGET_LINK_ARG}" STREQUAL "")
+    if (NOT "${EMPTY}${add_test_executable_dir_LIST_TARGET_LINK_ARG}" STREQUAL "${EMPTY}")
         set(enable_output_target_link_arg TRUE)
     endif()
 
     set(enable_output_target_include_dir_arg FALSE)
-    if (NOT "${add_test_executable_dir_LIST_TARGET_INCLUDE_DIR_ARG}" STREQUAL "")
+    if (NOT "${EMPTY}${add_test_executable_dir_LIST_TARGET_INCLUDE_DIR_ARG}" STREQUAL "${EMPTY}")
         set(enable_output_target_include_dir_arg TRUE)
     endif()
 
     set(enable_output_target_compile_def_arg FALSE)
-    if (NOT "${add_test_executable_dir_LIST_TARGET_COMPILE_DEF_ARG}" STREQUAL "")
+    if (NOT "${EMPTY}${add_test_executable_dir_LIST_TARGET_COMPILE_DEF_ARG}" STREQUAL "${EMPTY}")
         set(enable_output_target_compile_def_arg TRUE)
     endif()
 
     set(enable_output_target_compile_option_arg FALSE)
-    if (NOT "${add_test_executable_dir_LIST_TARGET_COMPILE_OPTION_ARG}" STREQUAL "")
+    if (NOT "${EMPTY}${add_test_executable_dir_LIST_TARGET_COMPILE_OPTION_ARG}" STREQUAL "${EMPTY}")
         set(enable_output_target_compile_option_arg TRUE)
     endif()
 
     set(enable_output_target_property_arg FALSE)
-    if (NOT "${add_test_executable_dir_LIST_TARGET_PROPERTY_ARG}" STREQUAL "")
+    if (NOT "${EMPTY}${add_test_executable_dir_LIST_TARGET_PROPERTY_ARG}" STREQUAL "${EMPTY}")
         set(enable_output_target_property_arg TRUE)
     endif()
 
     set(enable_output_target_test_cmd_arg FALSE) 
-    if (NOT "${add_test_executable_dir_LIST_TARGET_TEST_CMD_ARG}" STREQUAL "")
+    if (NOT "${EMPTY}${add_test_executable_dir_LIST_TARGET_TEST_CMD_ARG}" STREQUAL "${EMPTY}")
         set(enable_output_target_test_cmd_arg TRUE)
     endif()
 
     set(enable_output_src FALSE) 
-    if (NOT "${add_test_executable_dir_LIST_SRC}" STREQUAL "")
+    if (NOT "${EMPTY}${add_test_executable_dir_LIST_SRC}" STREQUAL "${EMPTY}")
         set(enable_output_src TRUE) 
     endif()
 
     set(enable_output_header FALSE) 
-    if (NOT "${add_test_executable_dir_LIST_HEADER}" STREQUAL "")
+    if (NOT "${EMPTY}${add_test_executable_dir_LIST_HEADER}" STREQUAL "${EMPTY}")
         set(enable_output_header TRUE) 
     endif()
 
     set(enable_output_group_name FALSE)
-    if (NOT "${add_test_executable_dir_LIST_GROUP_NAME}" STREQUAL "")
+    if (NOT "${EMPTY}${add_test_executable_dir_LIST_GROUP_NAME}" STREQUAL "${EMPTY}")
         set(enable_output_group_name TRUE)
     endif()
     

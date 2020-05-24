@@ -12,7 +12,7 @@ function(add_test_executable_dir_get_target_include out_list_include_dir_arg)
     set(default_list_arg ${add_test_executable_dir_get_target_include_DEFAULT_LIST_ARG})
     set(list_arg "")
     foreach(it ${default_list_arg})
-        if (NOT "${args_INCLUDE_BASE_DIR}" STREQUAL "" 
+        if (NOT "${EMPTY}${args_INCLUDE_BASE_DIR}" STREQUAL "${EMPTY}" 
             AND (EXISTS ${args_INCLUDE_BASE_DIR}/${it}))
 
             list(APPEND list_arg "${args_INCLUDE_BASE_DIR}/${it}")

@@ -5,14 +5,14 @@ function(get_test_source_dir_condition output)
         "${one_options}" "ARGS" ${ARGN}) 
     
     set(is_case_sensitive FALSE)
-    if (NOT "${get_test_source_dir_condition_CASE_SENSITIVE}" STREQUAL "")
+    if (NOT "${EMPTY}${get_test_source_dir_condition_CASE_SENSITIVE}" STREQUAL "${EMPTY}")
         set(is_case_sensitive ${get_test_source_dir_condition_CASE_SENSITIVE})
     endif()
     
     cmake_parse_arguments(args "" "name;relative_path_regex" "" ${get_test_source_dir_condition_ARGS})
 
     set(name "test1.txt")
-    if (NOT "${args_name}" STREQUAL "")
+    if (NOT "${EMPTY}${args_name}" STREQUAL "${EMPTY}")
         set(name "${args_name}")
     endif() 
     
@@ -23,7 +23,7 @@ function(get_test_source_dir_condition output)
     endif()
 
     set(regex "^[^b]*$")
-    if (NOT "${args_relative_path_regex}" STREQUAL "")
+    if (NOT "${EMPTY}${args_relative_path_regex}" STREQUAL "${EMPTY}")
         set(regex "${args_relative_path_regex}")
     endif()
 

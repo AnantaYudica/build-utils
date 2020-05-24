@@ -13,19 +13,19 @@ function(add_test_executable_dir_header_filter output)
     set(filename "${add_test_executable_dir_header_filter_FILENAME}")
 
     set(is_directory FALSE)
-    if (NOT "${add_test_executable_dir_header_filter_CASE_SENSITIVE}" STREQUAL "")
+    if (NOT "${EMPTY}${add_test_executable_dir_header_filter_CASE_SENSITIVE}" STREQUAL "${EMPTY}")
         set(is_directory ${add_test_executable_dir_header_filter_DIRECTORY})
     endif()
     
     set(is_case_sensitive FALSE)
-    if (NOT "${add_test_executable_dir_header_filter_CASE_SENSITIVE}" STREQUAL "")
+    if (NOT "${EMPTY}${add_test_executable_dir_header_filter_CASE_SENSITIVE}" STREQUAL "${EMPTY}")
         set(is_case_sensitive ${add_test_executable_dir_header_filter_CASE_SENSITIVE})
     endif()
 
     set(list_ext ${args_LIST_EXT})
 
     set(result FALSE)
-    if (NOT "${list_ext}" STREQUAL "" AND (NOT is_directory))
+    if (NOT "${EMPTY}${list_ext}" STREQUAL "${EMPTY}" AND (NOT is_directory))
     
         set(filename ${add_test_executable_dir_header_filter_FILENAME})
         

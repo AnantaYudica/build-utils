@@ -27,7 +27,7 @@ function(get_test_source_dir_condition output)
         set(regex "${args_relative_path_regex}")
     endif()
 
-    if ("${filename}" STREQUAL "${name}" 
+    if ("${EMPTY}${filename}" STREQUAL "${EMPTY}${name}" 
         AND ("${get_test_source_dir_condition_RELATIVE_PATH}" MATCHES "${regex}"))
         
         set(${output} TRUE PARENT_SCOPE)

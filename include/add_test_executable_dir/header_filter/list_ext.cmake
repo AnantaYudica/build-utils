@@ -41,7 +41,7 @@ function(add_test_executable_dir_header_filter output)
         endif()
 
         foreach(it ${list_ext})
-            if ("${filename_ext}" STREQUAL "${it}")
+            if ("${EMPTY}${filename_ext}" STREQUAL "${EMPTY}${it}")
                 set(result TRUE)
                 break()
             endif()

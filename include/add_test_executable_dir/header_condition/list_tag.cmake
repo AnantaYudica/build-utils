@@ -52,7 +52,7 @@ function(add_test_executable_dir_header_condition output)
 
         set(result FALSE)
         foreach(it ${list_tag})
-            if ("${it}" STREQUAL "${tag}")
+            if ("${EMPTY}${it}" STREQUAL "${EMPTY}${tag}")
                 set(result TRUE)
                 break()
             endif()

@@ -22,7 +22,7 @@ function(add_test_executable_dir_src_filter cond)
         endif()
 
         foreach(it ${list_ext})
-            if ("${ext}" STREQUAL "${it}")
+            if ("${EMPTY}${ext}" STREQUAL "${EMPTY}${it}")
                 set(result TRUE) 
                 break()
             endif()

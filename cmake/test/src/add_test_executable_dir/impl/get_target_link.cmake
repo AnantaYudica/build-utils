@@ -11,7 +11,7 @@ function(add_test_executable_dir_get_target_link out_list_link_arg)
     set(default_list_arg ${add_test_executable_dir_get_target_link_DEFAULT_LIST_ARG})
     set(prefix_list_arg ${args_LIST_LINK_INDEX})
 
-    if (NOT "${args_LIST_LINK_INDEX}" STREQUAL "")
+    if (NOT "${EMPTY}${args_LIST_LINK_INDEX}" STREQUAL "${EMPTY}")
         foreach(it ${args_LIST_LINK_INDEX})
             list(GET default_list_arg ${it} arg)
             list(APPEND list_arg ${arg})

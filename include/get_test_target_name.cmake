@@ -5,29 +5,37 @@ function(get_test_target_name target_name_out)
         "PREFIX_ARGS;NAME_ARGS;TAG_ARGS;FORMAT_ARGS" ${ARGN}) 
 
     set(base_dir "${BUILD_UTILS_INCLUDE_DIR}")
-    if (NOT "${get_test_target_name_INCLUDE_DIR}" STREQUAL "")
+    if (NOT "${EMPTY}${get_test_target_name_INCLUDE_DIR}" STREQUAL "${EMPTY}")
         set(base_dir "${get_test_target_name_INCLUDE_DIR}")
     endif()
     
-    if ("${get_test_target_name_FORMAT}" STREQUAL "" OR (NOT EXISTS "${get_test_target_name_FORMAT}"))
+    if ("${EMPTY}${get_test_target_name_FORMAT}" STREQUAL "${EMPTY}" 
+        OR (NOT EXISTS "${get_test_target_name_FORMAT}"))
+        
         include(${base_dir}/get_test_target_name/format.cmake)
     else()
         include(${get_test_target_name_FORMAT})
     endif()
 
-    if ("${get_test_target_name_SET_NAME}" STREQUAL "" OR (NOT EXISTS "${get_test_target_name_SET_NAME}"))
+    if ("${EMPTY}${get_test_target_name_SET_NAME}" STREQUAL "${EMPTY}" 
+        OR (NOT EXISTS "${get_test_target_name_SET_NAME}"))
+        
         include(${base_dir}/get_test_target_name/set_name.cmake)
     else()
         include(${get_test_target_name_SET_NAME})
     endif()
 
-    if ("${get_test_target_name_SET_PREFIX}" STREQUAL "" OR (NOT EXISTS "${get_test_target_name_SET_PREFIX}"))
+    if ("${EMPTY}${get_test_target_name_SET_PREFIX}" STREQUAL "${EMPTY}" 
+        OR (NOT EXISTS "${get_test_target_name_SET_PREFIX}"))
+        
         include(${base_dir}/get_test_target_name/set_prefix.cmake)
     else()
         include(${get_test_target_name_SET_PREFIX})
     endif()
 
-    if ("${get_test_target_name_SET_TAG}" STREQUAL "" OR (NOT EXISTS "${get_test_target_name_SET_TAG}"))
+    if ("${EMPTY}${get_test_target_name_SET_TAG}" STREQUAL "${EMPTY}" 
+        OR (NOT EXISTS "${get_test_target_name_SET_TAG}"))
+        
         include(${base_dir}/get_test_target_name/set_tag.cmake)
     else()
         include(${get_test_target_name_SET_TAG})
@@ -37,15 +45,15 @@ function(get_test_target_name target_name_out)
     set(tag "")
     set(prefix "")
 
-    if (NOT "${get_test_target_name_PREFIX}" STREQUAL "")
+    if (NOT "${EMPTY}${get_test_target_name_PREFIX}" STREQUAL "${EMPTY}")
         set(prefix "${get_test_target_name_PREFIX}")
     endif()
 
-    if (NOT "${get_test_target_name_NAME}" STREQUAL "")
+    if (NOT "${EMPTY}${get_test_target_name_NAME}" STREQUAL "${EMPTY}")
         set(name "${get_test_target_name_NAME}")
     endif()
 
-    if (NOT "${get_test_target_name_TAG}" STREQUAL "")
+    if (NOT "${EMPTY}${get_test_target_name_TAG}" STREQUAL "${EMPTY}")
         set(tag "${get_test_target_name_TAG}")
     endif()
 

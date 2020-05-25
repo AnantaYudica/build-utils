@@ -12,12 +12,12 @@ function(get_test_source_dir_condition output)
         "HEADER_CONDITION_ARGS" ${get_test_source_dir_condition_ARGS})
 
     set(base_dir "${BUILD_UTILS_INCLUDE_DIR}")
-    if (NOT "${get_test_source_dir_condition_INCLUDE_DIR}" STREQUAL "")
+    if (NOT "${EMPTY}${get_test_source_dir_condition_INCLUDE_DIR}" STREQUAL "${EMPTY}")
         set(base_dir "${get_test_source_dir_condition_INCLUDE_DIR}")
     endif()
 
     if (NOT COMMAND add_test_executable_dir_header_condition)
-        if("${args_HEADER_CONDITION}" STREQUAL "" 
+        if("${EMPTY}${args_HEADER_CONDITION}" STREQUAL "${EMPTY}" 
             OR (NOT EXISTS "${args_HEADER_CONDITION}"))
 
             include(${base_dir}/add_test_executable_dir/header_condition/default.cmake)
@@ -27,74 +27,74 @@ function(get_test_source_dir_condition output)
     endif()
 
     set(case_sensitive_arg "")
-    if(NOT "${get_test_source_dir_condition_CASE_SENSITIVE}" STREQUAL ""
+    if(NOT "${EMPTY}${get_test_source_dir_condition_CASE_SENSITIVE}" STREQUAL "${EMPTY}"
         AND (get_test_source_dir_condition_CASE_SENSITIVE))
         
         set(case_sensitive_arg "CASE_SENSITIVE")
     endif()
 
     set(call_args "")
-    if (NOT "${args_GET_NAME}" STREQUAL "")
+    if (NOT "${EMPTY}${args_GET_NAME}" STREQUAL "${EMPTY}")
         list(APPEND call_args "GET_NAME" ${args_GET_NAME})
     endif()
 
-    if (NOT "${args_GET_TAG}" STREQUAL "")
+    if (NOT "${EMPTY}${args_GET_TAG}" STREQUAL "${EMPTY}")
         list(APPEND call_args "GET_TAG" ${args_GET_TAG})
     endif()
 
-    if(NOT "${args_TAG_CONDITION}" STREQUAL "")
+    if(NOT "${EMPTY}${args_TAG_CONDITION}" STREQUAL "${EMPTY}")
         list(APPEND call_args "TAG_CONDITION" ${args_TAG_CONDITION})
     endif()
 
-    if (NOT "${args_TAG_DELIMITER}" STREQUAL "")
+    if (NOT "${EMPTY}${args_TAG_DELIMITER}" STREQUAL "${EMPTY}")
         list(APPEND call_args "TAG_DELIMITER" ${args_TAG_DELIMITER})
     endif() 
 
-    if(NOT "${args_TARGET_NAME}" STREQUAL "")
+    if(NOT "${EMPTY}${args_TARGET_NAME}" STREQUAL "${EMPTY}")
         list(APPEND call_args "TARGET_NAME" ${args_TARGET_NAME})
     endif()
 
-    if(NOT "${args_TARGET_DIR}" STREQUAL "")
+    if(NOT "${EMPTY}${args_TARGET_DIR}" STREQUAL "${EMPTY}")
         list(APPEND call_args "TARGET_DIR" ${args_TARGET_DIR})
     endif()
 
-    if(NOT "${args_SRC_PATH}" STREQUAL "")
+    if(NOT "${EMPTY}${args_SRC_PATH}" STREQUAL "${EMPTY}")
         list(APPEND call_args "SRC_PATH" ${args_SRC_PATH})
     endif()
 
-    if(NOT "${args_SRC_BASE_DIR}" STREQUAL "")
+    if(NOT "${EMPTY}${args_SRC_BASE_DIR}" STREQUAL "${EMPTY}")
         list(APPEND call_args "SRC_BASE_DIR" ${args_SRC_BASE_DIR})
     endif()
 
-    if(NOT "${args_SRC_RELATIVE_PATH}" STREQUAL "")
+    if(NOT "${EMPTY}${args_SRC_RELATIVE_PATH}" STREQUAL "${EMPTY}")
         list(APPEND call_args "SRC_RELATIVE_PATH" ${args_SRC_RELATIVE_PATH})
     endif()
     
-    if(NOT "${args_SRC_FILENAME}" STREQUAL "")
+    if(NOT "${EMPTY}${args_SRC_FILENAME}" STREQUAL "${EMPTY}")
         list(APPEND call_args "SRC_FILENAME" ${args_SRC_FILENAME})
     endif()
 
-    if(NOT "${args_SRC_NAME}" STREQUAL "")
+    if(NOT "${EMPTY}${args_SRC_NAME}" STREQUAL "${EMPTY}")
         list(APPEND call_args "SRC_NAME" ${args_SRC_NAME})
     endif()
 
-    if(NOT "${args_SRC_TAG}" STREQUAL "")
+    if(NOT "${EMPTY}${args_SRC_TAG}" STREQUAL "${EMPTY}")
         list(APPEND call_args "SRC_TAG" ${args_SRC_TAG})
     endif()
 
-    if(NOT "${args_SRC_EXT}" STREQUAL "")
+    if(NOT "${EMPTY}${args_SRC_EXT}" STREQUAL "${EMPTY}")
         list(APPEND call_args "SRC_EXT" ${args_SRC_EXT})
     endif()
 
-    if(NOT "${args_SRC_CURR_DIR}" STREQUAL "")
+    if(NOT "${EMPTY}${args_SRC_CURR_DIR}" STREQUAL "${EMPTY}")
         list(APPEND call_args "SRC_CURR_DIR" ${args_SRC_CURR_DIR})
     endif()
 
-    if(NOT "${args_SRC_RELATIVE_CURR_DIR}" STREQUAL "")
+    if(NOT "${EMPTY}${args_SRC_RELATIVE_CURR_DIR}" STREQUAL "${EMPTY}")
         list(APPEND call_args "SRC_RELATIVE_CURR_DIR" ${args_SRC_RELATIVE_CURR_DIR})
     endif()
 
-    if (NOT "${args_SRC_CURR_DIRNAME}" STREQUAL "")
+    if (NOT "${EMPTY}${args_SRC_CURR_DIRNAME}" STREQUAL "${EMPTY}")
         list(APPEND call_args "SRC_CURR_DIRNAME" ${args_SRC_CURR_DIRNAME})
     endif()
     

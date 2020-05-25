@@ -10,7 +10,7 @@ function(get_test_name_tag_ext_file_tag_condition filename index length cond
     set(delim "${get_test_name_tag_ext_file_tag_condition_DELIMITER}")
 
     if (${delim_len} EQUAL  1)
-        if ("${delim}" STREQUAL "${get_test_name_tag_ext_file_tag_condition_CHARACTER}")
+        if ("${EMPTY}${delim}" STREQUAL "${EMPTY}${get_test_name_tag_ext_file_tag_condition_CHARACTER}")
             set(${cond} TRUE PARENT_SCOPE)
             set(${tag_delim_index} ${index} PARENT_SCOPE)
             set(${tag_delim_length} 1 PARENT_SCOPE)
@@ -19,7 +19,7 @@ function(get_test_name_tag_ext_file_tag_condition filename index length cond
         endif()
     elseif(NOT ${delim_len} GREATER ${length})
         string(SUBSTRING ${get_test_name_tag_ext_file_tag_condition_STRING} 0 ${delim_len} comp)
-        if ("${comp}" STREQUAL "${get_test_name_tag_ext_file_tag_condition_DELIMITER}")
+        if ("${EMPTY}${comp}" STREQUAL "${EMPTY}${get_test_name_tag_ext_file_tag_condition_DELIMITER}")
             set(${cond} TRUE PARENT_SCOPE)
             set(${tag_delim_index} ${index} PARENT_SCOPE)
             set(${tag_delim_length} ${delim_len} PARENT_SCOPE)

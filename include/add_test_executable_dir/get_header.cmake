@@ -10,19 +10,19 @@ function(add_test_executable_dir_get_header header_dir output_list_path)
         "${one_options}" "${list_options}" ${ARGN}) 
     
     set(base_dir "${BUILD_UTILS_INCLUDE_DIR}")
-    if (NOT "${add_test_executable_dir_get_header_INCLUDE_DIR}" STREQUAL "")
+    if (NOT "${EMPTY}${add_test_executable_dir_get_header_INCLUDE_DIR}" STREQUAL "${EMPTY}")
         set(base_dir "${add_test_executable_dir_get_header_INCLUDE_DIR}")
     endif()
 
     set(recursive_arg "")
-    if(NOT "${add_test_executable_dir_get_header_RECURSIVE}" STREQUAL ""
+    if(NOT "${EMPTY}${add_test_executable_dir_get_header_RECURSIVE}" STREQUAL "${EMPTY}"
         AND (add_test_executable_dir_get_header_RECURSIVE))
 
         set(recursive_arg "RECURSIVE")
     endif()
 
     set(case_sensitive_arg "")
-    if(NOT "${add_test_executable_dir_get_header_CASE_SENSITIVE}" STREQUAL ""
+    if(NOT "${EMPTY}${add_test_executable_dir_get_header_CASE_SENSITIVE}" STREQUAL "${EMPTY}"
         AND (add_test_executable_dir_get_header_CASE_SENSITIVE))
 
         set(case_sensitive_arg "CASE_SENSITIVE")
@@ -53,86 +53,86 @@ function(add_test_executable_dir_get_header header_dir output_list_path)
     set(header_condition_args ${add_test_executable_dir_get_header_HEADER_CONDITION_ARGS})
 
     set(args"")
-    if(NOT "${target_name}" STREQUAL "")
+    if(NOT "${EMPTY}${target_name}" STREQUAL "${EMPTY}")
         list(APPEND args "TARGET_NAME" ${target_name})
     endif()
 
-    if(NOT "${target_dir}" STREQUAL "")
+    if(NOT "${EMPTY}${target_dir}" STREQUAL "${EMPTY}")
         list(APPEND args "TARGET_DIR" ${target_dir})
     endif()
 
-    if(NOT "${src_path}" STREQUAL "")
+    if(NOT "${EMPTY}${src_path}" STREQUAL "${EMPTY}")
         list(APPEND args "SRC_PATH" ${src_path})
     endif()
 
-    if(NOT "${src_base_dir}" STREQUAL "")
+    if(NOT "${EMPTY}${src_base_dir}" STREQUAL "${EMPTY}")
         list(APPEND args "SRC_BASE_DIR" ${src_base_dir})
     endif()
 
-    if(NOT "${src_relative_path}" STREQUAL "")
+    if(NOT "${EMPTY}${src_relative_path}" STREQUAL "${EMPTY}")
         list(APPEND args "SRC_RELATIVE_PATH" ${src_relative_path})
     endif()
     
-    if(NOT "${src_filename}" STREQUAL "")
+    if(NOT "${EMPTY}${src_filename}" STREQUAL "${EMPTY}")
         list(APPEND args "SRC_FILENAME" ${src_filename})
     endif()
 
-    if(NOT "${src_name}" STREQUAL "")
+    if(NOT "${EMPTY}${src_name}" STREQUAL "${EMPTY}")
         list(APPEND args "SRC_NAME" ${src_name})
     endif()
 
-    if(NOT "${src_tag}" STREQUAL "")
+    if(NOT "${EMPTY}${src_tag}" STREQUAL "${EMPTY}")
         list(APPEND args "SRC_TAG" ${src_tag})
     endif()
 
-    if(NOT "${src_ext}" STREQUAL "")
+    if(NOT "${EMPTY}${src_ext}" STREQUAL "${EMPTY}")
         list(APPEND args "SRC_EXT" ${src_ext})
     endif()
 
-    if(NOT "${src_curr_dir}" STREQUAL "")
+    if(NOT "${EMPTY}${src_curr_dir}" STREQUAL "${EMPTY}")
         list(APPEND args "SRC_CURR_DIR" ${src_curr_dir})
     endif()
 
-    if(NOT "${src_relative_curr_dir}" STREQUAL "")
+    if(NOT "${EMPTY}${src_relative_curr_dir}" STREQUAL "${EMPTY}")
         list(APPEND args "SRC_RELATIVE_CURR_DIR" ${src_relative_curr_dir})
     endif()
     
-    if(NOT "${src_curr_dirname}" STREQUAL "")
+    if(NOT "${EMPTY}${src_curr_dirname}" STREQUAL "${EMPTY}")
         list(APPEND args "SRC_CURR_DIRNAME" ${src_curr_dirname})
     endif()
 
     set(filter_args "${args}")
 
-    if (NOT "${header_filter}" STREQUAL "")
+    if (NOT "${EMPTY}${header_filter}" STREQUAL "${EMPTY}")
         list(APPEND filter_args "HEADER_FILTER" ${header_filter})
     endif()
 
-    if (NOT "${header_filter_args}" STREQUAL "")
+    if (NOT "${EMPTY}${header_filter_args}" STREQUAL "${EMPTY}")
         list(APPEND filter_args "HEADER_FILTER_ARGS" ${header_filter_args})
     endif()
 
     set(condition_args "${args}")
-    if (NOT "${get_name}" STREQUAL "")
+    if (NOT "${EMPTY}${get_name}" STREQUAL "${EMPTY}")
         list(APPEND condition_args "GET_NAME" ${get_name})
     endif()
 
-    if (NOT "${get_tag}" STREQUAL "")
+    if (NOT "${EMPTY}${get_tag}" STREQUAL "${EMPTY}")
         list(APPEND condition_args "GET_TAG" ${get_tag})
     endif()
 
-    if (NOT "${tag_condition}" STREQUAL "")
+    if (NOT "${EMPTY}${tag_condition}" STREQUAL "${EMPTY}")
         list(APPEND condition_args "TAG_CONDITION" ${tag_condition})
     endif()
 
-    if (NOT "${tag_delimiter}" STREQUAL "")
+    if (NOT "${EMPTY}${tag_delimiter}" STREQUAL "${EMPTY}")
         list(APPEND condition_args "TAG_DELIMITER" ${tag_delimiter})
     endif()
     
-    if (NOT "${header_condition}" STREQUAL "")
+    if (NOT "${EMPTY}${header_condition}" STREQUAL "${EMPTY}")
         list(APPEND condition_args "HEADER_CONDITION" ${header_condition})
     endif()
 
-    if (NOT "${header_condition_args}" STREQUAL "")
+    if (NOT "${EMPTY}${header_condition_args}" STREQUAL "${EMPTY}")
         list(APPEND condition_args "HEADER_CONDITION_ARGS" ${header_condition_args})
     endif()
     

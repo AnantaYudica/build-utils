@@ -11,7 +11,7 @@ function(add_test_executable_dir_get_target_other_src out_list_src)
     set(default_list_src ${add_test_executable_dir_get_target_other_src_DEFAULT_LIST})
 
     set(list_src "")
-    if (NOT "${args_LIST_OTHER_SRC_INDEX}" STREQUAL "")
+    if (NOT "${EMPTY}${args_LIST_OTHER_SRC_INDEX}" STREQUAL "${EMPTY}")
         foreach(it ${args_LIST_OTHER_SRC_INDEX})
             list(GET default_list_src ${it} src)
             list(APPEND list_src ${src})

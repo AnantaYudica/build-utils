@@ -10,7 +10,7 @@ function(source_group_dir_get_prefix_name current_prefix_name prefix_name)
         ${source_group_dir_get_prefix_name_ARGS}) 
 
     set(delim "\\")
-    if (NOT "${args_delimiter}" STREQUAL "")
+    if (NOT "${EMPTY}${args_delimiter}" STREQUAL "${EMPTY}")
         set(delim "${args_delimiter}")
     endif()
     

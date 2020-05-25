@@ -21,19 +21,19 @@ function(add_test_executable_dir_get_group_name)
 
     set(header ${add_test_executable_dir_get_group_name_HEADER})
     unset("${header}")
-    if (NOT "${header}" STREQUAL "")
+    if (NOT "${EMPTY}${header}" STREQUAL "${EMPTY}")
         set(${header} "${default_header}" PARENT_SCOPE)
     endif()
 
     set(src ${add_test_executable_dir_get_group_name_SRC})
     unset("${src}")
-    if (NOT "${src}" STREQUAL "")
+    if (NOT "${EMPTY}${src}" STREQUAL "${EMPTY}")
         set(${src} "${default_src}" PARENT_SCOPE)
     endif()
 
     set(other_src ${add_test_executable_dir_get_group_name_OTHER_SRC})
     unset("${other_src}")
-    if (NOT "${other_src}" STREQUAL "")
+    if (NOT "${EMPTY}${other_src}" STREQUAL "${EMPTY}")
         set(${other_src} "${default_other_src}" PARENT_SCOPE)
     endif()
     

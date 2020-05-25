@@ -11,7 +11,7 @@ function(add_test_executable_dir_get_header_dir header_dir)
 
     set(dir ${add_test_executable_dir_get_header_dir_CURR_DIR})
 
-    if (NOT "${args_LIST_HEADER_DIR}" STREQUAL "")
+    if (NOT "${EMPTY}${args_LIST_HEADER_DIR}" STREQUAL "${EMPTY}")
         set(relative_dir ${add_test_executable_dir_get_header_dir_RELATIVE_CURR_DIR})
         list(GET args_LIST_HEADER_DIR ${args_INDEX} base_header_dir)
         get_filename_component(current_header_dir "${base_header_dir}/${relative_dir}" ABSOLUTE)

@@ -10,10 +10,14 @@ elseif(NOT BASE_SOURCE_DIR)
     get_filename_component(l_base_source_dir "${CMAKE_SOURCE_DIR}" ABSOLUTE)
 endif()
 
+if (NOT DEFINED EMPTY)
+    set(EMPTY "_empty_" CACHE INTERNAL "Empty" FORCE)
+endif()
+
 set(BUILD_UTILS_BASE_SOURCE_DIR "${l_base_source_dir}" 
     CACHE PATH "build utils base source directory" FORCE)
 
-if("${BUILD_UTILS_ENABLE_TEST}" STREQUAL "")
+if("${EMPTY}${BUILD_UTILS_ENABLE_TEST}" STREQUAL "${EMPTY}")
     set(BUILD_UTILS_ENABLE_TEST TRUE CACHE BOOL "build utils enable test" FORCE)
 else()
     set(BUILD_UTILS_ENABLE_TEST ${BUILD_UTILS_ENABLE_TEST} 

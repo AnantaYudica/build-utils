@@ -11,7 +11,7 @@ function(add_test_executable_dir_get_target_properties out_list_property_arg)
     set(default_list_arg ${add_test_executable_dir_get_target_properties_DEFAULT_LIST_ARG})
     
     set(list_arg "")
-    if (NOT "${args_LIST_PROPERTY_INDEX}" STREQUAL "")
+    if (NOT "${EMPTY}${args_LIST_PROPERTY_INDEX}" STREQUAL "${EMPTY}")
         foreach(it ${args_LIST_PROPERTY_INDEX})
             list(GET default_list_arg ${it} arg)
             list(APPEND list_arg ${arg})

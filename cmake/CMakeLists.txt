@@ -11,7 +11,7 @@ elseif(NOT BASE_SOURCE_DIR)
 endif()
 
 if (NOT DEFINED EMPTY)
-    set(EMPTY "EMPTY" CACHE INTERNAL "Empty" FORCE)
+    set(EMPTY "_empty_" CACHE INTERNAL "Empty" FORCE)
 endif()
 
 set(BUILD_UTILS_BASE_SOURCE_DIR "${l_base_source_dir}" 

@@ -84,9 +84,9 @@ else()
 endif()
 
 if("${EMPTY}${set_variables_TEST_NAME}" STREQUAL "${EMPTY}")
-    set(l_test_source_dir "Not Defined" CACHE PATH "test source name" FORCE)
+    set(TEST_NAME "Not Defined" CACHE STRING "test source name" FORCE)
 else()
-    set(l_test_source_dir "${set_variables_TEST_NAME}" CACHE PATH "test source name" FORCE)
+    set(TEST_NAME "${set_variables_TEST_NAME}" CACHE STRING "test source name" FORCE)
 endif()
 
 if("${EMPTY}${set_variables_TEST_BASE_SOURCE_DIR}" STREQUAL "${EMPTY}")

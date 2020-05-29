@@ -39,7 +39,7 @@ foreach(it ${test_build_utils_list})
         set(name "")
         get_filename_component(name "${it}" NAME)
         add_test(NAME "${name}" COMMAND ${CMAKE_COMMAND} 
-            -D BASE_SOURCE_DIR=${BUILD_UTILS_CMAKE_BASE_SRC_DIR}
+            -D CMAKE_BASE_SRC_DIR=${BUILD_UTILS_CMAKE_BASE_SRC_DIR}
             -D INCLUDE_DIR=${${BUILD_UTILS_PREFIX}BUILD_UTILS_INCLUDE_DIR}
             -D TEST_BASE_DIR=${${BUILD_UTILS_PREFIX}BUILD_UTILS_TEST_BASE_DIR}
             -D TEST_UTILS_DIR=${${BUILD_UTILS_PREFIX}BUILD_UTILS_TEST_UTILS_DIR}

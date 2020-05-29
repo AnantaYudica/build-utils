@@ -1,10 +1,10 @@
-if (NOT BASE_SOURCE_DIR)
-    set(BASE_SOURCE_DIR "" CACHE PATH "project directory" FORCE)
+if (NOT CMAKE_BASE_SRC_DIR)
+    set(CMAKE_BASE_SRC_DIR "" CACHE PATH "project directory" FORCE)
 endif()
 
 include(${TEST_BASE_DIR}/set_variables.cmake)
 
-set_variables(BASE_SOURCE_DIR ${BASE_SOURCE_DIR} 
+set_variables(CMAKE_BASE_SRC_DIR ${CMAKE_BASE_SRC_DIR} 
     INCLUDE_DIR ${INCLUDE_DIR}
     TEST_BASE_DIR ${TEST_BASE_DIR}
     TEST_UTILS_DIR ${TEST_UTILS_DIR}
@@ -12,7 +12,7 @@ set_variables(BASE_SOURCE_DIR ${BASE_SOURCE_DIR}
     TEST_NAME ${TEST_NAME}
     TEST_BASE_SOURCE_DIR ${TEST_BASE_SOURCE_DIR})
 
-include(${BASE_SOURCE_DIR}/include_build_util.cmake)
+include(${CMAKE_BASE_SRC_DIR}/include_build_util.cmake)
 include(${TEST_BASE_DIR}/include_test_util.cmake)
 
 include_build_util(NAME get_test_target_name INCLUDE_DIR ${INCLUDE_DIR})

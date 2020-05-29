@@ -1,7 +1,7 @@
 
 function(set_variables)
     string(CONCAT one_options "PREFIX;INCLUDE_DIR;TEST_BASE_DIR"
-        ";TEST_UTILS_DIR;TEST_SOURCE_DIR")
+        ";TEST_UTILS_DIR;TEST_SRC_DIR")
     cmake_parse_arguments(set_variables "" "${one_options}" "" ${ARGN}) 
     
     if (NOT DEFINED BUILD_UTILS_CMAKE_BASE_SRC_DIR 
@@ -74,23 +74,23 @@ function(set_variables)
         message(FATAL_ERROR "variable \"TEST_UTILS_DIR\"" )
     endif()
 
-    set(l_test_source_dir "")
+    set(l_test_src_dir "")
 
-    if("${EMPTY}${set_variables_TEST_SOURCE_DIR}" STREQUAL "${EMPTY}")
-        get_filename_component(l_test_source_dir "${BUILD_UTILS_TEST_BASE_DIR}/src" ABSOLUTE)
+    if("${EMPTY}${set_variables_TEST_SRC_DIR}" STREQUAL "${EMPTY}")
+        get_filename_component(l_test_src_dir "${BUILD_UTILS_TEST_BASE_DIR}/src" ABSOLUTE)
     else()
-        get_filename_component(l_test_source_dir "${set_variables_TEST_SOURCE_DIR}" ABSOLUTE)
+        get_filename_component(l_test_src_dir "${set_variables_TEST_SRC_DIR}" ABSOLUTE)
     endif()
 
-    if (EXISTS "${l_test_source_dir}")
-        set(${BUILD_UTILS_PREFIX}BUILD_UTILS_TEST_SOURCE_DIR ${l_test_source_dir} 
+    if (EXISTS "${l_test_src_dir}")
+        set(${BUILD_UTILS_PREFIX}BUILD_UTILS_TEST_SRC_DIR ${l_test_src_dir} 
             CACHE PATH "test source directory" FORCE)
-    elseif(NOT EXISTS "${l_test_source_dir}")
-        get_filename_component(l_test_source_dir "${BUILD_UTILS_TEST_BASE_DIR}/src" ABSOLUTE)
-        set(${BUILD_UTILS_PREFIX}BUILD_UTILS_TEST_SOURCE_DIR "${l_test_source_dir}" 
+    elseif(NOT EXISTS "${l_test_src_dir}")
+        get_filename_component(l_test_src_dir "${BUILD_UTILS_TEST_BASE_DIR}/src" ABSOLUTE)
+        set(${BUILD_UTILS_PREFIX}BUILD_UTILS_TEST_SRC_DIR "${l_test_src_dir}" 
             CACHE PATH "test source directory" FORCE)
     else()
-        message(FATAL_ERROR "variable \"TEST_SOURCE_DIR\"" )
+        message(FATAL_ERROR "variable \"TEST_SRC_DIR\"" )
     endif()
 
     include(${BUILD_UTILS_CMAKE_BASE_SRC_DIR}/include_build_util.cmake)

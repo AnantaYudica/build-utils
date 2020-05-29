@@ -43,7 +43,7 @@ foreach(it ${test_build_utils_list})
             -D INCLUDE_DIR=${${BUILD_UTILS_PREFIX}BUILD_UTILS_INCLUDE_DIR}
             -D TEST_BASE_DIR=${${BUILD_UTILS_PREFIX}BUILD_UTILS_TEST_BASE_DIR}
             -D TEST_UTILS_DIR=${${BUILD_UTILS_PREFIX}BUILD_UTILS_TEST_UTILS_DIR}
-            -D TEST_SOURCE_DIR=${${BUILD_UTILS_PREFIX}BUILD_UTILS_TEST_SRC_DIR}
+            -D TEST_SRC_DIR=${${BUILD_UTILS_PREFIX}BUILD_UTILS_TEST_SRC_DIR}
             -D TEST_NAME=${name}
             -D TEST_BASE_SOURCE_DIR=${it}
             -P "${it}/CMakeLists.txt")

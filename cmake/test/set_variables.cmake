@@ -1,7 +1,7 @@
 
 function(set_variables)
 cmake_parse_arguments(set_variables "" 
-    "CMAKE_BASE_SRC_DIR;INCLUDE_DIR;TEST_BASE_DIR;TEST_UTILS_DIR;TEST_SOURCE_DIR;
+    "CMAKE_BASE_SRC_DIR;INCLUDE_DIR;TEST_BASE_DIR;TEST_UTILS_DIR;TEST_SRC_DIR;
     TEST_NAME;TEST_BASE_SOURCE_DIR" "" ${ARGN}) 
 
 unset(l_cmake_base_src_dir)
@@ -67,20 +67,20 @@ else()
     message(FATAL_ERROR "variable \"TEST_UTILS_DIR\"" )
 endif()
 
-unset(l_test_source_dir)
-if("${EMPTY}${set_variables_TEST_SOURCE_DIR}" STREQUAL "${EMPTY}")
-    get_filename_component(l_test_source_dir "${TEST_BASE_DIR}/build_utils" ABSOLUTE)
+unset(l_test_src_dir)
+if("${EMPTY}${set_variables_TEST_SRC_DIR}" STREQUAL "${EMPTY}")
+    get_filename_component(l_test_src_dir "${TEST_BASE_DIR}/build_utils" ABSOLUTE)
 else()
-    get_filename_component(l_test_source_dir "${set_variables_TEST_SOURCE_DIR}" ABSOLUTE)
+    get_filename_component(l_test_src_dir "${set_variables_TEST_SRC_DIR}" ABSOLUTE)
 endif()
 
-if (IS_DIRECTORY "${l_test_source_dir}")
-    set(TEST_SOURCE_DIR ${l_test_source_dir} CACHE PATH "test source directory" FORCE)
-elseif(NOT IS_DIRECTORY "${l_test_source_dir}")
-    get_filename_component(l_test_source_dir "${TEST_BASE_DIR}/src" ABSOLUTE)
-    set(TEST_SOURCE_DIR "${l_test_source_dir}" CACHE PATH "test source directory" FORCE)
+if (IS_DIRECTORY "${l_test_src_dir}")
+    set(TEST_SRC_DIR ${l_test_src_dir} CACHE PATH "test source directory" FORCE)
+elseif(NOT IS_DIRECTORY "${l_test_src_dir}")
+    get_filename_component(l_test_src_dir "${TEST_BASE_DIR}/src" ABSOLUTE)
+    set(TEST_SRC_DIR "${l_test_src_dir}" CACHE PATH "test source directory" FORCE)
 else()
-    message(FATAL_ERROR "variable \"TEST_SOURCE_DIR\"" )
+    message(FATAL_ERROR "variable \"TEST_SRC_DIR\"" )
 endif()
 
 if("${EMPTY}${set_variables_TEST_NAME}" STREQUAL "${EMPTY}")

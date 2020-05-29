@@ -3,7 +3,8 @@ function(set_variables)
     cmake_parse_arguments(set_variables "" 
         "INCLUDE_DIR;TEST_BASE_DIR;TEST_UTILS_DIR;TEST_SOURCE_DIR" "" ${ARGN}) 
     
-    if (NOT DEFINED BUILD_UTILS_CMAKE_BASE_SRC_DIR)
+    if (NOT DEFINED BUILD_UTILS_CMAKE_BASE_SRC_DIR 
+        OR("${EMPTY}${BUILD_UTILS_CMAKE_BASE_SRC_DIR}" STREQUAL "${EMPTY}"))
         
         get_filename_component(l_cmake_base_src_dir "${CMAKE_SOURCE_DIR}" ABSOLUTE)
         set(BUILD_UTILS_CMAKE_BASE_SRC_DIR ${l_cmake_base_src_dir} 

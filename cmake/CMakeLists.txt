@@ -16,23 +16,31 @@ else()
 endif()
 
 set(BUILD_UTILS_CMAKE_BASE_SRC_DIR "${l_cmake_base_src_dir}" 
-    CACHE PATH "build utils cmake base source directory" FORCE)
+    CACHE INTERNAL "build utils cmake base source directory" FORCE)
+
+if (DEFINED BUILD_UTILS_PREFIX 
+    AND (NOT "${EMPTY}${BUILD_UTILS_PREFIX}" STREQUAL "${EMPTY}"))
+
+    set(BUILD_UTILS_PREFIX "${BUILD_UTILS_PREFIX}_" CACHE INTERNAL "build-utils prefix" FORCE)
+endif()
 
 if("${EMPTY}${BUILD_UTILS_ENABLE_TEST}" STREQUAL "${EMPTY}")
-    set(BUILD_UTILS_ENABLE_TEST TRUE CACHE BOOL "build utils enable test" FORCE)
+    set(${BUILD_UTILS_PREFIX}BUILD_UTILS_ENABLE_TEST 
+        TRUE CACHE BOOL "build utils enable test" FORCE)
 else()
-    set(BUILD_UTILS_ENABLE_TEST ${BUILD_UTILS_ENABLE_TEST} 
+    set(${BUILD_UTILS_PREFIX}BUILD_UTILS_ENABLE_TEST 
+        ${${BUILD_UTILS_PREFIX}BUILD_UTILS_ENABLE_TEST} 
         CACHE BOOL "build utils enable test" FORCE)
 endif()
 
 include(${BUILD_UTILS_CMAKE_BASE_SRC_DIR}/include_build_util.cmake)
 
-if (BUILD_UTILS_ENABLE_TEST)
+if (${BUILD_UTILS_PREFIX}BUILD_UTILS_ENABLE_TEST)
     include(${BUILD_UTILS_CMAKE_BASE_SRC_DIR}/set_variables.cmake)
     set_variables(INCLUDE_DIR "${BUILD_UTILS_INCLUDE_DIR}" 
         TEST_BASE_DIR "${BUILD_UTILS_BASE_TEST_DIR}" 
         TEST_UTILS_DIR "${BUILD_UTILS_TEST_UTILS_DIR}" 
         TEST_SOURCE_DIR "${BUILD_UTILS_TEST_SOURCE_DIR}")
     enable_testing()
-    add_subdirectory(${BUILD_UTILS_TEST_BASE_DIR})
+    add_subdirectory(${${BUILD_UTILS_PREFIX}BUILD_UTILS_TEST_BASE_DIR})
 endif()

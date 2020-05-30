@@ -1,34 +1,34 @@
-if (NOT BASE_SOURCE_DIR)
-    set(BASE_SOURCE_DIR "" CACHE PATH "project directory" FORCE)
+if (NOT CMAKE_BASE_SRC_DIR)
+    set(CMAKE_BASE_SRC_DIR "" CACHE PATH "project directory" FORCE)
 endif()
 
 include(${TEST_BASE_DIR}/set_variables.cmake)
 
-set_variables(BASE_SOURCE_DIR ${BASE_SOURCE_DIR} 
+set_variables(CMAKE_BASE_SRC_DIR ${CMAKE_BASE_SRC_DIR} 
     INCLUDE_DIR ${INCLUDE_DIR}
     TEST_BASE_DIR ${TEST_BASE_DIR}
     TEST_UTILS_DIR ${TEST_UTILS_DIR}
-    TEST_SOURCE_DIR ${TEST_SOURCE_DIR}
+    TEST_SRC_DIR ${TEST_SRC_DIR}
     TEST_NAME ${TEST_NAME}
-    TEST_BASE_SOURCE_DIR ${TEST_BASE_SOURCE_DIR})
+    TEST_CMAKE_BASE_SRC_DIR ${TEST_CMAKE_BASE_SRC_DIR})
 
-include(${BASE_SOURCE_DIR}/include_build_util.cmake)
+include(${CMAKE_BASE_SRC_DIR}/include_build_util.cmake)
 include(${TEST_BASE_DIR}/include_test_util.cmake)
 
 include_build_util(NAME get_test_target_name INCLUDE_DIR ${INCLUDE_DIR})
 
 include_test_util(NAME assert)
 
-set(call_default ${TEST_BASE_SOURCE_DIR}/assert_call.cmake 
+set(call_default ${TEST_CMAKE_BASE_SRC_DIR}/assert_call.cmake 
     CACHE PATH "call get_test_target_name with args")
 
-set(format ${TEST_BASE_SOURCE_DIR}/get_test_target_name_format.cmake 
+set(format ${TEST_CMAKE_BASE_SRC_DIR}/get_test_target_name_format.cmake 
     CACHE PATH "format for get_test_target_name")
-set(set_prefix ${TEST_BASE_SOURCE_DIR}/get_test_target_name_set_prefix.cmake 
+set(set_prefix ${TEST_CMAKE_BASE_SRC_DIR}/get_test_target_name_set_prefix.cmake 
     CACHE PATH "set prefix for get_test_target_name")
-set(set_name ${TEST_BASE_SOURCE_DIR}/get_test_target_name_set_name.cmake 
+set(set_name ${TEST_CMAKE_BASE_SRC_DIR}/get_test_target_name_set_name.cmake 
     CACHE PATH "set name for get_test_target_name")
-set(set_tag ${TEST_BASE_SOURCE_DIR}/get_test_target_name_set_tag.cmake 
+set(set_tag ${TEST_CMAKE_BASE_SRC_DIR}/get_test_target_name_set_tag.cmake 
     CACHE PATH "set tag for get_test_target_name")
 
 assert(EQUAL STR CALL ${call_default} RESULT "call" ARGS "prefix;call")

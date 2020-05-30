@@ -1,29 +1,29 @@
 
-if (NOT BASE_SOURCE_DIR)
-set(BASE_SOURCE_DIR "" CACHE PATH "project directory" FORCE)
+if (NOT CMAKE_BASE_SRC_DIR)
+set(CMAKE_BASE_SRC_DIR "" CACHE PATH "project directory" FORCE)
 endif()
 
 include(${TEST_BASE_DIR}/set_variables.cmake)
 
-set_variables(BASE_SOURCE_DIR ${BASE_SOURCE_DIR} 
+set_variables(CMAKE_BASE_SRC_DIR ${CMAKE_BASE_SRC_DIR} 
     INCLUDE_DIR ${INCLUDE_DIR}
     TEST_BASE_DIR ${TEST_BASE_DIR}
     TEST_UTILS_DIR ${TEST_UTILS_DIR}
-    TEST_SOURCE_DIR ${TEST_SOURCE_DIR}
+    TEST_SRC_DIR ${TEST_SRC_DIR}
     TEST_NAME ${TEST_NAME}
-    TEST_BASE_SOURCE_DIR ${TEST_BASE_SOURCE_DIR})
+    TEST_CMAKE_BASE_SRC_DIR ${TEST_CMAKE_BASE_SRC_DIR})
 
 
-include(${BASE_SOURCE_DIR}/include_build_util.cmake)
+include(${CMAKE_BASE_SRC_DIR}/include_build_util.cmake)
 include(${TEST_BASE_DIR}/include_test_util.cmake)
 
 include_build_util(NAME upper_str INCLUDE_DIR ${INCLUDE_DIR})
 
 include_test_util(NAME assert)
 
-set(call_default_args ${TEST_BASE_SOURCE_DIR}/assert_call_1.cmake 
+set(call_default_args ${TEST_CMAKE_BASE_SRC_DIR}/assert_call_1.cmake 
     CACHE PATH "call upper_str function with default parameter")
-set(call_length_args ${TEST_BASE_SOURCE_DIR}/assert_call_2.cmake 
+set(call_length_args ${TEST_CMAKE_BASE_SRC_DIR}/assert_call_2.cmake 
     CACHE PATH "call upper_str function with length parameter")
 
 assert(EQUAL STR CALL ${call_default_args} RESULT "ABCDE0" ARGS "abcDe0")

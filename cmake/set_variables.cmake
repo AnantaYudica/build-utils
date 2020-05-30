@@ -17,7 +17,7 @@ function(set_variables)
     else()
         set(BUILD_UTILS_PREFIX "" CACHE INTERNAL "build-utils prefix" FORCE)
     endif()
-    
+
     unset(l_include_dir)
     if("${EMPTY}${set_variables_INCLUDE_DIR}" STREQUAL "${EMPTY}")
         get_filename_component(l_include_dir 
@@ -27,10 +27,10 @@ function(set_variables)
             ${set_variables_INCLUDE_DIR}" ABSOLUTE)
     endif()
 
-    if (EXISTS "${l_include_dir}")
+    if (IS_DIRECTORY "${l_include_dir}")
         set(${BUILD_UTILS_PREFIX}BUILD_UTILS_INCLUDE_DIR ${l_include_dir} 
             CACHE PATH "build utils include directory" FORCE)
-    elseif(NOT EXISTS "${l_include_dir}")
+    elseif(NOT IS_DIRECTORY "${l_include_dir}")
         get_filename_component(l_include_dir "${BUILD_UTILS_CMAKE_BASE_SRC_DIR}/../include" ABSOLUTE)
         set(${BUILD_UTILS_PREFIX}BUILD_UTILS_INCLUDE_DIR "${l_include_dir}" 
             CACHE PATH "build utils include directory" FORCE)
@@ -45,10 +45,10 @@ function(set_variables)
         get_filename_component(l_test_base_dir "${set_variables_TEST_BASE_DIR}" ABSOLUTE)
     endif()
 
-    if (EXISTS "${l_test_base_dir}")
+    if (IS_DIRECTORY "${l_test_base_dir}")
         set(${BUILD_UTILS_PREFIX}BUILD_UTILS_TEST_BASE_DIR ${l_test_base_dir} 
             CACHE PATH "test directory" FORCE)
-    elseif(NOT EXISTS "${l_test_base_dir}")
+    elseif(NOT IS_DIRECTORY "${l_test_base_dir}")
         get_filename_component(l_test_base_dir "${BUILD_UTILS_CMAKE_BASE_SRC_DIR}/test" ABSOLUTE)
         set(${BUILD_UTILS_PREFIX}BUILD_UTILS_TEST_BASE_DIR "${l_test_base_dir}" 
             CACHE PATH "test directory" FORCE)
@@ -64,10 +64,10 @@ function(set_variables)
         get_filename_component(l_test_utils_dir "${set_variables_TEST_UTILS_DIR}" ABSOLUTE)
     endif()
 
-    if (EXISTS "${l_test_utils_dir}")
+    if (IS_DIRECTORY "${l_test_utils_dir}")
         set(${BUILD_UTILS_PREFIX}BUILD_UTILS_TEST_UTILS_DIR ${l_test_utils_dir} 
             CACHE PATH "test utils directory" FORCE)
-    elseif(NOT EXISTS "${l_test_utils_dir}")
+    elseif(NOT IS_DIRECTORY "${l_test_utils_dir}")
         get_filename_component(l_test_utils_dir 
             "${${BUILD_UTILS_PREFIX}BUILD_UTILS_TEST_BASE_DIR}/utils" ABSOLUTE)
         set(${BUILD_UTILS_PREFIX}BUILD_UTILS_TEST_UTILS_DIR "${l_test_utils_dir}" 
@@ -84,10 +84,10 @@ function(set_variables)
         get_filename_component(l_test_src_dir "${set_variables_TEST_SRC_DIR}" ABSOLUTE)
     endif()
 
-    if (EXISTS "${l_test_src_dir}")
+    if (IS_DIRECTORY "${l_test_src_dir}")
         set(${BUILD_UTILS_PREFIX}BUILD_UTILS_TEST_SRC_DIR ${l_test_src_dir} 
             CACHE PATH "test source directory" FORCE)
-    elseif(NOT EXISTS "${l_test_src_dir}")
+    elseif(NOT IS_DIRECTORY "${l_test_src_dir}")
         get_filename_component(l_test_src_dir 
             "${${BUILD_UTILS_PREFIX}BUILD_UTILS_TEST_BASE_DIR}/src" ABSOLUTE)
         set(${BUILD_UTILS_PREFIX}BUILD_UTILS_TEST_SRC_DIR "${l_test_src_dir}" 

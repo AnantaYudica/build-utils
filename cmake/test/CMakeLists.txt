@@ -45,7 +45,7 @@ foreach(it ${test_build_utils_list})
             -D TEST_UTILS_DIR=${${BUILD_UTILS_PREFIX}BUILD_UTILS_TEST_UTILS_DIR}
             -D TEST_SRC_DIR=${${BUILD_UTILS_PREFIX}BUILD_UTILS_TEST_SRC_DIR}
             -D TEST_NAME=${name}
-            -D TEST_BASE_SOURCE_DIR=${it}
+            -D TEST_CMAKE_BASE_SRC_DIR=${it}
             -P "${it}/CMakeLists.txt")
     endif()
 endforeach()

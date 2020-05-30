@@ -10,7 +10,7 @@ set_variables(CMAKE_BASE_SRC_DIR ${CMAKE_BASE_SRC_DIR}
     TEST_UTILS_DIR ${TEST_UTILS_DIR}
     TEST_SRC_DIR ${TEST_SRC_DIR}
     TEST_NAME ${TEST_NAME}
-    TEST_BASE_SOURCE_DIR ${TEST_BASE_SOURCE_DIR})
+    TEST_CMAKE_BASE_SRC_DIR ${TEST_CMAKE_BASE_SRC_DIR})
 
 include(${CMAKE_BASE_SRC_DIR}/include_build_util.cmake)
 include(${TEST_BASE_DIR}/include_test_util.cmake)
@@ -19,9 +19,9 @@ include_build_util(NAME get_test_name_tag_ext_file INCLUDE_DIR ${INCLUDE_DIR})
 
 include_test_util(NAME assert)
 
-set(call_default_1 ${TEST_BASE_SOURCE_DIR}/assert_call_1.cmake 
+set(call_default_1 ${TEST_CMAKE_BASE_SRC_DIR}/assert_call_1.cmake 
     CACHE PATH "call get_test_name_tag_ext_file with args")
-set(call_default_2 ${TEST_BASE_SOURCE_DIR}/assert_call_2.cmake 
+set(call_default_2 ${TEST_CMAKE_BASE_SRC_DIR}/assert_call_2.cmake 
     CACHE PATH "call get_test_name_tag_ext_file with args")
 
 assert(EQUAL STR FOREACH CALL ${call_default_1} LIST_RESULT "EMPTY;EMPTY;EMPTY")
@@ -72,7 +72,7 @@ assert(EQUAL STR FOREACH CALL ${call_default_1} LIST_RESULT "name;test;txt"
 assert(EQUAL FOREACH CALL ${call_default_2} LIST_RESULT "0;4;4;2;6;4;10;1;11;3" 
     ARGS "filename;name--test.txt;tag_delimiter;--")
 
-set(tag_condition ${TEST_BASE_SOURCE_DIR}/get_test_name_tag_ext_file_tag_condition.cmake 
+set(tag_condition ${TEST_CMAKE_BASE_SRC_DIR}/get_test_name_tag_ext_file_tag_condition.cmake 
     CACHE PATH "tag_condition for get_test_name_tag_ext_file")
     
 assert(EQUAL STR FOREACH CALL ${call_default_1} LIST_RESULT "name;-test-;txt" 
@@ -80,7 +80,7 @@ assert(EQUAL STR FOREACH CALL ${call_default_1} LIST_RESULT "name;-test-;txt"
 assert(EQUAL FOREACH CALL ${call_default_2} LIST_RESULT "0;4;4;0;4;6;10;1;11;3" 
     ARGS "filename;name-test-.txt;tag_delimiter;-.*-;tag_condition;${tag_condition}")
 
-set(get_tag ${TEST_BASE_SOURCE_DIR}/get_test_name_tag_ext_file_get_tag.cmake 
+set(get_tag ${TEST_CMAKE_BASE_SRC_DIR}/get_test_name_tag_ext_file_get_tag.cmake 
     CACHE PATH "get_tag for get_test_name_tag_ext_file")
     
 assert(EQUAL STR FOREACH CALL ${call_default_1} LIST_RESULT "name;test;txt" 
@@ -88,7 +88,7 @@ assert(EQUAL STR FOREACH CALL ${call_default_1} LIST_RESULT "name;test;txt"
 assert(EQUAL FOREACH CALL ${call_default_2} LIST_RESULT "0;4;4;0;5;4;10;1;11;3" 
     ARGS "filename;name-test-.txt;tag_delimiter;-.*-;tag_condition;${tag_condition};get_tag;${get_tag}")
 
-set(get_name ${TEST_BASE_SOURCE_DIR}/get_test_name_tag_ext_file_get_name.cmake 
+set(get_name ${TEST_CMAKE_BASE_SRC_DIR}/get_test_name_tag_ext_file_get_name.cmake 
     CACHE PATH "get_name for get_test_name_tag_ext_file")
     
 assert(EQUAL STR FOREACH CALL ${call_default_1} LIST_RESULT "NAME;test;txt" 

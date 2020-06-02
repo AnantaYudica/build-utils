@@ -2,6 +2,13 @@ function(include_build_util)
     cmake_parse_arguments(include_build_util "" 
         "NAME;RELATIVE_DIR;INCLUDE_DIR" "" ${ARGN}) 
 
+    if (NOT DEFINED BUILD_UTILS_PREFIX 
+        OR ("${EMPTY}${BUILD_UTILS_PREFIX}" STREQUAL "${EMPTY}"))
+        
+        set(BUILD_UTILS_PREFIX "" CACHE INTERNAL "build-utils prefix" FORCE)
+        set(BUILD_UTILS_PREFIX_UPPER_ "" CACHE INTERNAL "build-utils prefix" FORCE)
+    endif()
+
     set(relative_dir "${include_build_util_RELATIVE_DIR}")
     set(name "${include_build_util_NAME}")
 
@@ -12,7 +19,7 @@ function(include_build_util)
     if(NOT "${EMPTY}${include_build_util_INCLUDE_DIR}" STREQUAL "${EMPTY}" )
         set(base_dir "${include_build_util_INCLUDE_DIR}")
     else()
-        set(base_dir "${BUILD_UTILS_INCLUDE_DIR}")
+        set(base_dir "${${BUILD_UTILS_PREFIX_UPPER_}BUILD_UTILS_INCLUDE_DIR}")
     endif()
     
     if(NOT "${EMPTY}${relative_dir}" STREQUAL "${EMPTY}")

@@ -18,24 +18,29 @@ endif()
 set(BUILD_UTILS_CMAKE_BASE_SRC_DIR "${l_cmake_base_src_dir}" 
     CACHE INTERNAL "build utils cmake base source directory" FORCE)
 
-if (DEFINED BUILD_UTILS_PREFIX 
+if (DEFINED BUILD_UTILS_PREFIX
     AND (NOT "${EMPTY}${BUILD_UTILS_PREFIX}" STREQUAL "${EMPTY}"))
 
-    set(BUILD_UTILS_PREFIX "${BUILD_UTILS_PREFIX}_" CACHE INTERNAL "build-utils prefix" FORCE)
+    set(BUILD_UTILS_PREFIX "${BUILD_UTILS_PREFIX}" 
+        CACHE INTERNAL "build-utils prefix string" FORCE)
+    string(TOUPPER "${BUILD_UTILS_PREFIX}_" l_upper_)
+    set(BUILD_UTILS_PREFIX_UPPER_ "${l_upper_}" 
+        CACHE INTERNAL "build-utils prefix string" FORCE)
+    unset(l_upper_)
 endif()
 
 if("${EMPTY}${BUILD_UTILS_ENABLE_TEST}" STREQUAL "${EMPTY}")
-    set(${BUILD_UTILS_PREFIX}BUILD_UTILS_ENABLE_TEST 
+    set(${BUILD_UTILS_PREFIX_UPPER_}BUILD_UTILS_ENABLE_TEST 
         TRUE CACHE BOOL "build utils enable test" FORCE)
 else()
-    set(${BUILD_UTILS_PREFIX}BUILD_UTILS_ENABLE_TEST 
-        ${${BUILD_UTILS_PREFIX}BUILD_UTILS_ENABLE_TEST} 
+    set(${BUILD_UTILS_PREFIX_UPPER_}BUILD_UTILS_ENABLE_TEST 
+        ${${BUILD_UTILS_PREFIX_UPPER_}BUILD_UTILS_ENABLE_TEST} 
         CACHE BOOL "build utils enable test" FORCE)
 endif()
 
 include(${BUILD_UTILS_CMAKE_BASE_SRC_DIR}/include_build_util.cmake)
 
-if (${BUILD_UTILS_PREFIX}BUILD_UTILS_ENABLE_TEST)
+if (${BUILD_UTILS_PREFIX_UPPER_}BUILD_UTILS_ENABLE_TEST)
     include(${BUILD_UTILS_CMAKE_BASE_SRC_DIR}/set_variables.cmake)
     set_variables(PREFIX ${BUILD_UTILS_PREFIX}
         INCLUDE_DIR ${BUILD_UTILS_INCLUDE_DIR}
@@ -43,5 +48,5 @@ if (${BUILD_UTILS_PREFIX}BUILD_UTILS_ENABLE_TEST)
         TEST_UTILS_DIR ${BUILD_UTILS_TEST_UTILS_DIR}
         TEST_SRC_DIR ${BUILD_UTILS_TEST_SRC_DIR})
     enable_testing()
-    add_subdirectory(${${BUILD_UTILS_PREFIX}BUILD_UTILS_TEST_BASE_DIR})
+    add_subdirectory(${${BUILD_UTILS_PREFIX_UPPER_}BUILD_UTILS_TEST_BASE_DIR})
 endif()

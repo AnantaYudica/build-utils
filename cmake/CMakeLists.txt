@@ -31,11 +31,11 @@ endif()
 
 if("${EMPTY}${BUILD_UTILS_ENABLE_TESTING}" STREQUAL "${EMPTY}")
     set(${BUILD_UTILS_PREFIX_UPPER_}BUILD_UTILS_ENABLE_TESTING 
-        TRUE CACHE BOOL "build utils enable test" FORCE)
+        TRUE CACHE BOOL "build utils enable testing" FORCE)
 else()
     set(${BUILD_UTILS_PREFIX_UPPER_}BUILD_UTILS_ENABLE_TESTING 
         ${${BUILD_UTILS_PREFIX_UPPER_}BUILD_UTILS_ENABLE_TESTING} 
-        CACHE BOOL "build utils enable test" FORCE)
+        CACHE BOOL "build utils enable testing" FORCE)
 endif()
 
 include(${BUILD_UTILS_CMAKE_BASE_SRC_DIR}/include_build_util.cmake)

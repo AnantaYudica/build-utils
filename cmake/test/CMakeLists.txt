@@ -5,11 +5,15 @@ if (NOT IS_DIRECTORY "${BUILD_UTILS_CMAKE_BASE_SRC_DIR}")
     message(FATAL_ERROR "${msg}")
 endif()
 
+unset(l_prefix_)
 if (NOT DEFINED BUILD_UTILS_PREFIX 
     OR ("${EMPTY}${BUILD_UTILS_PREFIX}" STREQUAL "${EMPTY}"))
     
     set(BUILD_UTILS_PREFIX "" CACHE INTERNAL "build-utils prefix" FORCE)
     set(BUILD_UTILS_PREFIX_UPPER_ "" CACHE INTERNAL "build-utils prefix" FORCE)
+    set(l_prefix_ "")
+else()
+    set(l_prefix_ "${BUILD_UTILS_PREFIX}_")
 endif()
 
 if (NOT IS_DIRECTORY "${${BUILD_UTILS_PREFIX_UPPER_}BUILD_UTILS_INCLUDE_DIR}")
@@ -39,9 +43,8 @@ endif()
 file(GLOB test_build_utils_list "${${BUILD_UTILS_PREFIX_UPPER_}BUILD_UTILS_TEST_SRC_DIR}/*")
 foreach(it ${test_build_utils_list})
     if(IS_DIRECTORY ${it})
-        set(name "")
         get_filename_component(name "${it}" NAME)
-        add_test(NAME "${name}" COMMAND ${CMAKE_COMMAND} 
+        add_test(NAME "${l_prefix_}build_utils__${name}" COMMAND ${CMAKE_COMMAND} 
             -D CMAKE_BASE_SRC_DIR=${BUILD_UTILS_CMAKE_BASE_SRC_DIR}
             -D INCLUDE_DIR=${${BUILD_UTILS_PREFIX_UPPER_}BUILD_UTILS_INCLUDE_DIR}
             -D TEST_BASE_DIR=${${BUILD_UTILS_PREFIX_UPPER_}BUILD_UTILS_TEST_BASE_DIR}
@@ -50,6 +53,8 @@ foreach(it ${test_build_utils_list})
             -D TEST_NAME=${name}
             -D TEST_CMAKE_BASE_SRC_DIR=${it}
             -P "${it}/CMakeLists.txt")
+        unset(name)
     endif()
 endforeach()
 
+unset(l_prefix_)

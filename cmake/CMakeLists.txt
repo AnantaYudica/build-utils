@@ -48,7 +48,17 @@ set_variables(PREFIX ${BUILD_UTILS_PREFIX}
     TEST_UTILS_DIR ${BUILD_UTILS_TEST_UTILS_DIR}
     TEST_SRC_DIR ${BUILD_UTILS_TEST_SRC_DIR})
 
+get_filename_component(cmake_current_bin_dir ${CMAKE_CURRENT_BINARY_DIR} ABSOLUTE)
+get_filename_component(cmake_bin_dir ${CMAKE_BINARY_DIR} ABSOLUTE)
+
 if (${BUILD_UTILS_PREFIX_UPPER_}BUILD_UTILS_ENABLE_TESTING)
     add_subdirectory(${${BUILD_UTILS_PREFIX_UPPER_}BUILD_UTILS_TEST_BASE_DIR})
     enable_testing()
+elseif (NOT "${cmake_current_bin_dir}" STREQUAL "${cmake_bin_dir}"
+    AND (EXISTS ${CMAKE_CURRENT_BINARY_DIR}/CTestTestfile.cmake))
+
+    file(REMOVE ${CMAKE_CURRENT_BINARY_DIR}/CTestTestfile.cmake)
 endif()
+
+unset(cmake_current_bin_dir)
+unset(cmake_bin_dir)

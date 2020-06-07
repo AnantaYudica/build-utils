@@ -58,3 +58,5 @@ foreach(it ${test_build_utils_list})
 endforeach()
 
 unset(l_prefix_)
+
+enable_testing()

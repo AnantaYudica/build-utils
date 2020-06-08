@@ -1,7 +1,7 @@
 
 function(set_variables)
     string(CONCAT one_options "PREFIX;INCLUDE_DIR;TEST_BASE_DIR"
-        ";TEST_UTILS_DIR;TEST_SRC_DIR")
+        ";TEST_UTILS_DIR;TEST_SRC_DIR;ENABLE_TESTING")
     cmake_parse_arguments(set_variables "" "${one_options}" "" ${ARGN}) 
     
     if (NOT DEFINED BUILD_UTILS_CMAKE_BASE_SRC_DIR 
@@ -110,6 +110,24 @@ function(set_variables)
     else()
         message(FATAL_ERROR "variable \"TEST_SRC_DIR\"" )
     endif()
+
+    get_property(build_utils_enable_testing_cache_type 
+        CACHE ${BUILD_UTILS_PREFIX_UPPER_}BUILD_UTILS_ENABLE_TESTING
+        PROPERTY TYPE)
+    if (NOT DEFINED ${BUILD_UTILS_PREFIX_UPPER_}BUILD_UTILS_ENABLE_TESTING
+        OR("${EMPTY}${build_utils_enable_testing_cache_type}" STREQUAL "${EMPTY}BOOL"))
+
+        set(l_enable_testing TRUE)
+        if (NOT "${EMPTY}${set_variables_ENABLE_TESTING}" STREQUAL "${EMPTY}")
+            if (NOT set_variables_ENABLE_TESTING)
+                set(l_enable_testing FALSE)
+            endif()
+        endif()
+        set(${BUILD_UTILS_PREFIX_UPPER_}BUILD_UTILS_ENABLE_TESTING 
+            ${l_enable_testing} CACHE BOOL "build utils enable testing" FORCE)
+        unset(l_enable_testing)
+    endif()
+    unset(build_utils_enable_testing_cache_type)
 
     include(${BUILD_UTILS_CMAKE_BASE_SRC_DIR}/include_build_util.cmake)
 
